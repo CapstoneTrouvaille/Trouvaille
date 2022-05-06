@@ -1,10 +1,17 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native"; //rnfes
-import React from "react";
+import React, { useEffect } from "react";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "./store/user";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
+  const userInfo = useSelector((state) => state.user);
 
   const handleSignOut = () => {
     auth
@@ -17,7 +24,8 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Email: {auth.currentUser?.email}</Text>
+      <Text>Welcome, {userInfo.name}</Text>
+      <Text>Email: {auth.currentUser.email}</Text>
       <TouchableOpacity onPress={handleSignOut} style={styles.button}>
         <Text style={styles.buttonText}>Sign out</Text>
       </TouchableOpacity>
