@@ -7,13 +7,9 @@ import {
   View,
   ImageBackground,
 } from "react-native";
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
-
-// const image = {
-//   path: "../assets/trouvaillehomeback.png",
-// };
+import { useNavigation } from "@react-navigation/core";
 
 const image = require("../assets/trouvaillehomeback.png");
 
@@ -21,12 +17,37 @@ const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigation = useNavigation();
+
+  //listens to firebase to see if the user is logged in, then do something if the user is logged in
+  //this runs when the component mounts, pass in empty array so this only runs onece
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.replace("Home");
+      }
+    });
+
+    return unsubscribe;
+    //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
+  }, []);
+
   const handleSignUp = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log(user.email);
+        console.log(`Registered with: `, user.email);
+      })
+      .catch((error) => alert(error.message));
+  };
+
+  const handleLogin = () => {
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log(`Logged in with: `, user.email);
       })
       .catch((error) => alert(error.message));
   };
@@ -55,7 +76,7 @@ const LoginScreen = () => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={() => {}} style={styles.button}>
+          <TouchableOpacity onPress={handleLogin} style={styles.button}>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
           <TouchableOpacity
