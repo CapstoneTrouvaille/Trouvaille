@@ -1,28 +1,17 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native"; //rnfes
-import React from "react";
+import React, { useEffect } from "react";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
-import {db} from "../firebase"
-import { doc, getDoc } from "firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "./store/user";
 
-const test = async() =>{
-  const docRef = doc(db, "user", "HverH3BQtzK50kfLORNK");
-const docSnap = await getDoc(docRef);
-
-if (docSnap.exists()) {
-  console.log("Document data:", docSnap.data().name);
-  return docSnap.name
-} else {
-  // doc.data() will be undefined in this case
-  console.log("No such document!");
-}
-}
-
-
-const HomeScreen = async() => {
+const HomeScreen = () => {
   const navigation = useNavigation();
-  const testrun = await test()
-  console.log("IN FUNC,", testrun)
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
+  const userInfo = useSelector((state) => state.user);
 
   const handleSignOut = () => {
     auth
@@ -35,9 +24,8 @@ const HomeScreen = async() => {
 
   return (
     <View style={styles.container}>
-      <Text>Email: {auth.currentUser?.email}</Text>
-
-      <Text>TEST: {testrun}</Text>
+      <Text>Welcome, {userInfo.name}</Text>
+      <Text>Email: {auth.currentUser.email}</Text>
       <TouchableOpacity onPress={handleSignOut} style={styles.button}>
         <Text style={styles.buttonText}>Sign out</Text>
       </TouchableOpacity>
