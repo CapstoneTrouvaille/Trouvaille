@@ -8,6 +8,7 @@ import { fetchUser } from "./store/user";
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchUser());
   }, []);
@@ -24,7 +25,8 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Welcome, {userInfo.name}</Text>
+      {/* <Text>Welcome, {userInfo.name}</Text> */}
+      <Text>Welcome!</Text>
       <Text>Email: {auth.currentUser.email}</Text>
       <TouchableOpacity onPress={handleSignOut} style={styles.button}>
         <Text style={styles.buttonText}>Sign out</Text>

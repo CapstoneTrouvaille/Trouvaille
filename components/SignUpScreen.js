@@ -2,68 +2,47 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   Text,
+  View,
   TextInput,
   TouchableOpacity,
-  View,
   ImageBackground,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
 import { useDispatch } from "react-redux";
-import { fetchUser } from "./store/user";
+import { signupUser } from "./store/user";
 
 const image = require("../assets/trouvaillehomeback.png");
 
-const LoginScreen = () => {
+const SignUpScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
 
-  //listens to firebase to see if the user is logged in, then do something if the user is logged in
-  //this runs when the component mounts, pass in empty array so this only runs once
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.navigate("Home");
-      }
-    });
-
-    return unsubscribe;
-    //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
-  }, []);
-
-  // const handleSignUp = () => {
-  //   auth
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then((userCredentials) => {
-  //       const user = userCredentials.user;
-  //       console.log(`Registered with: `, user.email);
-  //     })
-  //     .catch((error) => alert(error.message));
-  // };
-
-  const handleLogin = () => {
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log(`Logged in with: `, user.email);
-      })
-      .catch((error) => alert(error.message));
-  };
+  //   const handleSignUp = () => {
+  //     // auth
+  //     //   .createUserWithEmailAndPassword(email, password)
+  //     //   .then((userCredentials) => {
+  //     //     const user = userCredentials.user;
+  //     //     console.log(`Registered with: `, user.email);
+  //     //   })
+  //     //   .catch((error) => alert(error.message));
+  //   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior="padding"
-      // avoid the keyboard from covering login fields
-    >
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
         <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="First Name"
+            value={name}
+            onChangeText={(text) => setName(text)}
+            style={styles.input}
+          />
           <TextInput
             placeholder="Email"
             value={email}
@@ -80,16 +59,11 @@ const LoginScreen = () => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handleLogin} style={styles.button}>
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
-
           <TouchableOpacity
-            title="Register"
-            onPress={() => navigation.navigate("SignUp")}
-            style={[styles.button, styles.buttonOutline]}
+            onPress={() => dispatch(signupUser(name, email, password))}
+            style={styles.button}
           >
-            <Text style={styles.buttonOutlineText}>Register</Text>
+            <Text style={styles.buttonText}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -97,14 +71,13 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "#E9DAC4",
   },
   inputContainer: {
     width: "80%",
@@ -129,19 +102,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
   },
-  buttonOutline: {
-    backgroundColor: "white",
-    marginTop: 5,
-    borderColor: "#A267AC",
-    borderWidth: 2,
-  },
   buttonText: {
     color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: "#A267AC",
     fontWeight: "700",
     fontSize: 16,
   },
