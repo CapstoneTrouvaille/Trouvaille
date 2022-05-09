@@ -10,6 +10,7 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user);
+
   useEffect(() => {
     dispatch(fetchUser());
   }, []);
@@ -25,7 +26,8 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Welcome</Text>
+      <Text>Welcome!</Text>
+      {/* <Text>Welcome, {userInfo.name}</Text> */}
       <Text>Email: {auth.currentUser.email}</Text>
       <TouchableOpacity
         onPress={() => navigation.navigate("Add a trip")}

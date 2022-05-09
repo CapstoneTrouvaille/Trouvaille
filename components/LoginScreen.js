@@ -10,6 +10,8 @@ import {
 import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
+import { useDispatch } from "react-redux";
+import { fetchUser } from "./store/user";
 
 const image = require("../assets/trouvaillehomeback.png");
 
@@ -19,28 +21,34 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
+  const dispatch = useDispatch();
+
   //listens to firebase to see if the user is logged in, then do something if the user is logged in
   //this runs when the component mounts, pass in empty array so this only runs onece
   //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
+
         navigation.replace("Home");
+        navigation.replace("Tabs")
+
       }
     });
     return unsubscribe;
     //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
   }, []);
 
-  const handleSignUp = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log(`Registered with: `, user.email);
-      })
-      .catch((error) => alert(error.message));
-  };
+  // const handleSignUp = () => {
+  //   auth
+  //     .createUserWithEmailAndPassword(email, password)
+  //     .then((userCredentials) => {
+  //       const user = userCredentials.user;
+  //       console.log(`Registered with: `, user.email);
+  //     })
+  //     .catch((error) => alert(error.message));
+  // };
 
   const handleLogin = () => {
     auth
@@ -79,8 +87,10 @@ const LoginScreen = () => {
           <TouchableOpacity onPress={handleLogin} style={styles.button}>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
-            onPress={handleSignUp}
+            title="Register"
+            onPress={() => navigation.navigate("SignUp")}
             style={[styles.button, styles.buttonOutline]}
           >
             <Text style={styles.buttonOutlineText}>Register</Text>
