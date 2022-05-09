@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./components/LoginScreen";
 import HomeScreen from "./components/HomeScreen";
+import Tabs from "./components/Tabs"
 import store from "./components/store";
 import { Provider } from "react-redux";
 import SignUpScreen from "./components/SignUpScreen";
@@ -27,6 +28,7 @@ export default function App() {
             component={SignUpScreen}
           />
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name = "Tabs" component={Tabs}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
