@@ -16,9 +16,10 @@ import { useNavigation } from "@react-navigation/core";
 import * as Google from "expo-google-app-auth";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "./store/user";
-
+import { db } from "../firebase";
+import { fetchgoogleUser } from "./store";
 
 const image = require("../assets/trouvaillehomeback.png");
 const logo = require("../assets/TrouvailleMain.png");
@@ -28,13 +29,11 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
-
   //GOOGLE
   const [accessToken, setAccessToken] = useState();
-  const [userInfo, setUserInfo] = useState();
+  // const [userInfo, setUserInfo] = useState();
 
   const dispatch = useDispatch();
-
 
   //listens to firebase to see if the user is logged in, then do something if the user is logged in
   //this runs when the component mounts, pass in empty array so this only runs onece
@@ -43,16 +42,17 @@ const LoginScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-
+        console.log("user", user);
+        const { currentUser } = auth;
+        console.log("Currently logged in user", currentUser);
+        dispatch(fetchUser(currentUser.uid));
         navigation.replace("Home");
-        navigation.replace("Tabs")
-
+        navigation.replace("Tabs");
       }
     });
     return unsubscribe;
     //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
   }, []);
-
 
   // const handleSignUp = () => {
   //   auth
@@ -64,16 +64,24 @@ const LoginScreen = () => {
   //     .catch((error) => alert(error.message));
   // };
 
-
   const handleLogin = () => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log(`Logged in with: `, user.email);
+        console.log(`Logged in with: `, user);
       })
       .catch((error) => alert(error.message));
   };
+
+  // async function getUserInfo() {
+  //   console.log("email", email);
+  //   const userRef = db.collection("user");
+  //   const doc = await userRef.where("email", "==", email).get();
+  //   console.log("DOC", doc);
+  //   const data = doc.docs[0].data();
+  //   console.log("getUserInfo", data);
+  // }
 
   //GOOGLE SIGNIN
   async function signInWithGoogleAsync() {
@@ -89,35 +97,39 @@ const LoginScreen = () => {
       if (result.type === "success") {
         setAccessToken(result.accessToken);
         console.log("login with google success!");
-        navigation.replace("Home");
+        const userId = String(result.user.id);
+        console.log("string userID", userId);
+
+        //using UID to find individuals on our Firestore to retrieve their data
+        const userRef = db.collection("user");
+        const doc = await userRef.where("UID", "==", userId).get();
+        // console.log("doc", doc.docs[0]);
+        //If user exists in our Firestore database
+        if (doc.docs[0] !== undefined) {
+          const data = doc.docs[0].data();
+          console.log("userID", userId);
+          dispatch(fetchUser(userId));
+          console.log("GOOGLE USER", data);
+          navigation.replace("Home");
+        } else {
+          //If user does NOT exist and need to add as a new user
+          const userData = {
+            name: result.user.givenName,
+            UID: result.user.id,
+            email: result.user.email,
+            trip: [],
+          };
+
+          //adding new google signed in user to FireStore
+          await db.collection("user").add(userData);
+        }
+
+        // navigation.replace("Home");
       } else {
         console.log("Permission denied");
       }
     } catch (error) {
       console.log(error);
-    }
-  }
-
-  async function getUserData() {
-    let userInfoResponse = await fetch(
-      "https://www.googleapis.com/userinfo/v2/me",
-      { headers: { Authorization: `Bearer ${accessToken}` } }
-    );
-
-    userInfoResponse.json().then((data) => {
-      setUserInfo(data);
-      console.log("data", data);
-    });
-  }
-  function showUserInfo() {
-    if (userInfo) {
-      return (
-        <View style={styles.userInfo}>
-          <Image source={{ uri: userInfo.picture }} style={styles.profilePic} />
-          <Text>Welcome {userInfo.name}</Text>
-          <Text>{userInfo.email}</Text>
-        </View>
-      );
     }
   }
 
@@ -163,10 +175,9 @@ const LoginScreen = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
-          {showUserInfo()}
           <FontAwesome5.Button
-            title={accessToken ? "Get User Data" : "Log In With Google"}
-            onPress={accessToken ? getUserData : signInWithGoogleAsync}
+            title="Log In With Google"
+            onPress={signInWithGoogleAsync}
             style={styles.googleButton}
           ></FontAwesome5.Button>
         </View>
@@ -176,6 +187,8 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
+
+// title={accessToken ? "Get User Data" : "Log In With Google"}
 
 const styles = StyleSheet.create({
   container: {

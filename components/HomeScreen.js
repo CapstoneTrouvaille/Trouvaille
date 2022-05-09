@@ -9,7 +9,10 @@ import AddTrip from "./AddTrip";
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  // const userInfo = useSelector((state) => state.user);
   const userInfo = useSelector((state) => state.user);
+  console.log("userINFO", userInfo);
+  // console.log("userINFO", userInfo);
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -26,20 +29,15 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-<<<<<<< HEAD
+      <Text>Welcome!</Text>
       <Text>Welcome, {userInfo.name}</Text>
       {/* <Text>Email: {auth.currentUser.email}</Text> */}
-=======
-      <Text>Welcome!</Text>
-      {/* <Text>Welcome, {userInfo.name}</Text> */}
-      <Text>Email: {auth.currentUser.email}</Text>
       <TouchableOpacity
         onPress={() => navigation.navigate("Add a trip")}
         style={styles.button}
-      >
-        <Text style={styles.buttonText}>Add a Trip</Text>
-      </TouchableOpacity>
->>>>>>> main
+      ></TouchableOpacity>
+      <Text style={styles.buttonText}>Add a Trip</Text>
+
       <TouchableOpacity onPress={handleSignOut} style={styles.button}>
         <Text style={styles.buttonText}>Sign out</Text>
       </TouchableOpacity>
@@ -54,6 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    // backgroundColor: "#E9DAC4",
   },
   button: {
     backgroundColor: "#A267AC",

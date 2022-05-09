@@ -17,15 +17,15 @@ export const signup = (user) => ({
 });
 
 //THUNK
-export const fetchUser = () => {
+export const fetchUser = (userId) => {
   return async (dispatch) => {
     try {
-      const userRef = db.collection("user").doc("HverH3BQtzK50kfLORNK");
-      const doc = await userRef.get();
-      if (!doc.exists) {
+      const userRef = db.collection("user");
+      const doc = await userRef.where("UID", "==", userId || "").get();
+      if (!doc.docs[0]) {
         console.log("No such document!");
       } else {
-        const data = doc.data();
+        const data = doc.docs[0].data();
         dispatch(getUser(data));
       }
     } catch (error) {
