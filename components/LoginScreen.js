@@ -6,18 +6,26 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  Image,
+  Button,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
+import * as Google from "expo-google-app-auth";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const image = require("../assets/trouvaillehomeback.png");
+const logo = require("../assets/TrouvailleMain.png");
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const navigation = useNavigation();
+
+  //GOOGLE
+  const [accessToken, setAccessToken] = useState();
+  const [userInfo, setUserInfo] = useState();
 
   //listens to firebase to see if the user is logged in, then do something if the user is logged in
   //this runs when the component mounts, pass in empty array so this only runs onece
@@ -31,6 +39,11 @@ const LoginScreen = () => {
     return unsubscribe;
     //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
   }, []);
+
+  //GOOGLE
+  // useEffect(()=> {
+  //   const googleLogIn =
+  // })
 
   const handleSignUp = () => {
     auth
@@ -52,13 +65,60 @@ const LoginScreen = () => {
       .catch((error) => alert(error.message));
   };
 
+  //GOOGLE SIGNIN
+  async function signInWithGoogleAsync() {
+    try {
+      const result = await Google.logInAsync({
+        androidClientId:
+          "483169550927-hc31k451v8h377movghnbvp5at91mfbi.apps.googleusercontent.com",
+        iosClientId:
+          "483169550927-jaklnim83sh381ut3cfdnnb066tkk50k.apps.googleusercontent.com",
+        scopes: ["profile", "email"],
+      });
+
+      if (result.type === "success") {
+        setAccessToken(result.accessToken);
+        console.log("login with google success!");
+        navigation.replace("Home");
+      } else {
+        console.log("Permission denied");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getUserData() {
+    let userInfoResponse = await fetch(
+      "https://www.googleapis.com/userinfo/v2/me",
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
+
+    userInfoResponse.json().then((data) => {
+      setUserInfo(data);
+      console.log("data", data);
+    });
+  }
+  function showUserInfo() {
+    if (userInfo) {
+      return (
+        <View style={styles.userInfo}>
+          <Image source={{ uri: userInfo.picture }} style={styles.profilePic} />
+          <Text>Welcome {userInfo.name}</Text>
+          <Text>{userInfo.email}</Text>
+        </View>
+      );
+    }
+  }
+
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior="padding"
-      // avoid the keyboard from covering login fields
-    >
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+        <Image
+          source={logo}
+          resizeMode="center"
+          style={styles.mainlogo}
+        ></Image>
         <View style={styles.inputContainer}>
           <TextInput
             placeholder="Email"
@@ -85,6 +145,14 @@ const LoginScreen = () => {
           >
             <Text style={styles.buttonOutlineText}>Register</Text>
           </TouchableOpacity>
+        </View>
+        <View style={styles.buttonContainer}>
+          {showUserInfo()}
+          <FontAwesome5.Button
+            title={accessToken ? "Get User Data" : "Log In With Google"}
+            onPress={accessToken ? getUserData : signInWithGoogleAsync}
+            style={styles.googleButton}
+          ></FontAwesome5.Button>
         </View>
       </ImageBackground>
     </KeyboardAvoidingView>
@@ -145,5 +213,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     height: "100%",
+  },
+  mainlogo: {
+    flex: 0.5,
+    aspectRatio: 1,
+    resizeMode: "contain",
+  },
+  userInfo: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  profilePic: {
+    width: 50,
+    height: 50,
   },
 });
