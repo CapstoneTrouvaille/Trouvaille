@@ -12,8 +12,13 @@ import {
 import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
+
 import * as Google from "expo-google-app-auth";
 import { FontAwesome5 } from "@expo/vector-icons";
+
+import { useDispatch } from "react-redux";
+import { fetchUser } from "./store/user";
+
 
 const image = require("../assets/trouvaillehomeback.png");
 const logo = require("../assets/TrouvailleMain.png");
@@ -23,37 +28,42 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
+
   //GOOGLE
   const [accessToken, setAccessToken] = useState();
   const [userInfo, setUserInfo] = useState();
 
+  const dispatch = useDispatch();
+
+
   //listens to firebase to see if the user is logged in, then do something if the user is logged in
   //this runs when the component mounts, pass in empty array so this only runs onece
+  //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
+
         navigation.replace("Home");
+        navigation.replace("Tabs")
+
       }
     });
-
     return unsubscribe;
     //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
   }, []);
 
-  //GOOGLE
-  // useEffect(()=> {
-  //   const googleLogIn =
-  // })
 
-  const handleSignUp = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log(`Registered with: `, user.email);
-      })
-      .catch((error) => alert(error.message));
-  };
+  // const handleSignUp = () => {
+  //   auth
+  //     .createUserWithEmailAndPassword(email, password)
+  //     .then((userCredentials) => {
+  //       const user = userCredentials.user;
+  //       console.log(`Registered with: `, user.email);
+  //     })
+  //     .catch((error) => alert(error.message));
+  // };
+
 
   const handleLogin = () => {
     auth
@@ -121,12 +131,17 @@ const LoginScreen = () => {
         ></Image>
         <View style={styles.inputContainer}>
           <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="email-address"
             placeholder="Email"
             value={email}
             onChangeText={(text) => setEmail(text)}
             style={styles.input}
           />
           <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
             placeholder="Password"
             value={password}
             onChangeText={(text) => setPassword(text)}
@@ -134,13 +149,14 @@ const LoginScreen = () => {
             secureTextEntry
           />
         </View>
-
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleLogin} style={styles.button}>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
-            onPress={handleSignUp}
+            title="Register"
+            onPress={() => navigation.navigate("SignUp")}
             style={[styles.button, styles.buttonOutline]}
           >
             <Text style={styles.buttonOutlineText}>Register</Text>
@@ -166,7 +182,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "#E9DAC4",
   },
   inputContainer: {
     width: "80%",
