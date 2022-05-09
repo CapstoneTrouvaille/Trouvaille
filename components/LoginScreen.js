@@ -24,7 +24,9 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
 
   //listens to firebase to see if the user is logged in, then do something if the user is logged in
-  //this runs when the component mounts, pass in empty array so this only runs once
+  //this runs when the component mounts, pass in empty array so this only runs onece
+  //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -34,7 +36,6 @@ const LoginScreen = () => {
 
       }
     });
-
     return unsubscribe;
     //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
   }, []);
@@ -60,20 +61,21 @@ const LoginScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior="padding"
-      // avoid the keyboard from covering login fields
-    >
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
         <View style={styles.inputContainer}>
           <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="email-address"
             placeholder="Email"
             value={email}
             onChangeText={(text) => setEmail(text)}
             style={styles.input}
           />
           <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
             placeholder="Password"
             value={password}
             onChangeText={(text) => setPassword(text)}
@@ -81,7 +83,6 @@ const LoginScreen = () => {
             secureTextEntry
           />
         </View>
-
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleLogin} style={styles.button}>
             <Text style={styles.buttonText}>Login</Text>
@@ -107,7 +108,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "#E9DAC4",
   },
   inputContainer: {
     width: "80%",
