@@ -24,7 +24,12 @@ import {
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+
   const userInfo = useSelector((state) => state.user);
+  console.log("userINFO", userInfo);
+  // console.log("userINFO", userInfo);
+
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -33,9 +38,10 @@ const HomeScreen = () => {
   const handleSignOut = () => {
     auth
       .signOut()
-      .then(() => {
-        navigation.replace("Login");
-      })
+      //*** OMIT BC TAB NAV */
+      // .then(() => {
+      //   navigation.replace("Login");
+      // })
       .catch((error) => alert(error.message));
   };
 
