@@ -18,8 +18,9 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "./store/user";
-import { db } from "../firebase";
-import { fetchgoogleUser } from "./store";
+
+import { signupGoogleUser } from "./store";
+import GoogleButton from "react-native-google-button/src";
 
 const image = require("../assets/trouvaillehomeback.png");
 const logo = require("../assets/TrouvailleMain.png");
@@ -31,8 +32,8 @@ const LoginScreen = () => {
 
   //GOOGLE
   const [accessToken, setAccessToken] = useState();
-  // const [userInfo, setUserInfo] = useState();
-
+  const userInfo = useSelector((state) => state.user);
+  console.log("userinfo from firestore", userInfo);
   const dispatch = useDispatch();
 
   //listens to firebase to see if the user is logged in, then do something if the user is logged in
@@ -42,9 +43,9 @@ const LoginScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log("user", user);
         const { currentUser } = auth;
         console.log("Currently logged in user", currentUser);
+        //getting userInfo from store
         dispatch(fetchUser(currentUser.uid));
         navigation.replace("Home");
         navigation.replace("Tabs");
@@ -53,16 +54,6 @@ const LoginScreen = () => {
     return unsubscribe;
     //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
   }, []);
-
-  // const handleSignUp = () => {
-  //   auth
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then((userCredentials) => {
-  //       const user = userCredentials.user;
-  //       console.log(`Registered with: `, user.email);
-  //     })
-  //     .catch((error) => alert(error.message));
-  // };
 
   const handleLogin = () => {
     auth
@@ -73,15 +64,6 @@ const LoginScreen = () => {
       })
       .catch((error) => alert(error.message));
   };
-
-  // async function getUserInfo() {
-  //   console.log("email", email);
-  //   const userRef = db.collection("user");
-  //   const doc = await userRef.where("email", "==", email).get();
-  //   console.log("DOC", doc);
-  //   const data = doc.docs[0].data();
-  //   console.log("getUserInfo", data);
-  // }
 
   //GOOGLE SIGNIN
   async function signInWithGoogleAsync() {
@@ -101,30 +83,22 @@ const LoginScreen = () => {
         console.log("string userID", userId);
 
         //using UID to find individuals on our Firestore to retrieve their data
-        const userRef = db.collection("user");
-        const doc = await userRef.where("UID", "==", userId).get();
-        // console.log("doc", doc.docs[0]);
+        dispatch(fetchUser(userId));
         //If user exists in our Firestore database
-        if (doc.docs[0] !== undefined) {
-          const data = doc.docs[0].data();
-          console.log("userID", userId);
-          dispatch(fetchUser(userId));
-          console.log("GOOGLE USER", data);
+        if (userInfo) {
+          console.log("retrieved userInfo from Firebase!");
           navigation.replace("Home");
         } else {
           //If user does NOT exist and need to add as a new user
+          //adding new google signed in user to FireStore
           const userData = {
             name: result.user.givenName,
             UID: result.user.id,
             email: result.user.email,
             trip: [],
           };
-
-          //adding new google signed in user to FireStore
-          await db.collection("user").add(userData);
+          dispatch(signupGoogleUser(userData));
         }
-
-        // navigation.replace("Home");
       } else {
         console.log("Permission denied");
       }
@@ -175,11 +149,10 @@ const LoginScreen = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
-          <FontAwesome5.Button
-            title="Log In With Google"
+          <GoogleButton
             onPress={signInWithGoogleAsync}
-            style={styles.googleButton}
-          ></FontAwesome5.Button>
+            title="Sign In with Google"
+          />
         </View>
       </ImageBackground>
     </KeyboardAvoidingView>
