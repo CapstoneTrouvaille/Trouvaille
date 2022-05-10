@@ -43,24 +43,20 @@ export const fetchUser = (userId) => {
 };
 
 
-//This is for base login for firestore
 export const signupUser = (name, email, password) => {
   return async (dispatch) => {
     try {
       const res = await auth.createUserWithEmailAndPassword(email, password);
-      let user;
-      if (res.user.uid) {
-        user = {
-          id: res.user.id,
-          name: name,
-          email: email,
-          password: password,
-          trip: [],
-        };
-      }
-      //does this collection have to be named as singular or plural?
-      db.collection("user").add(user);
-      dispatch(signup(user));
+      
+      const userData = {
+        UID: res.user.uid,
+        name: name,
+        email: email,
+        trip: [],
+      };
+      await db.collection("user").add(userData);
+      dispatch(signup(userData));
+   
     } catch (error) {
       console.log(error);
     }
