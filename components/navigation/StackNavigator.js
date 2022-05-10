@@ -7,6 +7,7 @@ import AddTrip from '../AddTrip'
 import ProfileScreen from '../ProfileScreen';
 import ChatScreen from '../ChatScreen';
 import ExploreScreen from '../ExploreScreen';
+import InviteTripMember from '../InviteTripMember';
 
 
 const Stack = createNativeStackNavigator();
@@ -16,6 +17,7 @@ const HomeStackNavigator = () => {
     <Stack.Navigator screenOptions={{headerBackVisible:true}}>
       <Stack.Screen name = "Home" component = {HomeScreen} />
       <Stack.Screen name = "AddTrip" component = {AddTrip} />
+      <Stack.Screen name ="InviteFriends" component ={InviteTripMember} />
     </Stack.Navigator>
   )
 }

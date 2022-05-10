@@ -17,26 +17,27 @@ export default class App extends Component {
     };
   }
 
- componentDidMount() {
+  componentDidMount() {
     auth.onAuthStateChanged((user) => {
-      if(user) {
-        this.setState({isLoggedIn: true})
+      if (user) {
+        this.setState({ isLoggedIn: true });
       } else {
-        this.setState({ isLoggedIn:false})
+        this.setState({ isLoggedIn: false });
       }
-    })
+    });
   }
 
   render() {
     return (
       <Provider store={store}>
-        <NavigationContainer>
-          {this.state.isLoggedIn? <TabNavigator/> : <InitialNavigator/>}
-        </NavigationContainer>
+        <NativeBaseProvider>
+          <NavigationContainer>
+            {this.state.isLoggedIn ? <TabNavigator /> : <InitialNavigator />}
+          </NavigationContainer>
+        </NativeBaseProvider>
       </Provider>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
