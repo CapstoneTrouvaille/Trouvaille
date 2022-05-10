@@ -1,12 +1,24 @@
 import {
-  KeyboardAvoidingView,
+  //   KeyboardAvoidingView,
   StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  ImageBackground,
+  //   Text,
+  //   View,
+  //   TextInput,
+  //   TouchableOpacity,
+  //   ImageBackground,
 } from "react-native";
+import {
+  ScrollView,
+  Stack,
+  FormControl,
+  Input,
+  Box,
+  Divider,
+  WarningOutlineIcon,
+  Heading,
+  Text,
+  Button,
+} from "native-base";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/core";
 import { useDispatch } from "react-redux";
@@ -23,45 +35,105 @@ const SignUpScreen = () => {
 
   const dispatch = useDispatch();
 
-  //   const handleSignUp = () => {
-  //     // auth
-  //     //   .createUserWithEmailAndPassword(email, password)
-  //     //   .then((userCredentials) => {
-  //     //     const user = userCredentials.user;
-  //     //     console.log(`Registered with: `, user.email);
-  //     //   })
-  //     //   .catch((error) => alert(error.message));
-  //   };
+  //   return (
+  //     <KeyboardAvoidingView style={styles.container} behavior="padding">
+  //       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+  //         <View style={styles.inputContainer}>
+  //           <TextInput
+  //             placeholder="First Name"
+  //             value={name}
+  //             onChangeText={(text) => setName(text)}
+  //             style={styles.input}
+  //           />
 
+  //           <TextInput
+  //             placeholder="Email"
+  //             value={email}
+  //             onChangeText={(text) => setEmail(text)}
+  //             style={styles.input}
+  //           />
+
+  //           <TextInput
+  //             placeholder="Password"
+  //             value={password}
+  //             onChangeText={(text) => setPassword(text)}
+  //             style={styles.input}
+  //             secureTextEntry
+  //           />
+  //         </View>
+
+  //         <View style={styles.buttonContainer}>
+  //           <TouchableOpacity
+  //             onPress={() => {
+  //               if (name != "") {
+  //                 dispatch(signupUser(name, email, password));
+  //               } else {
+  //                 alert("Please fill everything out to register!");
+  //               }
+  //             }}
+  //             style={styles.button}
+  //           >
+  //             <Text style={styles.buttonText}>Sign Up</Text>
+  //           </TouchableOpacity>
+  //         </View>
+  //       </ImageBackground>
+  //     </KeyboardAvoidingView>
+  //   );
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="First Name"
-            value={name}
-            onChangeText={(text) => setName(text)}
-            style={styles.input}
-          />
+    <ScrollView w="100%">
+      <Stack
+        space={2.5}
+        alignSelf="center"
+        px="4"
+        safeArea
+        mt="4"
+        w={{
+          base: "100%",
+          md: "25%",
+        }}
+      >
+        <Box alignItems="center">
+          <Heading size="2xl" mb="4">
+            Create Account
+          </Heading>
+        </Box>
 
-          <TextInput
-            placeholder="Email"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            style={styles.input}
-          />
+        <Box>
+          <Divider mb="8" />
+          <FormControl mb="4">
+            <FormControl.Label>First Name</FormControl.Label>
+            <Input
+              value={name}
+              size="md"
+              placeholder="Enter your first name"
+              onChangeText={(text) => setName(text)}
+            />
+          </FormControl>
 
-          <TextInput
-            placeholder="Password"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            style={styles.input}
-            secureTextEntry
-          />
-        </View>
+          <FormControl mb="4">
+            <FormControl.Label>Email</FormControl.Label>
+            <Input
+              value={email}
+              size="md"
+              placeholder="Enter your email"
+              onChangeText={(text) => setEmail(text)}
+            />
+          </FormControl>
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
+          <FormControl mb="4">
+            <FormControl.Label>Password</FormControl.Label>
+            <Input
+              value={password}
+              size="md"
+              placeholder="Enter make a password"
+              onChangeText={(text) => setPassword(text)}
+            />
+          </FormControl>
+        </Box>
+
+        <Box alignItems="center" mb="6">
+          <Button
+            size="lg"
             onPress={() => {
               if (name != "") {
                 dispatch(signupUser(name, email, password));
@@ -69,57 +141,58 @@ const SignUpScreen = () => {
                 alert("Please fill everything out to register!");
               }
             }}
-            style={styles.button}
           >
-            <Text style={styles.buttonText}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-    </KeyboardAvoidingView>
+            Sign Up
+          </Button>
+        </Box>
+      </Stack>
+    </ScrollView>
   );
 };
 
 export default SignUpScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  inputContainer: {
-    width: "80%",
-  },
-  input: {
-    backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
-  },
-  buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
-  },
-  button: {
-    backgroundColor: "#A267AC",
-    width: "100%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  image: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "100%",
-  },
-});
+const styles = StyleSheet.create({});
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   inputContainer: {
+//     width: "80%",
+//   },
+//   input: {
+//     backgroundColor: "white",
+//     paddingHorizontal: 15,
+//     paddingVertical: 10,
+//     borderRadius: 10,
+//     marginTop: 5,
+//   },
+//   buttonContainer: {
+//     width: "60%",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     marginTop: 40,
+//   },
+//   button: {
+//     backgroundColor: "#A267AC",
+//     width: "100%",
+//     padding: 15,
+//     borderRadius: 10,
+//     alignItems: "center",
+//   },
+//   buttonText: {
+//     color: "white",
+//     fontWeight: "700",
+//     fontSize: 16,
+//   },
+//   image: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     width: "100%",
+//     height: "100%",
+//   },
+// });
