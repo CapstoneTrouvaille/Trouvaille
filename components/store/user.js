@@ -4,7 +4,9 @@ import { db, auth } from "../../firebase";
 //ACTION TYPES
 const GET_USER = "GET_USER";
 const SIGNUP = "SIGNUP";
+
 const SIGNUP_GOOGLE = "SIGNUP_GOOGLE";
+
 
 //ACTION CREATOR
 export const getUser = (user) => ({
@@ -39,6 +41,7 @@ export const fetchUser = (userId) => {
     }
   };
 };
+
 
 //This is for base login for firestore
 export const signupUser = (name, email, password) => {
