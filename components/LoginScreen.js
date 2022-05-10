@@ -12,14 +12,10 @@ import {
 import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
-
 import * as Google from "expo-google-app-auth";
 import { FontAwesome5 } from "@expo/vector-icons";
-
 import { useDispatch } from "react-redux";
 import { fetchUser } from "./store/user";
-
-
 const image = require("../assets/trouvaillehomeback.png");
 const logo = require("../assets/TrouvailleMain.png");
 
@@ -40,12 +36,13 @@ const LoginScreen = () => {
   //this runs when the component mounts, pass in empty array so this only runs onece
   //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
 
+  //***OMIT BC TAB NAV */
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
 
-        navigation.replace("Home");
-        navigation.replace("Tabs")
+        // navigation.replace("Home");
+        // navigation.replace("Tabs")
 
       }
     });
