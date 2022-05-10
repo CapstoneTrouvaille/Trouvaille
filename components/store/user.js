@@ -5,6 +5,9 @@ import { db, auth } from "../../firebase";
 const GET_USER = "GET_USER";
 const SIGNUP = "SIGNUP";
 
+const SIGNUP_GOOGLE = "SIGNUP_GOOGLE";
+
+
 //ACTION CREATOR
 export const getUser = (user) => ({
   type: GET_USER,
@@ -16,16 +19,21 @@ export const signup = (user) => ({
   user,
 });
 
+export const signupGoogle = (user) => ({
+  type: SIGNUP_GOOGLE,
+  user,
+});
+
 //THUNK
-export const fetchUser = () => {
+export const fetchUser = (userId) => {
   return async (dispatch) => {
     try {
-      const userRef = db.collection("user").doc("HverH3BQtzK50kfLORNK");
-      const doc = await userRef.get();
-      if (!doc.exists) {
+      const userRef = db.collection("user");
+      const doc = await userRef.where("UID", "==", userId || "").get();
+      if (!doc.docs[0]) {
         console.log("No such document!");
       } else {
-        const data = doc.data();
+        const data = doc.docs[0].data();
         dispatch(getUser(data));
       }
     } catch (error) {
@@ -34,45 +42,34 @@ export const fetchUser = () => {
   };
 };
 
-//danbee's firestore code
-// const userData = {
-//   name: result.user.givenName,
-//   UID: result.user.id,
-//   email: result.user.email,
-//   trip: [],
-// };
 
-// //adding new google signed in user to FireStore
-// await db.collection("user").add(userData);
-// }
 export const signupUser = (name, email, password) => {
   return async (dispatch) => {
     try {
       const res = await auth.createUserWithEmailAndPassword(email, password);
-      // let user;
-      // if (res.user.uid) {
-      //   user = {
-      //     id: res.user.id,
-      //     name: name,
-      //     email: email,
-      //     password: password,
-      //     trip: [],
-      //   };
-      // }
-      // //does this collection have to be named as singular or plural?
-      // db.collection("users").doc(res.user.uid).set(user);
-      // dispatch(signup(res.user));
-      console.log("res", res);
+      
       const userData = {
         UID: res.user.uid,
         name: name,
         email: email,
         trip: [],
       };
-      console.log("userData", userData);
-      //does this collection have to be named as singular or plural?
       await db.collection("user").add(userData);
       dispatch(signup(userData));
+   
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+//This is for firestore for google users
+export const signupGoogleUser = (userData) => {
+  return async (dispatch) => {
+    try {
+      await db.collection("user").add(userData);
+      console.log("new google user added to firestore", userData);
+      dispatch(signupGoogle(userData));
     } catch (error) {
       console.log(error);
     }
@@ -85,6 +82,8 @@ export default function user(state = {}, action) {
     case GET_USER:
       return action.user;
     case SIGNUP:
+      return action.user;
+    case SIGNUP_GOOGLE:
       return action.user;
     default:
       return state;

@@ -10,7 +10,6 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@react-native-google-signin/google-signin": "^7.2.2",
     "@expo-google-fonts/roboto": "^0.2.2",
     "@expo/vector-icons": "^12.0.0",
     "@react-navigation/bottom-tabs": "^6.3.1",
@@ -28,7 +27,9 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
+    "react-native-google-button": "^0.1.0",
     "react-native-ionicons": "^4.6.5",
+    "react-native-neat-date-picker": "^1.2.2",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
     "react-native-vector-icons": "^9.1.0",
