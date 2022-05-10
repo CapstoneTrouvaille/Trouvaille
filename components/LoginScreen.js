@@ -16,8 +16,12 @@ import { useNavigation } from "@react-navigation/core";
 import * as Google from "expo-google-app-auth";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-import { useDispatch } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "./store/user";
+
+import { signupGoogleUser } from "./store";
+import GoogleButton from "react-native-google-button/src";
 
 
 const image = require("../assets/trouvaillehomeback.png");
@@ -31,7 +35,9 @@ const LoginScreen = () => {
 
   //GOOGLE
   const [accessToken, setAccessToken] = useState();
-  const [userInfo, setUserInfo] = useState();
+  const userInfo = useSelector((state) => state.user);
+  console.log("userinfo from firestore", userInfo);
+  const dispatch = useDispatch();
 
   const dispatch = useDispatch();
 
@@ -43,34 +49,24 @@ const LoginScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-
+        const { currentUser } = auth;
+        console.log("Currently logged in user", currentUser);
+        //getting userInfo from store
+        dispatch(fetchUser(currentUser.uid));
         navigation.replace("Home");
-        navigation.replace("Tabs")
-
+        navigation.replace("Tabs");
       }
     });
     return unsubscribe;
     //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
   }, []);
 
-
-  // const handleSignUp = () => {
-  //   auth
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then((userCredentials) => {
-  //       const user = userCredentials.user;
-  //       console.log(`Registered with: `, user.email);
-  //     })
-  //     .catch((error) => alert(error.message));
-  // };
-
-
   const handleLogin = () => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log(`Logged in with: `, user.email);
+        console.log(`Logged in with: `, user);
       })
       .catch((error) => alert(error.message));
   };
@@ -89,35 +85,31 @@ const LoginScreen = () => {
       if (result.type === "success") {
         setAccessToken(result.accessToken);
         console.log("login with google success!");
-        navigation.replace("Home");
+        const userId = String(result.user.id);
+        console.log("string userID", userId);
+
+        //using UID to find individuals on our Firestore to retrieve their data
+        dispatch(fetchUser(userId));
+        //If user exists in our Firestore database
+        if (userInfo) {
+          console.log("retrieved userInfo from Firebase!");
+          navigation.replace("Home");
+        } else {
+          //If user does NOT exist and need to add as a new user
+          //adding new google signed in user to FireStore
+          const userData = {
+            name: result.user.givenName,
+            UID: result.user.id,
+            email: result.user.email,
+            trip: [],
+          };
+          dispatch(signupGoogleUser(userData));
+        }
       } else {
         console.log("Permission denied");
       }
     } catch (error) {
       console.log(error);
-    }
-  }
-
-  async function getUserData() {
-    let userInfoResponse = await fetch(
-      "https://www.googleapis.com/userinfo/v2/me",
-      { headers: { Authorization: `Bearer ${accessToken}` } }
-    );
-
-    userInfoResponse.json().then((data) => {
-      setUserInfo(data);
-      console.log("data", data);
-    });
-  }
-  function showUserInfo() {
-    if (userInfo) {
-      return (
-        <View style={styles.userInfo}>
-          <Image source={{ uri: userInfo.picture }} style={styles.profilePic} />
-          <Text>Welcome {userInfo.name}</Text>
-          <Text>{userInfo.email}</Text>
-        </View>
-      );
     }
   }
 
@@ -163,12 +155,10 @@ const LoginScreen = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
-          {showUserInfo()}
-          <FontAwesome5.Button
-            title={accessToken ? "Get User Data" : "Log In With Google"}
-            onPress={accessToken ? getUserData : signInWithGoogleAsync}
-            style={styles.googleButton}
-          ></FontAwesome5.Button>
+          <GoogleButton
+            onPress={signInWithGoogleAsync}
+            title="Sign In with Google"
+          />
         </View>
       </ImageBackground>
     </KeyboardAvoidingView>
@@ -176,6 +166,8 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
+
+// title={accessToken ? "Get User Data" : "Log In With Google"}
 
 const styles = StyleSheet.create({
   container: {

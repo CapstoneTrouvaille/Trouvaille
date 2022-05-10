@@ -9,7 +9,12 @@ import AddTrip from "./AddTrip";
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+
   const userInfo = useSelector((state) => state.user);
+  console.log("userINFO", userInfo);
+  // console.log("userINFO", userInfo);
+
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -27,14 +32,13 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <Text>Welcome!</Text>
-      {/* <Text>Welcome, {userInfo.name}</Text> */}
-      <Text>Email: {auth.currentUser.email}</Text>
+
+      <Text>Welcome, {userInfo.name}</Text>
       <TouchableOpacity
         onPress={() => navigation.navigate("Add a trip")}
         style={styles.button}
-      >
-        <Text style={styles.buttonText}>Add a Trip</Text>
-      </TouchableOpacity>
+      ></TouchableOpacity>
+      <Text style={styles.buttonText}>Add a Trip</Text>
       <TouchableOpacity onPress={handleSignOut} style={styles.button}>
         <Text style={styles.buttonText}>Sign out</Text>
       </TouchableOpacity>
