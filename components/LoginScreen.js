@@ -34,8 +34,6 @@ const LoginScreen = () => {
   console.log("userinfo from firestore", userInfo);
   const dispatch = useDispatch();
 
-  const dispatch = useDispatch();
-
 
   //listens to firebase to see if the user is logged in, then do something if the user is logged in
   //this runs when the component mounts, pass in empty array so this only runs onece

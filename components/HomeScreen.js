@@ -78,14 +78,14 @@ const HomeScreen = () => {
             <Button
               size="lg"
               mb="6"
-              onPress={() => navigation.navigate("Add a trip")}
+              onPress={() => navigation.navigate("AddTrip")}
             >
               Add a Trip
             </Button>
             <Button
               size="lg"
               mb="6"
-              onPress={() => navigation.navigate("Invite friends")}
+              onPress={() => navigation.navigate("InviteFriends")}
             >
               Invite Friends
             </Button>
