@@ -23,7 +23,7 @@ export const fetchUser = () => {
       const userRef = db.collection("user").doc("HverH3BQtzK50kfLORNK");
       const doc = await userRef.get();
       if (!doc.exists) {
-        console.log("No such document!");
+        console.log("Could not fetch user!");
       } else {
         const data = doc.data();
         dispatch(getUser(data));

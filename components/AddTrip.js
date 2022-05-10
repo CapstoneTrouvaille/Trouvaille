@@ -1,136 +1,162 @@
+import { StyleSheet, View } from "react-native";
+import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
+  ScrollView,
+  Stack,
+  FormControl,
+  Input,
+  Box,
+  Divider,
+  WarningOutlineIcon,
+  Heading,
   Text,
-  View,
-  SafeAreaView,
   Button,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
-import React from "react";
-import { Formik } from "formik";
+  DatePicker,
+} from "native-base";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { auth } from "../firebase";
+import { useDispatch } from "react-redux";
+import { addTrip } from "./store/trip";
+import { setStatusBarBackgroundColor } from "expo-status-bar";
+import { useNavigation } from "@react-navigation/core";
+import InviteTripMember from "./InviteTripMember";
 
 const AddTrip = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
+
+  const [tripName, setTripName] = useState("");
+  const [location, setLocation] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode("date");
+  };
+
+  const handleSubmit = () => {
+    const newTripInfo = {
+      tripName,
+      location,
+      startDate,
+      endDate,
+      status: "planning",
+      tripLead: auth.currentUser.uid,
+      users: [auth.currentUser.uid],
+      tripMemories: [],
+    };
+    console.log(`Get Planning! clicked:`, newTripInfo);
+    dispatch(addTrip(newTripInfo));
+    navigation.replace("Invite friends");
+  };
+
+  useEffect(() => {
+    console.log(`Use effect unmount started.`);
+    return () => {
+      setTripName("");
+      setLocation("");
+      setStartDate("");
+      setEndDate("");
+    };
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>Where to next</Text>
-      <Formik
-        initialValues={{
-          tripName: "",
-          location: "",
-          startDate: "",
-          endDate: "",
+    <ScrollView w="100%">
+      <Stack
+        space={2.5}
+        alignSelf="center"
+        px="4"
+        safeArea
+        mt="4"
+        w={{
+          base: "100%",
+          md: "25%",
         }}
-        onSubmit={(values) => console.log(values)}
       >
-        {({ handleChange, handleSubmit }) => (
-          <>
-            <Text style={styles.inputText}>Trip Name</Text>
-            <TextInput
-              maxLength={50}
-              keyboardType="ascii-capable"
-              clearButtonMode="always"
-              onChangeText={handleChange("tripName")}
-              placeholder="Enter trip name"
-              style={[styles.inputContainer, styles.input]}
+        <Box alignItems="center">
+          <Heading size="2xl" mb="4">
+            Where to Next?
+          </Heading>
+          <Text alignItems="center" fontSize="xs">
+            Name your trip, choose a destination, select the dates and Get
+            Planning! After you create a trip you can invite your friends and
+            get to coordinating!
+          </Text>
+        </Box>
+        <Box>
+          <Divider mb="8" />
+          <FormControl mb="4">
+            <FormControl.Label>Trip Name</FormControl.Label>
+            <Input
+              value={tripName}
+              size="md"
+              placeholder="Enter your trip name. Make it fun!"
+              onChangeText={(text) => setTripName(text)}
             />
-            <Text style={styles.inputText}>Location</Text>
-            <TextInput
-              maxLength={50}
-              keyboardType="ascii-capable"
-              clearButtonMode="always"
-              onChangeText={handleChange("location")}
-              placeholder="Location"
-              style={[styles.inputContainer, styles.input]}
+          </FormControl>
+          <FormControl mb="4">
+            <FormControl.Label>Location</FormControl.Label>
+            <Input
+              value={location}
+              size="md"
+              placeholder="Enter the destination"
+              onChangeText={(text) => setLocation(text)}
             />
-            <Text style={styles.inputText}>Trip start date</Text>
-            <TextInput
-              maxLength={50}
-              keyboardType="ascii-capable"
-              clearButtonMode="always"
-              onChangeText={handleChange("location")}
-              placeholder="MM/DD/YY"
-              style={[styles.inputContainer, styles.input]}
+          </FormControl>
+          <FormControl mb="4">
+            <FormControl.Label>Trip start date</FormControl.Label>
+            <Input
+              value={startDate}
+              size="md"
+              placeholder="Enter trip start date"
+              onChangeText={(text) => setStartDate(text)}
             />
-            <Text style={styles.inputText}>Trip end date</Text>
-            <TextInput
-              maxLength={50}
-              keyboardType="ascii-capable"
-              clearButtonMode="always"
-              onChangeText={handleChange("location")}
-              placeholder="MM/DD/YY"
-              style={[styles.inputContainer, styles.input]}
+          </FormControl>
+          <FormControl mb="4">
+            <FormControl.Label>Trip end date</FormControl.Label>
+            <Input
+              value={endDate}
+              size="md"
+              placeholder="Enter trip end date"
+              onChangeText={(text) => setEndDate(text)}
             />
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                <Text style={styles.buttonText}>Get Planning!</Text>
-              </TouchableOpacity>
-            </View>
-          </>
-        )}
-      </Formik>
-    </View>
+          </FormControl>
+          <FormControl mb="4">
+            <FormControl.Label>Trip end date 2</FormControl.Label>
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode="date"
+              is24Hour={true}
+              onChange={onChange}
+            />
+          </FormControl>
+        </Box>
+        <Box alignItems="center" mb="6">
+          <Button size="lg" onPress={handleSubmit}>
+            Get Planning!
+          </Button>
+        </Box>
+      </Stack>
+    </ScrollView>
   );
 };
 
 export default AddTrip;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#E9DAC4",
-  },
-  inputContainer: {
-    width: "80%",
-  },
-  inputText: {
-    textAlign: "left",
-  },
-  input: {
-    backgroundColor: "white",
-    paddingHorizontal: 25,
-    paddingVertical: 15,
-    borderRadius: 10,
-    marginTop: 5,
-    marginBottom: 15,
-  },
-  buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 30,
-  },
-  button: {
-    backgroundColor: "#483D8B",
-    width: "100%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    marginTop: 15,
-  },
-  buttonOutline: {
-    backgroundColor: "white",
-    marginTop: 5,
-    borderColor: "#483D8B",
-    borderWidth: 2,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: "#483D8B",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  image: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "100%",
-  },
-});
+const styles = StyleSheet.create({});
