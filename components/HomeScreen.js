@@ -23,9 +23,10 @@ const HomeScreen = () => {
   const handleSignOut = () => {
     auth
       .signOut()
-      .then(() => {
-        navigation.replace("Login");
-      })
+      //*** OMIT BC TAB NAV */
+      // .then(() => {
+      //   navigation.replace("Login");
+      // })
       .catch((error) => alert(error.message));
   };
 
@@ -35,7 +36,7 @@ const HomeScreen = () => {
 
       <Text>Welcome, {userInfo.name}</Text>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Add a trip")}
+        onPress={() => navigation.navigate("AddTrip")}
         style={styles.button}
       ></TouchableOpacity>
       <Text style={styles.buttonText}>Add a Trip</Text>

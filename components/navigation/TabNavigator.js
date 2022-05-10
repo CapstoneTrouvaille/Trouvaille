@@ -3,45 +3,42 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-//Screens
-import HomeScreen from "./HomeScreen";
-import ProfileScreen from "./ProfileScreen";
-import ExploreScreen from "./ExploreScreen";
-import ChatScreen from "./ChatScreen";
-
-//Screen names
-const homeName = "Home";
-const chatName = "Chat";
-const exploreName = "Explore";
-const profileName = "Profile";
+//Screen Stacks
+import {
+  ChatStackNavigator,
+  ExploreStackNavigator,
+  HomeStackNavigator,
+  ProfileStackNavigator,
+} from "./StackNavigator";
 
 const Tab = createBottomTabNavigator();
 
-const Tabs = () => {
+const TabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName={homeName}
+      initialRouteName="HomeTab"
       screenOptions={({ route }) => ({
+        unmountOnBlur:true,
         tabBarShowLabel: false,
         tabBarActiveTintColor: "#BABFE0",
         tabBarInactiveTintColor: "#BABFE0",
         tabBarStyle: {
           padding: 10,
-          height:70
+          height: 70,
         },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           let rn = route.name;
 
-          if (rn === homeName) {
+          if (rn === "HomeTab") {
             iconName = focused ? "home" : "home-outline";
-          } else if (rn === chatName) {
+          } else if (rn === "ChatTab") {
             iconName = focused
               ? "chatbubble-ellipses-sharp"
               : "chatbubble-ellipses-outline";
-          } else if (rn === exploreName) {
+          } else if (rn === "ExploreTab") {
             iconName = focused ? "search-circle" : "search-circle-outline";
-          } else if (rn === profileName) {
+          } else if (rn === "ProfileTab") {
             iconName = focused ? "person-circle" : "person-circle-outline";
           }
 
@@ -49,12 +46,14 @@ const Tabs = () => {
         },
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Chat" component={ChatScreen} />
-      <Tab.Screen name="Explore" component={ExploreScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="HomeTab" component={HomeStackNavigator} />
+      <Tab.Screen name="ChatTab" component={ChatStackNavigator} />
+      <Tab.Screen name="ExploreTab" component={ExploreStackNavigator} />
+      <Tab.Screen name="ProfileTab" component={ProfileStackNavigator} />
     </Tab.Navigator>
   );
 };
 
-export default Tabs;
+export default TabNavigator;
+
+const styles = StyleSheet.create({});
