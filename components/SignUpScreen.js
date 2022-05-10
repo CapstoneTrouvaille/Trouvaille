@@ -43,12 +43,14 @@ const SignUpScreen = () => {
             onChangeText={(text) => setName(text)}
             style={styles.input}
           />
+
           <TextInput
             placeholder="Email"
             value={email}
             onChangeText={(text) => setEmail(text)}
             style={styles.input}
           />
+
           <TextInput
             placeholder="Password"
             value={password}
@@ -60,7 +62,13 @@ const SignUpScreen = () => {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={() => dispatch(signupUser(name, email, password))}
+            onPress={() => {
+              if (name != "") {
+                dispatch(signupUser(name, email, password));
+              } else {
+                alert("Please fill everything out to register!");
+              }
+            }}
             style={styles.button}
           >
             <Text style={styles.buttonText}>Sign Up</Text>

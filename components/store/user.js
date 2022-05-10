@@ -34,23 +34,45 @@ export const fetchUser = () => {
   };
 };
 
+//danbee's firestore code
+// const userData = {
+//   name: result.user.givenName,
+//   UID: result.user.id,
+//   email: result.user.email,
+//   trip: [],
+// };
+
+// //adding new google signed in user to FireStore
+// await db.collection("user").add(userData);
+// }
 export const signupUser = (name, email, password) => {
   return async (dispatch) => {
     try {
       const res = await auth.createUserWithEmailAndPassword(email, password);
-      let user;
-      if (res.user.uid) {
-        user = {
-          id: res.user.id,
-          name: name,
-          email: email,
-          password: password,
-          trip: [],
-        };
-      }
+      // let user;
+      // if (res.user.uid) {
+      //   user = {
+      //     id: res.user.id,
+      //     name: name,
+      //     email: email,
+      //     password: password,
+      //     trip: [],
+      //   };
+      // }
+      // //does this collection have to be named as singular or plural?
+      // db.collection("users").doc(res.user.uid).set(user);
+      // dispatch(signup(res.user));
+      console.log("res", res);
+      const userData = {
+        UID: res.user.uid,
+        name: name,
+        email: email,
+        trip: [],
+      };
+      console.log("userData", userData);
       //does this collection have to be named as singular or plural?
-      db.collection("users").doc(res.user.uid).set(user);
-      dispatch(signup(res.user));
+      await db.collection("user").add(userData);
+      dispatch(signup(userData));
     } catch (error) {
       console.log(error);
     }
