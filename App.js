@@ -1,12 +1,13 @@
-import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { NativeBaseProvider, Text, Box } from "native-base";
 import store from "./components/store";
 import { Provider } from "react-redux";
 import TabNavigator from "./components/navigation/TabNavigator";
 import InitialNavigator from "./components/navigation/InitialNavigator";
 import { auth } from "./firebase";
+import InviteTripMember from "./components/InviteTripMember";
 
 export default class App extends Component {
   constructor() {
@@ -16,7 +17,7 @@ export default class App extends Component {
     };
   }
 
-  componentDidMount() {
+ componentDidMount() {
     auth.onAuthStateChanged((user) => {
       if(user) {
         this.setState({isLoggedIn: true})
@@ -35,6 +36,7 @@ export default class App extends Component {
       </Provider>
     );
   }
+
 }
 
 const styles = StyleSheet.create({

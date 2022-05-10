@@ -31,7 +31,7 @@ export const fetchUser = (userId) => {
       const userRef = db.collection("user");
       const doc = await userRef.where("UID", "==", userId || "").get();
       if (!doc.docs[0]) {
-        console.log("No such document!");
+        console.log("Cound not fetch user!");
       } else {
         const data = doc.docs[0].data();
         dispatch(getUser(data));
