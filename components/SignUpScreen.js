@@ -12,6 +12,7 @@ import {
   Stack,
   FormControl,
   Input,
+  Icon,
   Box,
   Divider,
   WarningOutlineIcon,
@@ -23,6 +24,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/core";
 import { useDispatch } from "react-redux";
 import { signupUser } from "./store/user";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const image = require("../assets/trouvaillehomeback.png");
 
@@ -30,6 +32,7 @@ const SignUpScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [show, setShow] = useState("");
 
   const navigation = useNavigation();
 
@@ -103,29 +106,86 @@ const SignUpScreen = () => {
           <FormControl mb="4">
             <FormControl.Label>First Name</FormControl.Label>
             <Input
+              w={{
+                base: "75%",
+                md: "25%",
+              }}
+              InputLeftElement={
+                <Icon
+                  as={<MaterialIcons name="person" />}
+                  size={5}
+                  ml="2"
+                  color="muted.400"
+                />
+              }
+              value={name}
+              onChangeText={(text) => setName(text)}
+              placeholder="Name"
+            />
+            {/* <Input
               value={name}
               size="md"
               placeholder="Enter your first name"
               onChangeText={(text) => setName(text)}
-            />
+            /> */}
           </FormControl>
 
           <FormControl mb="4">
             <FormControl.Label>Email</FormControl.Label>
             <Input
+              w={{
+                base: "75%",
+                md: "25%",
+              }}
+              InputLeftElement={
+                <Icon
+                  as={<MaterialIcons name="email" />}
+                  size={5}
+                  ml="2"
+                  color="muted.400"
+                />
+              }
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+              placeholder="Email"
+            />
+            {/* <Input
               value={email}
               size="md"
               placeholder="Enter your email"
               onChangeText={(text) => setEmail(text)}
-            />
+            /> */}
           </FormControl>
 
           <FormControl mb="4">
             <FormControl.Label>Password</FormControl.Label>
-            <Input
+            {/* <Input
               value={password}
               size="md"
               placeholder="Enter make a password"
+              onChangeText={(text) => setPassword(text)}
+            /> */}
+            <Input
+              w={{
+                base: "75%",
+                md: "25%",
+              }}
+              type={show ? "text" : "password"}
+              InputRightElement={
+                <Icon
+                  as={
+                    <MaterialIcons
+                      name={show ? "visibility" : "visibility-off"}
+                    />
+                  }
+                  size={5}
+                  mr="2"
+                  color="muted.400"
+                  onPress={() => setShow(!show)}
+                />
+              }
+              value={password}
+              placeholder="Password"
               onChangeText={(text) => setPassword(text)}
             />
           </FormControl>
