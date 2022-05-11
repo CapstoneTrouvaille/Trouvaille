@@ -34,13 +34,16 @@ import { TabView, SceneMap } from "react-native-tab-view";
 import CurrentTripScreen from "./CurrentTripScreen";
 import PastTripsScreen from "./PastTripsScreen";
 
-
 //ROUTES FOR MIDDLE TAB
 const FirstRoute = () => (
-  <Center><CurrentTripScreen/></Center>
+  <Center>
+    <CurrentTripScreen />
+  </Center>
 );
 const SecondRoute = () => (
-  <Center><PastTripsScreen/></Center>
+  <Center>
+    <PastTripsScreen />
+  </Center>
 );
 const initialLayout = {
   width: Dimensions.get("window").width,
@@ -49,8 +52,6 @@ const renderScene = SceneMap({
   first: FirstRoute,
   second: SecondRoute,
 });
-
-
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -73,7 +74,6 @@ const HomeScreen = () => {
       // })
       .catch((error) => alert(error.message));
   };
-
 
   //MIDDLE TAB
   const [index, setIndex] = React.useState(0);
@@ -182,22 +182,33 @@ const HomeScreen = () => {
           marginTop: StatusBar.currentHeight,
         }}
       />
-
-      <Box alignItems="center" mb="6">
-        <Button size="lg" mb="6" onPress={() => navigation.navigate("AddTrip")}>
-          Add a Trip
-        </Button>
-        <Button
-          size="lg"
-          mb="6"
-          onPress={() => navigation.navigate("InviteFriends")}
-        >
-          Invite Friends
-        </Button>
-        <Button size="lg" mb="6" onPress={handleSignOut}>
-          Sign Out
-        </Button>
-      </Box>
+      <Center>
+        <Stack direction="row" mb="2.5" mt="1.5" space={3}>
+          <Center>
+            <Button
+              size="lg"
+              mb="6"
+              onPress={() => navigation.navigate("AddTrip")}
+            >
+              Add a Trip
+            </Button>
+          </Center>
+          <Center>
+            <Button
+              size="lg"
+              mb="6"
+              onPress={() => navigation.navigate("InviteFriends")}
+            >
+              Invite Friends
+            </Button>
+          </Center>
+          <Center>
+            <Button size="lg" mb="6" onPress={handleSignOut}>
+              Sign Out
+            </Button>
+          </Center>
+        </Stack>
+      </Center>
     </>
   );
 };
