@@ -21,15 +21,14 @@ import {
   Avatar,
 } from "native-base";
 
+
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-
   const userInfo = useSelector((state) => state.user);
   console.log("userINFO", userInfo);
   // console.log("userINFO", userInfo);
-
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -74,6 +73,7 @@ const HomeScreen = () => {
           </Heading>
           <Text>Email: {auth.currentUser.email}</Text>
           <Divider mb="8" />
+
           <Box alignItems="center" mb="6">
             <Button
               size="lg"

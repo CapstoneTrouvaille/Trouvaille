@@ -85,7 +85,7 @@ const LoginScreen = () => {
         //If user exists in our Firestore database
         if (userInfo) {
           console.log("retrieved userInfo from Firebase!");
-          navigation.replace("Home");
+          // navigation.navigate("Home");
         } else {
           //If user does NOT exist and need to add as a new user
           //adding new google signed in user to FireStore
