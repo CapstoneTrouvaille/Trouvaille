@@ -27,13 +27,11 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
-
   //GOOGLE
   const [accessToken, setAccessToken] = useState();
   const userInfo = useSelector((state) => state.user);
   console.log("userinfo from firestore", userInfo);
   const dispatch = useDispatch();
-
 
   //listens to firebase to see if the user is logged in, then do something if the user is logged in
   //this runs when the component mounts, pass in empty array so this only runs onece
@@ -85,7 +83,11 @@ const LoginScreen = () => {
         //If user exists in our Firestore database
         if (userInfo) {
           console.log("retrieved userInfo from Firebase!");
+<<<<<<< HEAD
           // navigation.navigate("Home");
+=======
+          // navigation.replace("Home");
+>>>>>>> main
         } else {
           //If user does NOT exist and need to add as a new user
           //adding new google signed in user to FireStore
