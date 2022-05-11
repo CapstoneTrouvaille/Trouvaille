@@ -25,14 +25,16 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-
   const userInfo = useSelector((state) => state.user);
   console.log("userINFO", userInfo);
   // console.log("userINFO", userInfo);
 
-
   useEffect(() => {
     dispatch(fetchUser());
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchTrips());
   }, []);
 
   const handleSignOut = () => {
