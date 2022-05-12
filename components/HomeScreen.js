@@ -20,6 +20,8 @@ import {
   DatePicker,
   Avatar,
 } from "native-base";
+import { signOut } from "firebase/auth";
+import { logoutUser } from "./store";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -31,6 +33,9 @@ const HomeScreen = () => {
 
   useEffect(() => {
     dispatch(fetchUser());
+    // return () => {
+    //   dispatch(getUser());
+    // };
   }, []);
 
   useEffect(() => {
@@ -38,12 +43,13 @@ const HomeScreen = () => {
   }, []);
 
   const handleSignOut = () => {
-    auth
-      .signOut()
+    dispatch(logoutUser());
+    // console.log("userinfo should be empty", userInfo);
+    signOut(auth)
       //*** OMIT BC TAB NAV */
-      // .then(() => {
-      //   navigation.replace("Login");
-      // })
+      .then(() => {
+        console.log("user signed out");
+      })
       .catch((error) => alert(error.message));
   };
 
@@ -72,9 +78,9 @@ const HomeScreen = () => {
             RB
           </Avatar>
           <Heading size="xl" mb="4">
-            {auth.currentUser.displayName}'s Trip Dashboard
+            {userInfo.name}'s Trip Dashboard
           </Heading>
-          <Text>Email: {auth.currentUser.email}</Text>
+          <Text>Email: {userInfo.email}</Text>
           <Divider mb="8" />
           <Box alignItems="center" mb="6">
             <Button
