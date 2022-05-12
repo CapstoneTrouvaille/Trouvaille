@@ -3,10 +3,12 @@ import thunkMiddleware from "redux-thunk";
 import { createStore, applyMiddleware } from "redux";
 import user from "./user";
 import trip from "./trip";
+import places from "./places";
 
 const rootReducer = combineReducers({
   user,
   trip,
+  places
 });
 
 const middleware = applyMiddleware(thunkMiddleware);
