@@ -72,7 +72,7 @@ const HomeScreen = () => {
             RB
           </Avatar>
           <Heading size="xl" mb="4">
-            {userInfo.name}'s Trip Dashboard
+            {auth.currentUser.displayName}'s Trip Dashboard
           </Heading>
           <Text>Email: {auth.currentUser.email}</Text>
           <Divider mb="8" />
@@ -83,6 +83,13 @@ const HomeScreen = () => {
               onPress={() => navigation.navigate("AddTrip")}
             >
               Add a Trip
+            </Button>
+            <Button
+              size="lg"
+              mb="6"
+              onPress={() => navigation.navigate("SingleTrip")}
+            >
+              Single Trip View
             </Button>
             <Button
               size="lg"

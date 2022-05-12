@@ -1,11 +1,8 @@
-import { doc, getDoc } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 
 //ACTION TYPES
 const GET_USER = "GET_USER";
 const SIGNUP = "SIGNUP";
-
-const SIGNUP_GOOGLE = "SIGNUP_GOOGLE";
 
 
 //ACTION CREATOR
@@ -16,11 +13,6 @@ export const getUser = (user) => ({
 
 export const signup = (user) => ({
   type: SIGNUP,
-  user,
-});
-
-export const signupGoogle = (user) => ({
-  type: SIGNUP_GOOGLE,
   user,
 });
 
@@ -42,12 +34,10 @@ export const fetchUser = (userId) => {
   };
 };
 
-
 export const signupUser = (name, email, password) => {
   return async (dispatch) => {
     try {
       const res = await auth.createUserWithEmailAndPassword(email, password);
-      
       const userData = {
         UID: res.user.uid,
         name: name,
@@ -56,25 +46,12 @@ export const signupUser = (name, email, password) => {
       };
       await db.collection("user").add(userData);
       dispatch(signup(userData));
-   
     } catch (error) {
       console.log(error);
     }
   };
 };
 
-//This is for firestore for google users
-export const signupGoogleUser = (userData) => {
-  return async (dispatch) => {
-    try {
-      await db.collection("user").add(userData);
-      console.log("new google user added to firestore", userData);
-      dispatch(signupGoogle(userData));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
 
 //REDUCER
 export default function user(state = {}, action) {
@@ -82,8 +59,6 @@ export default function user(state = {}, action) {
     case GET_USER:
       return action.user;
     case SIGNUP:
-      return action.user;
-    case SIGNUP_GOOGLE:
       return action.user;
     default:
       return state;

@@ -11,12 +11,15 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 import { useNavigation } from "@react-navigation/core";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 //ACTION TYPES
 const GET_TRIPS = "GET_TRIPS";
 const ADD_TRIP_REQUEST = "ADD_TRIP_REQUEST";
 const ADD_TRIP_SUCCESS = "ADD_TRIP_SUCCESS";
 const ADD_TRIP_FAIL = "ADD_TRIP_FAIL";
+const SINGLE_TRIP = "SINGLE_TRIP";
+
 
 //ACTION CREATOR
 export const _getTrips = (trips) => ({
@@ -44,8 +47,32 @@ export const _set_active_trip = (tripId) => ({
   type: SET_ACTIVE_TRIP,
   tripId,
 });
+export const getSingleTrip = (trip) => ({
+  type: SINGLE_TRIP,
+  trip,
+});
 
 //THUNK
+export const fetchSingleTrip = (tripId) => {
+  return async (dispatch) => {
+    try {
+      console.log(`UUID from fetchTrips:`, auth.currentUser.uid);
+      const tripRef = db.collection("trips").doc(tripId);
+      const doc = await tripRef.get();
+      if (!doc.exists) {
+        console.log("No such document!");
+      } else {
+        const data = doc.data();
+        console.log("Document data:", data);
+        dispatch(getSingleTrip(data));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+
 export const fetchTrips = () => {
   return async (dispatch) => {
     try {
@@ -54,7 +81,7 @@ export const fetchTrips = () => {
         .collection("trips")
         .where("users", "array-contains", auth.currentUser.uid)
         .get();
-      // console.log(`FetchTrips: This is the users trips:`, userTrips.docs);
+      console.log(`FetchTrips: This is the users trips:`, userTrips.docs);
       // if (!userTrips.length) {
       //   console.log("You have no trips!");
       // } else {
@@ -65,6 +92,7 @@ export const fetchTrips = () => {
     }
   };
 };
+
 
 export const addTrip = (newTripInfo) => {
   return async (dispatch) => {
@@ -85,7 +113,6 @@ export const addTrip = (newTripInfo) => {
       await updateDoc(userReference, {
         trip: arrayUnion(addedTrip.id),
       });
-
       dispatch(_addTripSuccess(addedTrip));
     } catch (error) {
       dispatch(_addTripFail(error));
@@ -105,6 +132,8 @@ export default function trip(state = {}, action) {
       return { ...state, loadingAdd: false, trips: action.newTrip };
     case ADD_TRIP_FAIL:
       return { ...state, loadingAdd: false, errorAdd: action.errorAdd };
+    case SINGLE_TRIP:
+      return action.trip;
     default:
       return state;
   }
