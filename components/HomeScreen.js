@@ -25,11 +25,9 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-
   const userInfo = useSelector((state) => state.user);
   console.log("userINFO", userInfo);
   // console.log("userINFO", userInfo);
-
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -70,7 +68,7 @@ const HomeScreen = () => {
             RB
           </Avatar>
           <Heading size="xl" mb="4">
-            {userInfo.name}'s Trip Dashboard
+            {auth.currentUser.displayName}'s Trip Dashboard
           </Heading>
           <Text>Email: {auth.currentUser.email}</Text>
           <Divider mb="8" />
