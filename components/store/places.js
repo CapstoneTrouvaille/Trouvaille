@@ -28,8 +28,7 @@ export const getLocationId = async (locationInput) => {
         },
         headers: {
           "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
-          "X-RapidAPI-Key":
-            "61deca7304msh88be34d763afafdp120af6jsnef5a29b6ce65",
+          "X-RapidAPI-Key":process.env.RAPID_API_TRIP_ADVISOR_KEY,
         },
       }
     );
@@ -57,8 +56,7 @@ export const getPlaces = (locationInput) => {
           },
           headers: {
             "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
-            "X-RapidAPI-Key":
-              "61deca7304msh88be34d763afafdp120af6jsnef5a29b6ce65",
+            "X-RapidAPI-Key": process.env.RAPID_API_TRIP_ADVISOR_KEY
           },
         }
       );
