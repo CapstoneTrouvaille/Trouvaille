@@ -10,14 +10,12 @@ import {
   Button,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import { auth } from "../firebase";
+import { auth, firebase, db } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
 import * as Google from "expo-google-app-auth";
-import { FontAwesome5 } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "./store/user";
-import { signupGoogleUser } from "./store";
-import GoogleButton from "react-native-google-button/src";
+import Googleicon from "react-native-google-button/src";
 
 const image = require("../assets/trouvaillehomeback.png");
 const logo = require("../assets/TrouvailleMain.png");
@@ -28,9 +26,7 @@ const LoginScreen = () => {
   const navigation = useNavigation();
 
   //GOOGLE
-  const [accessToken, setAccessToken] = useState();
   const userInfo = useSelector((state) => state.user);
-  console.log("userinfo from firestore", userInfo);
   const dispatch = useDispatch();
 
   //listens to firebase to see if the user is logged in, then do something if the user is logged in
@@ -42,8 +38,6 @@ const LoginScreen = () => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         const { currentUser } = auth;
-        console.log("Currently logged in user", currentUser);
-        //getting userInfo from store
         dispatch(fetchUser(currentUser.uid));
       }
     });
@@ -62,39 +56,77 @@ const LoginScreen = () => {
   };
 
   //GOOGLE SIGNIN
+  const isUserEqual = (googleUser, firebaseUser) => {
+    if (firebaseUser) {
+      const providerData = firebaseUser.providerData;
+      for (let i = 0; i < providerData.length; i++) {
+        if (
+          providerData[i].providerId === auth.GoogleAuthProvider.PROVIDER_ID &&
+          providerData[i].uid === googleUser.getBasicProfile().getId()
+        ) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  const checkDatabase = () => {
+    if (userInfo.name) {
+      console.log("userinfo from firestore", userInfo);
+      return true;
+    }
+    return false;
+  };
+
+  const onSignIn = (googleUser) => {
+    // console.log("GOogle Auth Response", googleUser);
+
+    const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+      unsubscribe();
+      if (!isUserEqual(googleUser, firebaseUser)) {
+        const credential = firebase.auth.GoogleAuthProvider.credential(
+          googleUser.idToken,
+          googleUser.accessToken
+        );
+        //sign in with credential from the Google user.
+        auth
+          .signInAndRetrieveDataWithCredential(credential)
+          .then(() => {
+            console.log("user signed in with google");
+            const { currentUser } = auth;
+            const userExists = checkDatabase();
+            console.log("USER EXISTS????", userExists);
+            if (!userExists) {
+              db.collection("user").add({
+                name: currentUser.displayName,
+                UID: currentUser.uid,
+                email: currentUser.email,
+                trip: [],
+                photo: currentUser.photoURL,
+              });
+            }
+          })
+          .catch((error) => {
+            console.log("error: ", error);
+          });
+      } else {
+        console.log("user already signed-in Firebase");
+      }
+    });
+  };
+
   async function signInWithGoogleAsync() {
     try {
       const result = await Google.logInAsync({
         androidClientId:
-          "483169550927-hc31k451v8h377movghnbvp5at91mfbi.apps.googleusercontent.com",
+          "483169550927-u414e7n9k0g1643jb42vk3v958r9h7h8.apps.googleusercontent.com",
         iosClientId:
-          "483169550927-jaklnim83sh381ut3cfdnnb066tkk50k.apps.googleusercontent.com",
+          "483169550927-uimg0emiloj9g62h65f9dcou5oomsvq6.apps.googleusercontent.com",
         scopes: ["profile", "email"],
       });
-
       if (result.type === "success") {
-        setAccessToken(result.accessToken);
-        console.log("login with google success!");
-        const userId = String(result.user.id);
-        console.log("string userID", userId);
-
-        //using UID to find individuals on our Firestore to retrieve their data
-        dispatch(fetchUser(userId));
-        //If user exists in our Firestore database
-        if (userInfo) {
-          console.log("retrieved userInfo from Firebase!");
-          // navigation.replace("Home");
-        } else {
-          //If user does NOT exist and need to add as a new user
-          //adding new google signed in user to FireStore
-          const userData = {
-            name: result.user.givenName,
-            UID: result.user.id,
-            email: result.user.email,
-            trip: [],
-          };
-          dispatch(signupGoogleUser(userData));
-        }
+        onSignIn(result);
       } else {
         console.log("Permission denied");
       }
@@ -144,11 +176,13 @@ const LoginScreen = () => {
             <Text style={styles.buttonOutlineText}>Register</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.buttonContainer}>
-          <GoogleButton
-            onPress={signInWithGoogleAsync}
-            title="Sign In with Google"
-          />
+        <View style={styles.googleButtonContainer}>
+          <Text style={styles.googleText}>
+            <Googleicon onPress={signInWithGoogleAsync}>
+              {" "}
+              {"             "}Sign In with Google
+            </Googleicon>
+          </Text>
         </View>
       </ImageBackground>
     </KeyboardAvoidingView>
@@ -223,5 +257,31 @@ const styles = StyleSheet.create({
   profilePic: {
     width: 50,
     height: 50,
+  },
+  googleButton: {
+    // backgroundColor: "white",
+    width: "100%",
+    padding: 15,
+    borderRadius: 10,
+    // alignItems: "center",
+  },
+  // googleIcon: {
+  //   width: "100%",
+  //   padding: 0,
+  //   alignItems: "center",
+  //   // width: "60%",
+  //   justifyContent: "flex-start",
+  //   marginTop: 50,
+  // },
+  googleText: {
+    color: "gray",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  googleButtonContainer: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 40,
   },
 });

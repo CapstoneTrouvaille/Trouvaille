@@ -68,7 +68,7 @@ const HomeScreen = () => {
             RB
           </Avatar>
           <Heading size="xl" mb="4">
-            {userInfo.name}'s Trip Dashboard
+            {auth.currentUser.displayName}'s Trip Dashboard
           </Heading>
           <Text>Email: {auth.currentUser.email}</Text>
           <Divider mb="8" />
