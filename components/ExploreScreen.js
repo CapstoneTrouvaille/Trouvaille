@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
 import { Button } from "native-base";
 import {
@@ -13,16 +12,20 @@ import { FormControl, Input } from "native-base";
 import { getPlaces } from "./store/places";
 
 const ExploreScreen = () => {
+
+  const placesList = useSelector((state)=>state.places)
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [location, setLocation] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     console.log("LOCATION IN SCREEN:",location)
     const locationInput = {
       location,
     };
-    dispatch(getPlaces(locationInput));
+    dispatch(getPlaces(locationInput))
+    .then( navigation.navigate("Places"));
+    console.log("STATE in explore screen",placesList)
     setLocation("")
   };
 
@@ -43,7 +46,7 @@ const ExploreScreen = () => {
         mb="6"
         onPress={() => {
           handleSubmit();
-          navigation.navigate("Places");
+         ;
         }}
       >
         Get Attractions

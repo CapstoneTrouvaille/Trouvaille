@@ -1,10 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const PlacesResults = () => {
+  const placesList = useSelector((state)=>state.places) || [null]
+  console.log("placeslist", placesList)
   return (
     <View>
-      <Text>PlacesResults</Text>
+    {placesList.map((place) => <Text>{place.name}</Text>)}
+
     </View>
   )
 }
