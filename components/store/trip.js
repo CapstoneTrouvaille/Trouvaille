@@ -5,6 +5,9 @@ import {
   query,
   updateDoc,
   where,
+  onSnapshot,
+  collection,
+  getDocs,
 } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 import { useNavigation } from "@react-navigation/core";
@@ -51,7 +54,7 @@ export const fetchTrips = () => {
         .collection("trips")
         .where("users", "array-contains", auth.currentUser.uid)
         .get();
-      console.log(`FetchTrips: This is the users trips:`, userTrips.docs);
+      // console.log(`FetchTrips: This is the users trips:`, userTrips.docs);
       // if (!userTrips.length) {
       //   console.log("You have no trips!");
       // } else {
@@ -69,14 +72,17 @@ export const addTrip = (newTripInfo) => {
       // Add data to the store
       dispatch(_addTripRequest());
       const addedTrip = await db.collection("trips").add(newTripInfo);
-      alert("Your trip was successfully created. Invite your friends!");
-      console.log(`this is the new tripId:`, addedTrip.id);
+      alert("Your trip was successfully created");
 
-      const userObj = await db
-        .collection("user")
-        .where("UID", "==", auth.currentUser.uid || "")
-        .get();
-      await updateDoc(userObj, {
+      const q = query(
+        collection(db, "user"),
+        where("UID", "==", auth.currentUser.uid)
+      );
+      const userRecord = await getDocs(q);
+      // console.log(`this is userRecord.docs[0].id:`, userRecord.docs[0].id);
+      const userReference = doc(db, "user", userRecord.docs[0].id);
+
+      await updateDoc(userReference, {
         trip: arrayUnion(addedTrip.id),
       });
 

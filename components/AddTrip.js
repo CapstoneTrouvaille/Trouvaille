@@ -16,7 +16,7 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { auth } from "../firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { addTrip } from "./store/trip";
+import { addTrip, fetchTrips } from "./store/trip";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/core";
 import InviteTripMember from "./InviteTripMember";
@@ -36,7 +36,7 @@ const AddTrip = () => {
 
   const trip = useSelector((state) => state.trip);
 
-  console.log(`TRIPS FROM REDUX!!!:`, trip);
+  //console.log(`TRIPS FROM REDUX!!!:`, trip);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -70,18 +70,8 @@ const AddTrip = () => {
     setLocation("");
     setStartDate("");
     setEndDate("");
-    //navigation.replace("Invite friends");
+    navigation.navigate("InviteFriends");
   };
-
-  // useEffect(() => {
-  //   console.log(`Use effect unmount started.`);
-  //   return () => {
-  //     setTripName("");
-  //     setLocation("");
-  //     setStartDate("");
-  //     setEndDate("");
-  //   };
-  // }, []);
 
   return (
     <ScrollView w="100%">
