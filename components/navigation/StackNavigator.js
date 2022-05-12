@@ -8,6 +8,7 @@ import ProfileScreen from '../ProfileScreen';
 import ChatScreen from '../ChatScreen';
 import ExploreScreen from '../ExploreScreen';
 import InviteTripMember from '../InviteTripMember';
+import PlacesResults from '../PlacesResults';
 
 
 const Stack = createNativeStackNavigator();
@@ -42,6 +43,7 @@ const ExploreStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerBackVisible:true}}>
       <Stack.Screen name = "Explore" component = {ExploreScreen} />
+      <Stack.Screen name = "Places" component={PlacesResults} />
     </Stack.Navigator>
   )
 }
