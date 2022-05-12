@@ -3,7 +3,6 @@ import axios from "axios";
 const GET_PLACES = "GET_PLACES";
 
 export const _getPlaces = (places) => {
-  console.log("PLACE IN ACTION CREATOR",places)
   return {
     type: GET_PLACES,
     places,
@@ -34,7 +33,6 @@ export const getLocationId = async (locationInput) => {
         },
       }
     );
-    console.log("LOCATION ID FROM API:", data[0].result_object.location_id);
     return data[0].result_object.location_id;
   } catch (error) {
     console.log(error);
@@ -45,7 +43,6 @@ export const getPlaces = (locationInput) => {
   return async (dispatch) => {
     try {
       const locationId = await getLocationId(locationInput);
-      console.log("LOCATION ID", locationId)
       const {
         data: { data },
       } = await axios.get(
@@ -65,7 +62,6 @@ export const getPlaces = (locationInput) => {
           },
         }
       );
-      // console.log("PLACES FROM API", data)
       dispatch(_getPlaces(data));
     } catch (error) {
       console.log(error);
