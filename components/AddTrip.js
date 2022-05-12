@@ -15,8 +15,8 @@ import {
 } from "native-base";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { auth } from "../firebase";
-import { useDispatch } from "react-redux";
-import { addTrip } from "./store/trip";
+import { useDispatch, useSelector } from "react-redux";
+import { addTrip, fetchTrips } from "./store/trip";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/core";
 import InviteTripMember from "./InviteTripMember";
@@ -33,6 +33,10 @@ const AddTrip = () => {
   const [location, setLocation] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
+  const trip = useSelector((state) => state.trip);
+
+  //console.log(`TRIPS FROM REDUX!!!:`, trip);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -59,21 +63,16 @@ const AddTrip = () => {
       tripLead: auth.currentUser.uid,
       users: [auth.currentUser.uid],
       tripMemories: [],
+      messages: [],
     };
     console.log(`Get Planning! clicked:`, newTripInfo);
     dispatch(addTrip(newTripInfo));
-    navigation.replace("Invite friends");
+    setTripName("");
+    setLocation("");
+    setStartDate("");
+    setEndDate("");
+    navigation.navigate("InviteFriends");
   };
-
-  useEffect(() => {
-    console.log(`Use effect unmount started.`);
-    return () => {
-      setTripName("");
-      setLocation("");
-      setStartDate("");
-      setEndDate("");
-    };
-  }, []);
 
   return (
     <ScrollView w="100%">
