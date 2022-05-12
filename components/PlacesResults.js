@@ -3,11 +3,13 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 const PlacesResults = () => {
-  const placesList = useSelector((state)=>state.places) || [null]
+  // const placesList = useSelector((state)=>state.places) || [null]
   console.log("placeslist", placesList)
   return (
     <View>
-    {placesList.map((place) => <Text>{place.name}</Text>)}
+    {placesList.map((place, index) => (
+        <Text key={index}>{place.name}</Text>
+      ))}
 
     </View>
   )

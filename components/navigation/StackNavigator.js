@@ -9,6 +9,7 @@ import ChatScreen from '../ChatScreen';
 import ExploreScreen from '../ExploreScreen';
 import InviteTripMember from '../InviteTripMember';
 import PlacesResults from '../PlacesResults';
+import SingleTrip from '../SingleTrip'
 
 
 const Stack = createNativeStackNavigator();
