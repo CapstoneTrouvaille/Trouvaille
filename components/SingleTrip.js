@@ -19,8 +19,10 @@ import {
   HStack,
   Center,
 } from "native-base";
+import { useNavigation } from "@react-navigation/core";
 
 const SingleTrip = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripInfo = useSelector((state) => state.trip);
   useEffect(() => {
@@ -55,6 +57,11 @@ const SingleTrip = () => {
             </Text>
             <Text fontWeight="400">Travelers: {travelers}</Text>
           </Center>
+        </Box>
+        <Box alignItems="center" mb="6">
+          <Button size="lg" onPress={() => navigation.navigate("Memories")}>
+            Memories
+          </Button>
         </Box>
       </Stack>
     </ScrollView>
