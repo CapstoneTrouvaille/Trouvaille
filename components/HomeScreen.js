@@ -83,6 +83,13 @@ const HomeScreen = () => {
             <Button
               size="lg"
               mb="6"
+              onPress={() => navigation.navigate("SingleTrip")}
+            >
+              Single Trip View
+            </Button>
+            <Button
+              size="lg"
+              mb="6"
               onPress={() => navigation.navigate("InviteFriends")}
             >
               Invite Friends
