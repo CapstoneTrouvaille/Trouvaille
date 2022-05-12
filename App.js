@@ -9,6 +9,7 @@ import InitialNavigator from "./components/navigation/InitialNavigator";
 import { auth } from "./firebase";
 import InviteTripMember from "./components/InviteTripMember";
 
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const googleStatus = useSelector((state) => state.status);

@@ -3,11 +3,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
 import { Button } from "native-base";
-import {
-  getPlacesData,
-  getLocationId,
-  getRestaurantsData,
-} from "./api/tripAdvisor";
+
 import { FormControl, Input } from "native-base";
 import { getPlaces } from "./store/places";
 

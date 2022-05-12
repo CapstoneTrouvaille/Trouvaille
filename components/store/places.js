@@ -1,4 +1,5 @@
 import axios from "axios";
+import { RAPID_API_TRIP_ADVISOR_KEY } from "../../variables";
 
 const GET_PLACES = "GET_PLACES";
 
@@ -28,7 +29,7 @@ export const getLocationId = async (locationInput) => {
         },
         headers: {
           "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
-          "X-RapidAPI-Key":process.env.RAPID_API_TRIP_ADVISOR_KEY,
+          "X-RapidAPI-Key":RAPID_API_TRIP_ADVISOR_KEY
         },
       }
     );
@@ -56,7 +57,7 @@ export const getPlaces = (locationInput) => {
           },
           headers: {
             "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
-            "X-RapidAPI-Key": process.env.RAPID_API_TRIP_ADVISOR_KEY
+            "X-RapidAPI-Key": RAPID_API_TRIP_ADVISOR_KEY
           },
         }
       );
