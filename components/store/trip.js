@@ -5,8 +5,9 @@ import {
   query,
   updateDoc,
   where,
-  collection,
   onSnapshot,
+  collection,
+  getDocs,
 } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 import { useNavigation } from "@react-navigation/core";
@@ -19,24 +20,29 @@ const ADD_TRIP_SUCCESS = "ADD_TRIP_SUCCESS";
 const ADD_TRIP_FAIL = "ADD_TRIP_FAIL";
 const SINGLE_TRIP = "SINGLE_TRIP";
 
+
 //ACTION CREATOR
 export const _getTrips = (trips) => ({
   type: GET_TRIPS,
   trips,
 });
+
 export const _addTripRequest = () => ({
   type: ADD_TRIP_REQUEST,
   loadingAdd: true,
 });
+
 export const _addTripSuccess = (newTrip) => ({
   type: ADD_TRIP_SUCCESS,
   loadingAdd: false,
   newTrip,
 });
+
 export const _addTripFail = (error) => ({
   type: ADD_TRIP_FAIL,
   errorAdd: error,
 });
+
 export const _set_active_trip = (tripId) => ({
   type: SET_ACTIVE_TRIP,
   tripId,
@@ -50,6 +56,7 @@ export const getSingleTrip = (trip) => ({
 export const fetchSingleTrip = (tripId) => {
   return async (dispatch) => {
     try {
+      console.log(`UUID from fetchTrips:`, auth.currentUser.uid);
       const tripRef = db.collection("trips").doc(tripId);
       const doc = await tripRef.get();
       if (!doc.exists) {
@@ -64,6 +71,7 @@ export const fetchSingleTrip = (tripId) => {
     }
   };
 };
+
 
 export const fetchTrips = () => {
   return async (dispatch) => {
@@ -85,22 +93,26 @@ export const fetchTrips = () => {
   };
 };
 
+
 export const addTrip = (newTripInfo) => {
   return async (dispatch) => {
     try {
       // Add data to the store
       dispatch(_addTripRequest());
       const addedTrip = await db.collection("trips").add(newTripInfo);
-      alert("Your trip was successfully created. Invite your friends!");
-      console.log(`this is the new tripId:`, addedTrip.id);
-      const userObj = await db
-        .collection("user")
-        .where("UID", "==", auth.currentUser.uid || "")
-        .get();
-      console.log("I MADE IT!!! This is user object:", userObj);
-      //   await updateDoc(userObj, {
-      //   trip: arrayUnion(addedTrip.id),
-      // });
+      alert("Your trip was successfully created");
+
+      const q = query(
+        collection(db, "user"),
+        where("UID", "==", auth.currentUser.uid)
+      );
+      const userRecord = await getDocs(q);
+      // console.log(`this is userRecord.docs[0].id:`, userRecord.docs[0].id);
+      const userReference = doc(db, "user", userRecord.docs[0].id);
+
+      await updateDoc(userReference, {
+        trip: arrayUnion(addedTrip.id),
+      });
       dispatch(_addTripSuccess(addedTrip));
     } catch (error) {
       dispatch(_addTripFail(error));

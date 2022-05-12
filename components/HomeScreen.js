@@ -33,6 +33,10 @@ const HomeScreen = () => {
     dispatch(fetchUser());
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchTrips());
+  }, []);
+
   const handleSignOut = () => {
     auth
       .signOut()
