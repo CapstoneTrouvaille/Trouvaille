@@ -25,11 +25,9 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-
   const userInfo = useSelector((state) => state.user);
   console.log("userINFO", userInfo);
   // console.log("userINFO", userInfo);
-
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -81,6 +79,13 @@ const HomeScreen = () => {
               onPress={() => navigation.navigate("AddTrip")}
             >
               Add a Trip
+            </Button>
+            <Button
+              size="lg"
+              mb="6"
+              onPress={() => navigation.navigate("SingleTrip")}
+            >
+              Single Trip View
             </Button>
             <Button
               size="lg"

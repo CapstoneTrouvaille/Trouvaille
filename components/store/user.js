@@ -7,7 +7,6 @@ const SIGNUP = "SIGNUP";
 
 const SIGNUP_GOOGLE = "SIGNUP_GOOGLE";
 
-
 //ACTION CREATOR
 export const getUser = (user) => ({
   type: GET_USER,
@@ -42,12 +41,10 @@ export const fetchUser = (userId) => {
   };
 };
 
-
 export const signupUser = (name, email, password) => {
   return async (dispatch) => {
     try {
       const res = await auth.createUserWithEmailAndPassword(email, password);
-      
       const userData = {
         UID: res.user.uid,
         name: name,
@@ -56,7 +53,6 @@ export const signupUser = (name, email, password) => {
       };
       await db.collection("user").add(userData);
       dispatch(signup(userData));
-   
     } catch (error) {
       console.log(error);
     }
