@@ -11,18 +11,14 @@ import {
   Stack,
   Link,
 } from "native-base";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
-
-{
-  /* <Text key={index}>{place.name}</Text> */
-}
-const PlacesResults = () => {
-  const placesList = useSelector((state) => state.places) || [null];
-  console.log("placeslist", placesList);
+const FoodResults = () => {
+  const foodList = useSelector((state) => state.food) || [null];
+  console.log("placeslist", foodList);
   return (
     <Box alignItems="center">
-      {placesList.map((place, index) => (
+      {foodList.map((food, index) => (
         <Box
           key={index}
           w="100%"
@@ -46,8 +42,8 @@ const PlacesResults = () => {
             <AspectRatio w="100%" ratio={16 / 9}>
               <Image
                 source={{
-                  uri: place.photo
-                    ? place.photo.images.medium.url
+                  uri: food.photo
+                    ? food.photo.images.large.url
                     : "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
                 }}
                 alt="image"
@@ -68,22 +64,32 @@ const PlacesResults = () => {
               px="3"
               py="1.5"
             >
-              <Ionicons name="star" size={15} color="white" />
-              {place.rating}
+              {food.price_level}
             </Center>
           </Box>
           <Stack p="4" space={3}>
-            <Stack space={2}>
+            <Stack space={2} direction="row" justifyContent="space-between">
               <Heading size="md" ml="-1">
-                {place.name}
+                {food.name}
               </Heading>
+              <Ionicons name="heart-outline" size={25} color="red" />
             </Stack>
-            <Text fontWeight="400">{place.ranking}</Text>
+            <Text fontWeight="400">
+              <Ionicons name="star" size={17} color="orange" />
+              {food.rating}
+            </Text>
+            <Text fontWeight="400">{food.ranking}</Text>
+            <Text >
+              {food.cuisine
+                ? food.cuisine.map((type) => type.name).join(", ")
+                : ""}
+            </Text>
             <Text numberOfLines={4} fontWeight="400">
-              {place.description}
+              {food.description}
             </Text>
             <Link
-              href={place.web_url}
+              w="23%"
+              href={food.web_url}
               fontSize="xs"
               _light={{
                 color: "violet.500",
@@ -109,6 +115,6 @@ const PlacesResults = () => {
   );
 };
 
-export default PlacesResults;
+export default FoodResults;
 
 const styles = StyleSheet.create({});

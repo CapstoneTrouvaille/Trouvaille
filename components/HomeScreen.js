@@ -30,6 +30,10 @@ import {
   useColorModeValue,
   Center,
 } from "native-base";
+
+import { signOut } from "firebase/auth";
+import { logoutUser } from "./store";
+
 import { TabView, SceneMap } from "react-native-tab-view";
 import CurrentTripScreen from "./CurrentTripScreen";
 import PastTripsScreen from "./PastTripsScreen";
@@ -53,6 +57,7 @@ const renderScene = SceneMap({
   second: SecondRoute,
 });
 
+
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -72,12 +77,13 @@ const HomeScreen = () => {
   }, []);
 
   const handleSignOut = () => {
-    auth
-      .signOut()
+    dispatch(logoutUser());
+    // console.log("userinfo should be empty", userInfo);
+    signOut(auth)
       //*** OMIT BC TAB NAV */
-      // .then(() => {
-      //   navigation.replace("Login");
-      // })
+      .then(() => {
+        console.log("user signed out");
+      })
       .catch((error) => alert(error.message));
   };
 
@@ -168,9 +174,9 @@ const HomeScreen = () => {
             RB
           </Avatar>
           <Heading size="xl" mb="4">
-            {auth.currentUser.displayName}'s Trip Dashboard
+            {userInfo.name}'s Trip Dashboard
           </Heading>
-          <Text>Email: {auth.currentUser.email}</Text>
+          <Text>Email: {userInfo.email}</Text>
           <Divider mb="8" />
         </Box>
       </Stack>

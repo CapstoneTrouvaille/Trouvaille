@@ -63,6 +63,17 @@ export const signupUser = (name, email, password) => {
   };
 };
 
+
+export const logoutUser = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(getUser({}));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 //REDUCER
 export default function user(state = {}, action) {
   switch (action.type) {
