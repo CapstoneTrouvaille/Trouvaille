@@ -19,6 +19,7 @@ const TabNavigator = () => {
       initialRouteName="HomeTab"
       screenOptions={({ route }) => ({
         // unmountOnBlur:true,
+        headerShown: false,
         tabBarShowLabel: false,
         tabBarActiveTintColor: "#BABFE0",
         tabBarInactiveTintColor: "#BABFE0",
@@ -37,7 +38,7 @@ const TabNavigator = () => {
               ? "chatbubble-ellipses-sharp"
               : "chatbubble-ellipses-outline";
           } else if (rn === "ExploreTab") {
-            iconName = focused ? "search-circle" : "search-circle-outline";
+            iconName = focused ? "map" : "map-outline";
           } else if (rn === "ProfileTab") {
             iconName = focused ? "person-circle" : "person-circle-outline";
           }

@@ -21,13 +21,10 @@ const InviteTripMember = () => {
     navigation.replace("Invite friends");
   };
 
-
-
   return (
     <View>
-      <Text>Invite Your Friends</Text>
       <VStack w="100%" space={5} alignSelf="center">
-        <Heading fontSize="lg">Cupertino</Heading>
+        <Heading fontSize="lg">Invite friends by email</Heading>
         <Input
           value={friendEmail}
           onChangeText={(e) => setFriendEmail(e.target.value)}

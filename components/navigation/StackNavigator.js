@@ -13,6 +13,9 @@ import PlacesResults from "../PlacesResults";
 import Memories from "../Memories";
 import ImageUpload from "../ImageUpload";
 
+import SingleTrip from "../SingleTrip";
+
+
 const Stack = createNativeStackNavigator();
 
 const HomeStackNavigator = () => {
@@ -46,7 +49,11 @@ const ChatStackNavigator = () => {
 
 const ExploreStackNavigator = () => {
   return (
+
     <Stack.Navigator screenOptions={{ headerBackVisible: true }}>
+
+    <Stack.Navigator screenOptions={{ headerBackVisible: true, headerShown:false }}>
+
       <Stack.Screen name="Explore" component={ExploreScreen} />
       <Stack.Screen name="Places" component={PlacesResults} />
     </Stack.Navigator>

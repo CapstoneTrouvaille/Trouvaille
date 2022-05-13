@@ -4,11 +4,13 @@ import { createStore, applyMiddleware } from "redux";
 import user from "./user";
 import trip from "./trip";
 import places from "./places";
+import food from "./food";
 
 const rootReducer = combineReducers({
   user,
   trip,
-  places
+  places,
+  food
 });
 
 const middleware = applyMiddleware(thunkMiddleware);
