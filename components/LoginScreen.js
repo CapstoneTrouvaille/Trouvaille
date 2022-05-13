@@ -71,17 +71,7 @@ const LoginScreen = () => {
     return false;
   };
 
-  const checkDatabase = () => {
-    if (userInfo.name) {
-      console.log("userinfo from firestore", userInfo);
-      return true;
-    }
-    return false;
-  };
-
   const onSignIn = (googleUser) => {
-    // console.log("GOogle Auth Response", googleUser);
-
     const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
       unsubscribe();
       if (!isUserEqual(googleUser, firebaseUser)) {
@@ -92,12 +82,18 @@ const LoginScreen = () => {
         //sign in with credential from the Google user.
         auth
           .signInAndRetrieveDataWithCredential(credential)
-          .then(() => {
-            console.log("user signed in with google");
+          .then(async () => {
             const { currentUser } = auth;
-            const userExists = checkDatabase();
-            console.log("USER EXISTS????", userExists);
-            if (!userExists) {
+            const userRef = db.collection("user");
+            const user = await userRef
+              .where("UID", "==", auth.currentUser.uid || "")
+              .get();
+
+            const userInformation = user.docs[0];
+            if (userInformation !== undefined) {
+              dispatch(fetchUser(auth.currentUser.uid));
+              console.log("user exists in firestore");
+            } else {
               db.collection("user").add({
                 name: currentUser.displayName,
                 UID: currentUser.uid,
@@ -105,6 +101,8 @@ const LoginScreen = () => {
                 trip: [],
                 photo: currentUser.photoURL,
               });
+              dispatch(fetchUser(auth.currentUser.uid));
+              console.log("new google user added to firestore");
             }
           })
           .catch((error) => {
@@ -191,8 +189,6 @@ const LoginScreen = () => {
 
 export default LoginScreen;
 
-// title={accessToken ? "Get User Data" : "Log In With Google"}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -259,20 +255,10 @@ const styles = StyleSheet.create({
     height: 50,
   },
   googleButton: {
-    // backgroundColor: "white",
     width: "100%",
     padding: 15,
     borderRadius: 10,
-    // alignItems: "center",
   },
-  // googleIcon: {
-  //   width: "100%",
-  //   padding: 0,
-  //   alignItems: "center",
-  //   // width: "60%",
-  //   justifyContent: "flex-start",
-  //   marginTop: 50,
-  // },
   googleText: {
     color: "gray",
     fontWeight: "700",

@@ -4,7 +4,6 @@ import { db, auth } from "../../firebase";
 const GET_USER = "GET_USER";
 const SIGNUP = "SIGNUP";
 
-
 //ACTION CREATOR
 export const getUser = (user) => ({
   type: GET_USER,
@@ -52,6 +51,15 @@ export const signupUser = (name, email, password) => {
   };
 };
 
+export const logoutUser = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(getUser({}));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 
 //REDUCER
 export default function user(state = {}, action) {
