@@ -2,14 +2,14 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 //screens
-import HomeScreen from '../HomeScreen'
-import AddTrip from '../AddTrip'
-import ProfileScreen from '../ProfileScreen';
-import ChatScreen from '../ChatScreen';
-import ExploreScreen from '../ExploreScreen';
-import InviteTripMember from '../InviteTripMember';
-import PlacesResults from '../PlacesResults';
-
+import HomeScreen from "../HomeScreen";
+import AddTrip from "../AddTrip";
+import ProfileScreen from "../ProfileScreen";
+import ChatScreen from "../ChatScreen";
+import ExploreScreen from "../ExploreScreen";
+import InviteTripMember from "../InviteTripMember";
+import PlacesResults from "../PlacesResults";
+import SingleTrip from "../SingleTrip";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,9 +42,9 @@ const ChatStackNavigator = () => {
 
 const ExploreStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{headerBackVisible:true}}>
-      <Stack.Screen name = "Explore" component = {ExploreScreen} />
-      <Stack.Screen name = "Places" component={PlacesResults} />
+    <Stack.Navigator screenOptions={{ headerBackVisible: true, headerShown:false }}>
+      <Stack.Screen name="Explore" component={ExploreScreen} />
+      <Stack.Screen name="Places" component={PlacesResults} />
     </Stack.Navigator>
   );
 };

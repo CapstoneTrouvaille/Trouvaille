@@ -19,7 +19,7 @@ export const getLocationId = async (locationInput) => {
       {
         params: {
           query: locationInput,
-          limit: "30",
+          limit: "1",
           offset: "0",
           units: "km",
           location_id: "1",
@@ -33,6 +33,7 @@ export const getLocationId = async (locationInput) => {
         },
       }
     );
+    // console.log("IN THUNK",data[0].result_object.photo.images.medium.url)
     return data[0].result_object.location_id;
   } catch (error) {
     console.log(error);
