@@ -53,14 +53,15 @@ export const getSingleTrip = (trip) => ({
 export const fetchSingleTrip = (tripId) => {
   return async (dispatch) => {
     try {
-      console.log(`UUID from fetchTrips:`, auth.currentUser.uid);
+      // console.log(`UUID from fetchTrips:`, auth.currentUser.uid);
       const tripRef = db.collection("trips").doc(tripId);
+
       const doc = await tripRef.get();
       if (!doc.exists) {
         console.log("No such document!");
       } else {
         const data = doc.data();
-        console.log("Document data:", data);
+        // console.log("Document data:", data);
         dispatch(getSingleTrip(data));
       }
     } catch (error) {

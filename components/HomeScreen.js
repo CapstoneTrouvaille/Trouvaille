@@ -64,7 +64,7 @@ const HomeScreen = () => {
   const userInfo = useSelector((state) => state.user);
   const tripInfo = useSelector((state) => state.trip);
 
-  console.log("Line 63 inside useEffect - userINFO", userInfo);
+  // console.log("Line 63 inside useEffect - userINFO", userInfo);
   // console.log(`Trip info:`, tripInfo);
 
   useEffect(() => {
@@ -100,7 +100,7 @@ const HomeScreen = () => {
   ]);
 
   const renderTabBar = (props) => {
-    console.log(`Line 97 Home screen: `, props.navigationState.routes);
+    // console.log(`Line 97 Home screen: `, props.navigationState.routes);
     const inputRange = props.navigationState.routes.map((x, i) => i);
     return (
       <Box flexDirection="row">
