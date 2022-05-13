@@ -28,15 +28,21 @@ import ImageUpload from "./ImageUpload";
 const Memories = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const memories = useSelector((state) => state.memories);
-  console.log(memories)
   const tripId = route.params.tripId;
+  const memories = useSelector((state) => state.memories);
+  const [isClicked, setIsClicked] = useState(false)
+  console.log(isClicked)
 
+
+  console.log(memories);
 
   useEffect(() => {
     dispatch(fetchMemories(tripId));
-  },[]);
+  }, []);
 
+  const handleClick=()=>{
+    setIsClicked(!isClicked)
+  }
 
   return (
     <ScrollView w="100%">
@@ -77,31 +83,53 @@ const Memories = ({ route }) => {
         <Divider mv="8" />
 
         <Box>
-      <Heading fontSize="xl" p="4" pb="3">
-        Memories
-      </Heading>
-      <FlatList data={memories} renderItem={({
-      item
-    }) => <Box borderBottomWidth="1" _dark={{
-      borderColor: "gray.600"
-    }} borderColor="coolGray.200" pl="4" pr="5" py="2">
-            <HStack space={3} justifyContent="space-between">
-              <VStack>
-                <Text _dark={{
-            color: "warmGray.50"
-          }} color="coolGray.800" bold>
-                  {item.journalName}
-                </Text>
-              </VStack>
-              <Spacer />
-              <Text fontSize="xs" _dark={{
-          color: "warmGray.50"
-        }} color="coolGray.800" alignSelf="flex-start">
-                {item.journalDate}
-              </Text>
-            </HStack>
-          </Box>} keyExtractor={item => item.id} />
-    </Box>
+          <Heading fontSize="xl" p="4" pb="3">
+            Memories
+          </Heading>
+          <FlatList
+            data={memories}
+            renderItem={({ item }) => (
+              <Box
+                borderBottomWidth="1"
+                _dark={{
+                  borderColor: "gray.600",
+                }}
+                borderColor="coolGray.200"
+                pl="4"
+                pr="5"
+                py="2"
+              >
+                <HStack space={3} justifyContent="space-between">
+                  <VStack>
+                    <Text
+                      _dark={{
+                        color: "warmGray.50",
+                      }}
+                      color="coolGray.800"
+                      bold
+                      onPress={handleClick}
+                    >
+                      {item.journalName}
+                    </Text>
+                    {isClicked? <Text>hiiii</Text>: null}
+                  </VStack>
+                  <Spacer />
+                  <Text
+                    fontSize="xs"
+                    _dark={{
+                      color: "warmGray.50",
+                    }}
+                    color="coolGray.800"
+                    alignSelf="flex-start"
+                  >
+                    {item.journalDate}
+                  </Text>
+                </HStack>
+              </Box>
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        </Box>
       </Stack>
     </ScrollView>
   );

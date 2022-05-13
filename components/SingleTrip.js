@@ -28,7 +28,6 @@ const SingleTrip = ({ route }) => {
   console.log("PARAMS, SINGLETRIP", tripId);
   const tripInfo = useSelector((state) => state.trip);
   useEffect(() => {
-    //right now this is hardcoded, this will need to be fixed
     dispatch(fetchSingleTrip(tripId));
   }, []);
   const travelers = tripInfo.users || [];
