@@ -29,6 +29,11 @@ const Memories = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   console.log("PARAMS?", route.params);
+  const tripId = route.params;
+  console.log("memories", tripId);
+  const memories = useSelector((state) =>
+    console.log("memories", state.memories)
+  );
 
   //getting Trip doc id
   const tripInfo = useSelector((state) => state.trip);
@@ -47,7 +52,7 @@ const Memories = ({ route }) => {
 
   useEffect(() => {
     //right now this is hardcoded, this will need to be fixed
-    dispatch(fetchSingleTrip("TcvY0Vee386lwrFfWajl"));
+    dispatch(fetchSingleTrip(tripId));
   }, []);
   const travelers = tripInfo.users || [];
 

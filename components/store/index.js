@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   trip,
   places,
   memories,
-  food
+  food,
 });
 
 const middleware = applyMiddleware(thunkMiddleware);

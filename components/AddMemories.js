@@ -38,7 +38,7 @@ const AddMemories = (props) => {
   const [journal, setJournal] = useState("");
 
   const journalEntry = useSelector((state) => state.journalEntry);
-
+  const tripId = route.params;
   //console.log(`TRIPS FROM REDUX!!!:`, trip);
 
   const onChange = (event, selectedDate) => {
@@ -68,13 +68,14 @@ const AddMemories = (props) => {
       //   tripMemories: [],
       //   messages: [],
     };
-    console.log(`Get Planning! clicked:`, newJournalEntry);
-    dispatch(addTrip(newJournalEntry));
+    console.log(`post memories! clicked:`, newJournalEntry);
+    console.log(`post memories! clicked: tripId passed in `, tripId);
+    dispatch(addMemories(newJournalEntry, tripId.tripId));
     setJournalName("");
     setLocation("");
     setJournalDate("");
     setJournal("");
-    navigation.navigate("Memories");
+    // navigation.navigate("Memories");
   };
 
   return (
@@ -152,7 +153,7 @@ const AddMemories = (props) => {
         </Box>
         <Box alignItems="center" mb="6">
           <Button size="lg" onPress={handleSubmit}>
-            Post your memories
+            Post your memories!
           </Button>
         </Box>
       </Stack>
