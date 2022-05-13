@@ -11,6 +11,7 @@ import {
   Stack,
   Link,
 } from "native-base";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 {
   /* <Text key={index}>{place.name}</Text> */
@@ -21,9 +22,8 @@ const PlacesResults = () => {
   return (
     <Box alignItems="center">
       {placesList.map((place, index) => (
-
         <Box
-          key = {index}
+          key={index}
           w="100%"
           rounded="lg"
           overflow="hidden"
@@ -45,7 +45,9 @@ const PlacesResults = () => {
             <AspectRatio w="100%" ratio={16 / 9}>
               <Image
                 source={{
-                  uri: place.photo ? place.photo.images.medium.url : "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg"
+                  uri: place.photo
+                    ? place.photo.images.medium.url
+                    : "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
                 }}
                 alt="image"
               />
@@ -65,7 +67,8 @@ const PlacesResults = () => {
               px="3"
               py="1.5"
             >
-              PHOTOS
+              <Ionicons name="star" size={15} color="white" />
+              {place.rating}
             </Center>
           </Box>
           <Stack p="4" space={3}>
@@ -75,22 +78,24 @@ const PlacesResults = () => {
               </Heading>
             </Stack>
             <Text fontWeight="400">{place.ranking}</Text>
-            <Text numberOfLines={4} fontWeight="400">{place.description}</Text>
+            <Text numberOfLines={4} fontWeight="400">
+              {place.description}
+            </Text>
             <Link
-                href= {place.web_url}
-                fontSize="xs"
-                _light={{
-                  color: "violet.500",
-                }}
-                _dark={{
-                  color: "violet.400",
-                }}
-                fontWeight="500"
-                ml="-0.5"
-                mt="-1"
-              >
-                More Details
-              </Link>
+              href={place.web_url}
+              fontSize="xs"
+              _light={{
+                color: "violet.500",
+              }}
+              _dark={{
+                color: "violet.400",
+              }}
+              fontWeight="500"
+              ml="-0.5"
+              mt="-1"
+            >
+              More Details
+            </Link>
             <HStack
               alignItems="center"
               space={4}

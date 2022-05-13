@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
 import { useSelector } from "react-redux";
 import {
   Box,
@@ -11,18 +11,16 @@ import {
   Stack,
   Link,
 } from "native-base";
-
+import { Ionicons } from "@expo/vector-icons";
 
 const FoodResults = () => {
-
-  const foodList = useSelector((state)=>state.food) || [null];
+  const foodList = useSelector((state) => state.food) || [null];
   console.log("placeslist", foodList);
   return (
     <Box alignItems="center">
       {foodList.map((food, index) => (
-
         <Box
-          key = {index}
+          key={index}
           w="100%"
           rounded="lg"
           overflow="hidden"
@@ -44,7 +42,9 @@ const FoodResults = () => {
             <AspectRatio w="100%" ratio={16 / 9}>
               <Image
                 source={{
-                  uri: food.photo ? food.photo.images.large.url : "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg"
+                  uri: food.photo
+                    ? food.photo.images.large.url
+                    : "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
                 }}
                 alt="image"
               />
@@ -64,7 +64,7 @@ const FoodResults = () => {
               px="3"
               py="1.5"
             >
-              PHOTOS
+              {food.price_level}
             </Center>
           </Box>
           <Stack p="4" space={3}>
@@ -73,25 +73,34 @@ const FoodResults = () => {
                 {food.name}
               </Heading>
             </Stack>
+            <Text fontWeight="400">
+              <Ionicons name="star" size={15} color="orange" />
+              {food.rating}
+            </Text>
             <Text fontWeight="400">{food.ranking}</Text>
-            <Text fontWeight="400">Rating: {food.rating}</Text>
-            <Text fontWeight="400">Price: {food.price_level}</Text>
-            <Text numberOfLines={4} fontWeight="400">{food.description}</Text>
+            <Text>
+              {food.cuisine
+                ? food.cuisine.map((type) => type.name).join(", ")
+                : ""}
+            </Text>
+            <Text numberOfLines={4} fontWeight="400">
+              {food.description}
+            </Text>
             <Link
-                href= {food.web_url}
-                fontSize="xs"
-                _light={{
-                  color: "violet.500",
-                }}
-                _dark={{
-                  color: "violet.400",
-                }}
-                fontWeight="500"
-                ml="-0.5"
-                mt="-1"
-              >
-                More Details
-              </Link>
+              href={food.web_url}
+              fontSize="xs"
+              _light={{
+                color: "violet.500",
+              }}
+              _dark={{
+                color: "violet.400",
+              }}
+              fontWeight="500"
+              ml="-0.5"
+              mt="-1"
+            >
+              More Details
+            </Link>
             <HStack
               alignItems="center"
               space={4}
@@ -102,8 +111,8 @@ const FoodResults = () => {
       ))}
     </Box>
   );
-}
+};
 
-export default FoodResults
+export default FoodResults;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
