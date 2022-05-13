@@ -25,10 +25,14 @@ import { db } from "../firebase";
 import Voice from "./Voice";
 import ImageUpload from "./ImageUpload";
 
-const Memories = ({route}) => {
+const Memories = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  console.log("PARAMS?", route.params)
+  console.log("PARAMS?", route.params);
+
+  const memories = useSelector((state) =>
+    console.log("memories", state.memories)
+  );
 
   //getting Trip doc id
   const tripInfo = useSelector((state) => state.trip);
@@ -82,7 +86,11 @@ const Memories = ({route}) => {
           <Button
             size="lg"
             mb="6"
-            onPress={() => navigation.navigate("AddMemories", {tripId:route.params.tripId})}
+            onPress={() =>
+              navigation.navigate("AddMemories", {
+                tripId: route.params.tripId,
+              })
+            }
           >
             Add a memory
           </Button>
