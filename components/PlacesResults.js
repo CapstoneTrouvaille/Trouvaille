@@ -13,6 +13,7 @@ import {
 } from "native-base";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+
 {
   /* <Text key={index}>{place.name}</Text> */
 }

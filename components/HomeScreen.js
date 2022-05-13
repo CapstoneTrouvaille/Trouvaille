@@ -63,15 +63,14 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state) => state.user);
-  console.log("userINFO", userInfo);
-  // console.log("userINFO", userInfo);
+  const tripInfo = useSelector((state) => state.trip);
+
+  // console.log("Line 63 inside useEffect - userINFO", userInfo);
+  // console.log(`Trip info:`, tripInfo);
 
   useEffect(() => {
-    dispatch(fetchUser());
-    // return () => {
-    //   dispatch(getUser());
-    // };
-  }, []);
+    dispatch(fetchUser(auth.currentUser.uid));
+  }, [tripInfo.successAdd]);
 
   useEffect(() => {
     dispatch(fetchTrips());
@@ -102,7 +101,7 @@ const HomeScreen = () => {
   ]);
 
   const renderTabBar = (props) => {
-    console.log(props.navigationState.routes);
+    console.log(`Line 97 Home screen: `, props.navigationState.routes);
     const inputRange = props.navigationState.routes.map((x, i) => i);
     return (
       <Box flexDirection="row">
@@ -131,7 +130,7 @@ const HomeScreen = () => {
             >
               <Pressable
                 onPress={() => {
-                  console.log(i);
+                  //console.log(i);
                   setIndex(i);
                 }}
               >
