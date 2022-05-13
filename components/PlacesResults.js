@@ -9,7 +9,6 @@ import {
   Center,
   HStack,
   Stack,
-  NativeBaseProvider,
   Link,
 } from "native-base";
 
@@ -18,7 +17,6 @@ import {
 }
 const PlacesResults = () => {
   const placesList = useSelector((state) => state.places) || [null];
-  const placesArr = [placesList[0]]
   console.log("placeslist", placesList);
   return (
     <Box alignItems="center">
