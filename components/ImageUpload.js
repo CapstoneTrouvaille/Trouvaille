@@ -38,6 +38,7 @@ const ImageUpload = () => {
       const ref_con = ref(storage, "image.jpg"); //how image will be addressed inside storage
       //convert images to bytes
       const img = await fetch(result.uri);
+      console.log("IMG",img)
       const bytes = await img.blob();
 
       await uploadBytes(ref_con, bytes); //upload image
