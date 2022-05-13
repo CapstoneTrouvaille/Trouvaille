@@ -22,12 +22,13 @@ export const fetchUser = (userId) => {
       const userRef = db.collection("user");
       const doc = await userRef.where("UID", "==", userId).get();
       console.log(`Line 24 - Fetch user userID:`, userId);
+      console.log("doc.empty", doc.docs[0].data());
       if (doc.empty) {
         console.log("Cound not fetch user!");
       } else {
         doc.forEach((item) => {
-          if (item.data().trip.length > 0) {
-//            console.log(item.data());
+          if (item.data().trip.length >= 0) {
+            console.log("user thunks", item.data());
             dispatch(getUser(item.data()));
           }
         });
@@ -62,7 +63,6 @@ export const signupUser = (name, email, password) => {
     }
   };
 };
-
 
 export const logoutUser = () => {
   return async (dispatch) => {
