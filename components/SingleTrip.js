@@ -24,12 +24,12 @@ import { useNavigation } from "@react-navigation/core";
 const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const tripId = route.params;
+  const tripId = route.params.tripId;
   console.log("PARAMS, SINGLETRIP", tripId);
   const tripInfo = useSelector((state) => state.trip);
   useEffect(() => {
     //right now this is hardcoded, this will need to be fixed
-    dispatch(fetchSingleTrip(route.params));
+    dispatch(fetchSingleTrip(tripId));
   }, []);
   const travelers = tripInfo.users || [];
 
