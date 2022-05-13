@@ -25,13 +25,14 @@ import { db } from "../firebase";
 import Voice from "./Voice";
 import ImageUpload from "./ImageUpload";
 
-const Memories = () => {
+const Memories = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  console.log("PARAMS?", route.params)
 
   //getting Trip doc id
   const tripInfo = useSelector((state) => state.trip);
-  console.log("trip name", tripInfo);
+  console.log("TRIP STATE", tripInfo);
   const [tripDocId, setTripDocId] = useState("");
   async function trip() {
     const tripObj = await db
@@ -81,7 +82,7 @@ const Memories = () => {
           <Button
             size="lg"
             mb="6"
-            onPress={() => navigation.navigate("AddMemories")}
+            onPress={() => navigation.navigate("AddMemories", {tripId:route.params.tripId})}
           >
             Add a memory
           </Button>
@@ -95,6 +96,8 @@ const Memories = () => {
             Upload Image
           </Button>
         </Box>
+
+        <Divider mv="8" />
       </Stack>
     </ScrollView>
   );

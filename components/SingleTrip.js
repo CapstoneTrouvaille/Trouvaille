@@ -21,9 +21,11 @@ import {
 } from "native-base";
 import { useNavigation } from "@react-navigation/core";
 
-const SingleTrip = () => {
+const SingleTrip = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  console.log("PARAMS, SINGLETRIP", route.params)
   const tripInfo = useSelector((state) => state.trip);
   useEffect(() => {
     //right now this is hardcoded, this will need to be fixed
@@ -63,7 +65,7 @@ const SingleTrip = () => {
           <Button
             size="lg"
             mb="6"
-            onPress={() => navigation.navigate("Memories")}
+            onPress={() => navigation.navigate("Memories", {tripId: "TcvY0Vee386lwrFfWajl"})}
           >
             Memories
           </Button>

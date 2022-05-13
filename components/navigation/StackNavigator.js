@@ -22,6 +22,7 @@ const HomeStackNavigator = () => {
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="AddTrip" component={AddTrip} />
       <Stack.Screen name="InviteFriends" component={InviteTripMember} />
+
       <Stack.Screen name="SingleTrip" component={SingleTrip} />
       <Stack.Screen name="Memories" component={Memories} />
       <Stack.Screen name="AddMemories" component={AddMemories} />

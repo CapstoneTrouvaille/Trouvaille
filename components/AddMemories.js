@@ -21,9 +21,11 @@ import { setStatusBarBackgroundColor } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/core";
 import InviteTripMember from "./InviteTripMember";
 
-const AddMemories = () => {
+const AddMemories = ({route}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  console.log("PARAMS, ADDMEM", route.params)
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
