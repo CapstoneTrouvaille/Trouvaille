@@ -27,6 +27,7 @@ const SingleTrip = ({ route }) => {
   const tripId = route.params.tripId;
   console.log("PARAMS, SINGLETRIP", tripId);
   const tripInfo = useSelector((state) => state.trip);
+  console.log("tripINfo in SingleTrip", tripInfo);
   useEffect(() => {
     //right now this is hardcoded, this will need to be fixed
     dispatch(fetchSingleTrip(tripId));

@@ -38,7 +38,7 @@ const AddMemories = (props) => {
   const [journal, setJournal] = useState("");
 
   const journalEntry = useSelector((state) => state.journalEntry);
-  const tripId = route.params;
+  //   const tripId = route.params;
   //console.log(`TRIPS FROM REDUX!!!:`, trip);
 
   const onChange = (event, selectedDate) => {
