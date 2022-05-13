@@ -30,23 +30,14 @@ export const _addMemories = (newMemories) => ({
 
 //THUNKS
 
-export const fetchMemories = () => {
+export const fetchMemories = (tripId) => {
   return async (dispatch) => {
     try {
-      console.log(`UUID from fetchTrips:`, auth.currentUser.uid);
-      const userTrips = await db
-        .collection("trips")
-        .where("users", "array-contains", auth.currentUser.uid)
-        .get();
-      console.log(
-        `FetchMemories: This is the users trip memories:`,
-        userTrips.docs
-      );
-      // if (!userTrips.length) {
-      //   console.log("You have no trips!");
-      // } else {
-      //   console.log(`2 FetchTrips: This is the users trips:`, userTrips)
-      // }
+      console.log("fetch memories thunk")
+      const docRef = doc(db, "trips", tripId)
+      const tripInfo = await getDoc(docRef)
+      const tripMemories = tripInfo.data().tripMemories
+      dispatch(_getMemories(tripMemories))
     } catch (error) {
       console.log(error);
     }
@@ -71,11 +62,9 @@ export const addMemories = (newMemories, tripId) => {
 export default function memories(state = [], action) {
   switch (action.type) {
     case GET_MEMORIES:
-      return [...state, action.memories];
-
+      return action.memories;
     case ADD_MEMORIES:
       return [...state, action.newMemories];
-
     default:
       return state;
   }

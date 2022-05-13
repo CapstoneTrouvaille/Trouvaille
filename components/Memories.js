@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSingleTrip } from "./store/trip";
+import { fetchMemories } from "./store/memories";
 import {
   ScrollView,
   Stack,
@@ -28,33 +28,15 @@ import ImageUpload from "./ImageUpload";
 const Memories = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  console.log("PARAMS?", route.params);
-  const tripId = route.params;
-  console.log("memories", tripId);
-  const memories = useSelector((state) =>
-    console.log("memories", state.memories)
-  );
+  const memories = useSelector((state) => state.memories);
+  console.log(memories)
+  const tripId = route.params.tripId;
 
-  //getting Trip doc id
-  const tripInfo = useSelector((state) => state.trip);
-  console.log("TRIP STATE", tripInfo);
-  const [tripDocId, setTripDocId] = useState("");
-  async function trip() {
-    const tripObj = await db
-      .collection("trips")
-      .where("tripName", "==", tripInfo.tripName)
-      .get();
-    console.log("tripObj", await tripObj);
-    return tripObj;
-  }
-  // .then((snapshot) => setTripDocId(snapshot.data()));
-  console.log("trip DOc id", trip);
 
   useEffect(() => {
-    //right now this is hardcoded, this will need to be fixed
-    dispatch(fetchSingleTrip(tripId));
-  }, []);
-  const travelers = tripInfo.users || [];
+    dispatch(fetchMemories(tripId));
+  },[]);
+
 
   return (
     <ScrollView w="100%">
@@ -69,20 +51,6 @@ const Memories = ({ route }) => {
           md: "25%",
         }}
       >
-        <Box>
-          <Center>
-            <Stack space={2}>
-              <Heading fontSize="xl" p="4" pb="3">
-                {tripInfo.tripName}
-              </Heading>
-            </Stack>
-            <Text fontWeight="400">Location: {tripInfo.location}</Text>
-            <Text fontWeight="400">
-              {tripInfo.startDate} - {tripInfo.endDate}
-            </Text>
-            <Text fontWeight="400">Travelers: {travelers}</Text>
-          </Center>
-        </Box>
         <Center>
           <Button
             size="lg"
@@ -106,6 +74,33 @@ const Memories = ({ route }) => {
         </Box>
 
         <Divider mv="8" />
+
+        <Box>
+      <Heading fontSize="xl" p="4" pb="3">
+        Memories
+      </Heading>
+      <FlatList data={memories} renderItem={({
+      item
+    }) => <Box borderBottomWidth="1" _dark={{
+      borderColor: "gray.600"
+    }} borderColor="coolGray.200" pl="4" pr="5" py="2">
+            <HStack space={3} justifyContent="space-between">
+              <VStack>
+                <Text _dark={{
+            color: "warmGray.50"
+          }} color="coolGray.800" bold>
+                  {item.journalName}
+                </Text>
+              </VStack>
+              <Spacer />
+              <Text fontSize="xs" _dark={{
+          color: "warmGray.50"
+        }} color="coolGray.800" alignSelf="flex-start">
+                {item.journalDate}
+              </Text>
+            </HStack>
+          </Box>} keyExtractor={item => item.id} />
+    </Box>
       </Stack>
     </ScrollView>
   );
