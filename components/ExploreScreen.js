@@ -46,9 +46,9 @@ const ExploreScreen = () => {
   return (
     <>
       <View>
-        <FormControl mb="4">
+        <FormControl mt = "15%" mb="4">
           <FormControl.Label>
-            Explore places to go and things to eat!
+            EXPLORE
           </FormControl.Label>
           <Input
             value={location}
@@ -67,7 +67,6 @@ const ExploreScreen = () => {
           >
             Get Attractions
           </Button>
-
           <Button size="sm" mb="4" onPress={() => eatHandleSubmit()}>
             Get Restaurants
           </Button>

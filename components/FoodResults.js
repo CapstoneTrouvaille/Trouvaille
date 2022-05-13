@@ -68,17 +68,18 @@ const FoodResults = () => {
             </Center>
           </Box>
           <Stack p="4" space={3}>
-            <Stack space={2}>
+            <Stack space={2} direction="row" justifyContent="space-between">
               <Heading size="md" ml="-1">
                 {food.name}
               </Heading>
+              <Ionicons name="heart-outline" size={25} color="red" />
             </Stack>
             <Text fontWeight="400">
-              <Ionicons name="star" size={15} color="orange" />
+              <Ionicons name="star" size={17} color="orange" />
               {food.rating}
             </Text>
             <Text fontWeight="400">{food.ranking}</Text>
-            <Text>
+            <Text >
               {food.cuisine
                 ? food.cuisine.map((type) => type.name).join(", ")
                 : ""}
