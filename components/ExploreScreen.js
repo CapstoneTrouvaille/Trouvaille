@@ -8,6 +8,8 @@ import {
   Button,
   Divider,
   ScrollView,
+  Stack,
+  Center,
 } from "native-base";
 import { getPlaces } from "./store/places";
 import { getFood } from "./store/food";
@@ -45,26 +47,31 @@ const ExploreScreen = () => {
     <>
       <View>
         <FormControl mb="4">
-          <FormControl.Label>Trip Name</FormControl.Label>
+          <FormControl.Label>
+            Explore places to go and things to eat!
+          </FormControl.Label>
           <Input
             value={location}
             size="md"
-            placeholder="Explore attractions and activities!"
+            placeholder="Enter a city, state, country, etc"
             onChangeText={(text) => setLocation(text)}
           />
         </FormControl>
-        <Button
-          size="lg"
-          mb="6"
-          onPress={() => {
-            handleSubmit();
-          }}
-        >
-          Get Attractions
-        </Button>
-        <Button size="lg" mb="6" onPress={() => eatHandleSubmit()}>
-          Get Restaurants
-        </Button>
+        <Stack direction="row" space={5} justifyContent="center">
+          <Button
+            size="sm"
+            mb="4"
+            onPress={() => {
+              handleSubmit();
+            }}
+          >
+            Get Attractions
+          </Button>
+
+          <Button size="sm" mb="4" onPress={() => eatHandleSubmit()}>
+            Get Restaurants
+          </Button>
+        </Stack>
         <Divider mv="8" />
       </View>
       <ScrollView>

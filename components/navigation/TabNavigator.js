@@ -19,6 +19,7 @@ const TabNavigator = () => {
       initialRouteName="HomeTab"
       screenOptions={({ route }) => ({
         // unmountOnBlur:true,
+        headerShown: false,
         tabBarShowLabel: false,
         tabBarActiveTintColor: "#BABFE0",
         tabBarInactiveTintColor: "#BABFE0",

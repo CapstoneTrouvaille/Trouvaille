@@ -87,6 +87,7 @@ const FoodResults = () => {
               {food.description}
             </Text>
             <Link
+              w="23%"
               href={food.web_url}
               fontSize="xs"
               _light={{
