@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleTrip } from "./store/trip";
 import {
@@ -20,11 +20,28 @@ import {
   Center,
 } from "native-base";
 import { useNavigation } from "@react-navigation/core";
+import { db } from "../firebase";
+import Voice from "./Voice";
 
-const SingleTrip = () => {
+const Memories = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  //getting Trip doc id
   const tripInfo = useSelector((state) => state.trip);
+  console.log("trip name", tripInfo);
+  const [tripDocId, setTripDocId] = useState("");
+  async function trip() {
+    const tripObj = await db
+      .collection("trips")
+      .where("tripName", "==", tripInfo.tripName)
+      .get();
+    console.log("tripObj", await tripObj);
+    return tripObj;
+  }
+  // .then((snapshot) => setTripDocId(snapshot.data()));
+  console.log("trip DOc id", trip);
+
   useEffect(() => {
     //right now this is hardcoded, this will need to be fixed
     dispatch(fetchSingleTrip("TcvY0Vee386lwrFfWajl"));
@@ -62,16 +79,30 @@ const SingleTrip = () => {
           <Button
             size="lg"
             mb="6"
-            onPress={() => navigation.navigate("Memories")}
+            onPress={() => navigation.navigate("AddMemories")}
           >
-            Memories
+            Add a memory
           </Button>
         </Center>
+        <Voice />
       </Stack>
     </ScrollView>
   );
 };
 
-export default SingleTrip;
+export default Memories;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  fill: {
+    flex: 1,
+    margin: 16,
+  },
+  button: {
+    margin: 16,
+  },
+});
