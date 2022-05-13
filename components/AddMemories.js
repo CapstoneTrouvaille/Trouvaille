@@ -20,12 +20,13 @@ import { addTrip, fetchTrips } from "./store/trip";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/core";
 import InviteTripMember from "./InviteTripMember";
+import { addMemories } from "./store/memories";
 
-const AddMemories = ({route}) => {
+const AddMemories = ({ route }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  console.log("PARAMS, ADDMEM", route.params)
+  console.log("PARAMS, ADDMEM", route.params);
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
@@ -37,7 +38,7 @@ const AddMemories = ({route}) => {
   const [journal, setJournal] = useState("");
 
   const journalEntry = useSelector((state) => state.journalEntry);
-
+  const tripId = route.params;
   //console.log(`TRIPS FROM REDUX!!!:`, trip);
 
   const onChange = (event, selectedDate) => {
@@ -67,13 +68,14 @@ const AddMemories = ({route}) => {
       //   tripMemories: [],
       //   messages: [],
     };
-    console.log(`Get Planning! clicked:`, newJournalEntry);
-    dispatch(addTrip(newJournalEntry));
+    console.log(`post memories! clicked:`, newJournalEntry);
+    console.log(`post memories! clicked: tripId passed in `, tripId);
+    dispatch(addMemories(newJournalEntry, tripId.tripId));
     setJournalName("");
     setLocation("");
     setJournalDate("");
     setJournal("");
-    navigation.navigate("Memories");
+    // navigation.navigate("Memories");
   };
 
   return (
@@ -148,7 +150,7 @@ const AddMemories = ({route}) => {
         </Box>
         <Box alignItems="center" mb="6">
           <Button size="lg" onPress={handleSubmit}>
-            Get Planning!
+            Post your memories!
           </Button>
         </Box>
       </Stack>
