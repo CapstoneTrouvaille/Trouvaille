@@ -4,7 +4,6 @@ import { db, auth } from "../../firebase";
 const GET_USER = "GET_USER";
 const SIGNUP = "SIGNUP";
 
-
 //ACTION CREATOR
 export const getUser = (user) => ({
   type: GET_USER,
@@ -21,13 +20,25 @@ export const fetchUser = (userId) => {
   return async (dispatch) => {
     try {
       const userRef = db.collection("user");
-      const doc = await userRef.where("UID", "==", userId || "").get();
-      if (!doc.docs[0]) {
+      const doc = await userRef.where("UID", "==", userId).get();
+      console.log(`Line 24 - Fetch user userID:`, userId);
+      if (doc.empty) {
         console.log("Cound not fetch user!");
       } else {
-        const data = doc.docs[0].data();
-        dispatch(getUser(data));
+        doc.forEach((item) => {
+          if (item.data().trip.length > 0) {
+//            console.log(item.data());
+            dispatch(getUser(item.data()));
+          }
+        });
       }
+      // if (!doc.docs[0]) {
+      //   console.log("Cound not fetch user!");
+      // } else {
+      //   const data = doc.docs[0].data();
+      //   console.log(`Line 29 - Fetch user:`, data);
+      //   dispatch(getUser(data));
+      // }
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +62,6 @@ export const signupUser = (name, email, password) => {
     }
   };
 };
-
 
 //REDUCER
 export default function user(state = {}, action) {
