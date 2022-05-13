@@ -1,5 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import SingleTrip from "../SingleTrip";
 
 //screens
 import HomeScreen from "../HomeScreen";
@@ -12,6 +13,11 @@ import PlacesResults from "../PlacesResults";
 import SingleTrip from "../SingleTrip";
 import Memories from "../Memories";
 import AddMemories from "../AddMemories";
+import ImageUpload from "../ImageUpload";
+
+
+
+
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +30,7 @@ const HomeStackNavigator = () => {
       <Stack.Screen name="SingleTrip" component={SingleTrip} />
       <Stack.Screen name="Memories" component={Memories} />
       <Stack.Screen name="AddMemories" component={AddMemories} />
+      <Stack.Screen name="ImageUpload" component={ImageUpload} />
     </Stack.Navigator>
   );
 };
@@ -46,7 +53,7 @@ const ChatStackNavigator = () => {
 
 const ExploreStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerBackVisible: true }}>
+    <Stack.Navigator screenOptions={{ headerBackVisible: true, headerShown:false }}>
       <Stack.Screen name="Explore" component={ExploreScreen} />
       <Stack.Screen name="Places" component={PlacesResults} />
     </Stack.Navigator>

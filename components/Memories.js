@@ -1,3 +1,4 @@
+
 import { StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,9 +20,11 @@ import {
   HStack,
   Center,
 } from "native-base";
+
 import { useNavigation } from "@react-navigation/core";
 import { db } from "../firebase";
 import Voice from "./Voice";
+import ImageUpload from "./ImageUpload";
 
 const Memories = () => {
   const navigation = useNavigation();
@@ -65,6 +68,7 @@ const Memories = () => {
           <Center>
             <Stack space={2}>
               <Heading fontSize="xl" p="4" pb="3">
+
                 {tripInfo.tripName}
               </Heading>
             </Stack>
@@ -85,6 +89,18 @@ const Memories = () => {
           </Button>
         </Center>
         <Voice />
+
+                Memories
+              </Heading>
+            </Stack>
+          </Center>
+        </Box>
+        <Box alignItems="center" mb="6">
+          <Button size="lg" onPress={() => navigation.navigate("ImageUpload")}>
+            Upload Image
+          </Button>
+        </Box>
+
       </Stack>
     </ScrollView>
   );
@@ -106,3 +122,4 @@ const styles = StyleSheet.create({
     margin: 16,
   },
 });
+

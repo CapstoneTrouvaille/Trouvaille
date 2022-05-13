@@ -12,6 +12,7 @@ import {
 import { db, auth } from "../../firebase";
 import { useNavigation } from "@react-navigation/core";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { fetchUser } from './user';
 
 //ACTION TYPES
 const GET_TRIPS = "GET_TRIPS";
@@ -19,7 +20,6 @@ const ADD_TRIP_REQUEST = "ADD_TRIP_REQUEST";
 const ADD_TRIP_SUCCESS = "ADD_TRIP_SUCCESS";
 const ADD_TRIP_FAIL = "ADD_TRIP_FAIL";
 const SINGLE_TRIP = "SINGLE_TRIP";
-
 
 //ACTION CREATOR
 export const _getTrips = (trips) => ({
@@ -29,13 +29,10 @@ export const _getTrips = (trips) => ({
 
 export const _addTripRequest = () => ({
   type: ADD_TRIP_REQUEST,
-  loadingAdd: true,
 });
 
 export const _addTripSuccess = (newTrip) => ({
   type: ADD_TRIP_SUCCESS,
-  loadingAdd: false,
-  newTrip,
 });
 
 export const _addTripFail = (error) => ({
@@ -72,7 +69,6 @@ export const fetchSingleTrip = (tripId) => {
   };
 };
 
-
 export const fetchTrips = () => {
   return async (dispatch) => {
     try {
@@ -81,7 +77,7 @@ export const fetchTrips = () => {
         .collection("trips")
         .where("users", "array-contains", auth.currentUser.uid)
         .get();
-      console.log(`FetchTrips: This is the users trips:`, userTrips.docs);
+      //console.log(`FetchTrips: This is the users trips:`, userTrips.docs);
       // if (!userTrips.length) {
       //   console.log("You have no trips!");
       // } else {
@@ -92,7 +88,6 @@ export const fetchTrips = () => {
     }
   };
 };
-
 
 export const addTrip = (newTripInfo) => {
   return async (dispatch) => {
@@ -129,7 +124,7 @@ export default function trip(state = {}, action) {
     case ADD_TRIP_REQUEST:
       return { ...state, loadingAdd: true };
     case ADD_TRIP_SUCCESS:
-      return { ...state, loadingAdd: false, trips: action.newTrip };
+      return { ...state, loadingAdd: false, successAdd: true };
     case ADD_TRIP_FAIL:
       return { ...state, loadingAdd: false, errorAdd: action.errorAdd };
     case SINGLE_TRIP:

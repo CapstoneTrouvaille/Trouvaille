@@ -58,6 +58,7 @@ const SingleTrip = () => {
             <Text fontWeight="400">Travelers: {travelers}</Text>
           </Center>
         </Box>
+
         <Center>
           <Button
             size="lg"
@@ -67,6 +68,7 @@ const SingleTrip = () => {
             Memories
           </Button>
         </Center>
+
       </Stack>
     </ScrollView>
   );

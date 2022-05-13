@@ -30,6 +30,10 @@ import {
   useColorModeValue,
   Center,
 } from "native-base";
+
+import { signOut } from "firebase/auth";
+import { logoutUser } from "./store";
+
 import { TabView, SceneMap } from "react-native-tab-view";
 import CurrentTripScreen from "./CurrentTripScreen";
 import PastTripsScreen from "./PastTripsScreen";
@@ -53,29 +57,33 @@ const renderScene = SceneMap({
   second: SecondRoute,
 });
 
+
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state) => state.user);
-  console.log("userINFO", userInfo);
-  // console.log("userINFO", userInfo);
+  const tripInfo = useSelector((state) => state.trip);
+
+  // console.log("Line 63 inside useEffect - userINFO", userInfo);
+  // console.log(`Trip info:`, tripInfo);
 
   useEffect(() => {
-    dispatch(fetchUser());
-  }, []);
+    dispatch(fetchUser(auth.currentUser.uid));
+  }, [tripInfo.successAdd]);
 
   useEffect(() => {
     dispatch(fetchTrips());
   }, []);
 
   const handleSignOut = () => {
-    auth
-      .signOut()
+    dispatch(logoutUser());
+    // console.log("userinfo should be empty", userInfo);
+    signOut(auth)
       //*** OMIT BC TAB NAV */
-      // .then(() => {
-      //   navigation.replace("Login");
-      // })
+      .then(() => {
+        console.log("user signed out");
+      })
       .catch((error) => alert(error.message));
   };
 
@@ -93,7 +101,7 @@ const HomeScreen = () => {
   ]);
 
   const renderTabBar = (props) => {
-    console.log(props.navigationState.routes);
+    console.log(`Line 97 Home screen: `, props.navigationState.routes);
     const inputRange = props.navigationState.routes.map((x, i) => i);
     return (
       <Box flexDirection="row">
@@ -122,7 +130,7 @@ const HomeScreen = () => {
             >
               <Pressable
                 onPress={() => {
-                  console.log(i);
+                  //console.log(i);
                   setIndex(i);
                 }}
               >
@@ -166,9 +174,9 @@ const HomeScreen = () => {
             RB
           </Avatar>
           <Heading size="xl" mb="4">
-            {auth.currentUser.displayName}'s Trip Dashboard
+            {userInfo.name}'s Trip Dashboard
           </Heading>
-          <Text>Email: {auth.currentUser.email}</Text>
+          <Text>Email: {userInfo.email}</Text>
           <Divider mb="8" />
         </Box>
       </Stack>

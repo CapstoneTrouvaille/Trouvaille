@@ -5,12 +5,14 @@ import user from "./user";
 import trip from "./trip";
 import places from "./places";
 import memories from "./memories";
+import food from "./food";
 
 const rootReducer = combineReducers({
   user,
   trip,
   places,
   memories,
+  food
 });
 
 const middleware = applyMiddleware(thunkMiddleware);
