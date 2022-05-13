@@ -57,7 +57,6 @@ const renderScene = SceneMap({
   second: SecondRoute,
 });
 
-
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -65,7 +64,7 @@ const HomeScreen = () => {
   const userInfo = useSelector((state) => state.user);
   const tripInfo = useSelector((state) => state.trip);
 
-  // console.log("Line 63 inside useEffect - userINFO", userInfo);
+  console.log("Line 63 inside useEffect - userINFO", userInfo);
   // console.log(`Trip info:`, tripInfo);
 
   useEffect(() => {

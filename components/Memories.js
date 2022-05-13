@@ -1,4 +1,3 @@
-
 import { StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -68,7 +67,6 @@ const Memories = () => {
           <Center>
             <Stack space={2}>
               <Heading fontSize="xl" p="4" pb="3">
-
                 {tripInfo.tripName}
               </Heading>
             </Stack>
@@ -88,19 +86,15 @@ const Memories = () => {
             Add a memory
           </Button>
         </Center>
-        <Voice />
-
-                Memories
-              </Heading>
-            </Stack>
-          </Center>
-        </Box>
+        <Center>
+          <Voice />
+          Memories
+        </Center>
         <Box alignItems="center" mb="6">
           <Button size="lg" onPress={() => navigation.navigate("ImageUpload")}>
             Upload Image
           </Button>
         </Box>
-
       </Stack>
     </ScrollView>
   );
@@ -122,4 +116,3 @@ const styles = StyleSheet.create({
     margin: 16,
   },
 });
-
