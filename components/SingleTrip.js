@@ -58,11 +58,17 @@ const SingleTrip = () => {
             <Text fontWeight="400">Travelers: {travelers}</Text>
           </Center>
         </Box>
-        <Box alignItems="center" mb="6">
-          <Button size="lg" onPress={() => navigation.navigate("Memories")}>
+
+        <Center>
+          <Button
+            size="lg"
+            mb="6"
+            onPress={() => navigation.navigate("Memories")}
+          >
             Memories
           </Button>
-        </Box>
+        </Center>
+
       </Stack>
     </ScrollView>
   );
