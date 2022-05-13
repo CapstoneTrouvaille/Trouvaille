@@ -6,7 +6,7 @@ import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
 
 const CurrentTripScreen = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user);
 
@@ -21,9 +21,12 @@ const CurrentTripScreen = () => {
   return (
     <View>
       <Text>Trip's in Progress</Text>
-      {userCurrentTrips && userCurrentTrips.map((tripId) => <Text
-      onPress={()=>navigation.navigate("SingleTrip",tripId)}
-      >{tripId}</Text>)}
+      {userCurrentTrips &&
+        userCurrentTrips.map((tripId) => (
+          <Text onPress={() => navigation.navigate("SingleTrip", { tripId })}>
+            {tripId}
+          </Text>
+        ))}
     </View>
   );
 };

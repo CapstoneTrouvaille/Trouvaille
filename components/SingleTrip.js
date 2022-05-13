@@ -21,15 +21,15 @@ import {
 } from "native-base";
 import { useNavigation } from "@react-navigation/core";
 
-const SingleTrip = ({route}) => {
+const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
-  console.log("PARAMS, SINGLETRIP", route.params)
+  const tripId = route.params;
+  console.log("PARAMS, SINGLETRIP", tripId);
   const tripInfo = useSelector((state) => state.trip);
   useEffect(() => {
     //right now this is hardcoded, this will need to be fixed
-    dispatch(fetchSingleTrip("TcvY0Vee386lwrFfWajl"));
+    dispatch(fetchSingleTrip(route.params));
   }, []);
   const travelers = tripInfo.users || [];
 
@@ -65,12 +65,15 @@ const SingleTrip = ({route}) => {
           <Button
             size="lg"
             mb="6"
-            onPress={() => navigation.navigate("Memories", {tripId: "TcvY0Vee386lwrFfWajl"})}
+            onPress={() =>
+              navigation.navigate("Memories", {
+                tripId,
+              })
+            }
           >
             Memories
           </Button>
         </Center>
-
       </Stack>
     </ScrollView>
   );
