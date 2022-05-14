@@ -26,10 +26,12 @@ import Voice from "./Voice";
 import ImageUpload from "./ImageUpload";
 import SingleMemory from "./SingleMemory";
 
-const Memories = ({ route }) => {
+
+const Memories = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const tripId = route.params.tripId;
+  const tripId = props.tripId;
+  console.log("PARAMS IN MEM", props);
   const memories = useSelector((state) => state.memories);
 
   useEffect(() => {
@@ -55,7 +57,7 @@ const Memories = ({ route }) => {
             mb="6"
             onPress={() =>
               navigation.navigate("AddMemories", {
-                tripId: route.params.tripId,
+                tripId: props.tripId,
               })
             }
           >

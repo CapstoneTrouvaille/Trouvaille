@@ -14,7 +14,7 @@ const Heart = () => {
         name={saved ? "heart" : "heart-outline"}
         size={25}
         color="red"
-      />
+      />q
     </TouchableOpacity>
   );
 };

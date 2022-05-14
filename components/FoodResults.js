@@ -17,8 +17,6 @@ import Heart from "./Heart";
 const FoodResults = () => {
   const foodList = useSelector((state) => state.food) || [null];
 
-  console.log("placeslist", foodList);
-
   return (
     <Box alignItems="center">
       {foodList.map((food, index) => (

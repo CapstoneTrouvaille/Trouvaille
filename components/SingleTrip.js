@@ -1,4 +1,12 @@
-import { StyleSheet, View } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  StatusBar,
+  TouchableOpacity,
+  Animated,
+  Pressable,
+} from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleTrip } from "./store/trip";
@@ -18,8 +26,12 @@ import {
   VStack,
   HStack,
   Center,
+  useColorModeValue,
 } from "native-base";
 import { useNavigation } from "@react-navigation/core";
+import { TabView, SceneMap } from "react-native-tab-view";
+import Itinerary from "./Itinerary";
+import Memories from "./Memories";
 
 const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
@@ -31,6 +43,89 @@ const SingleTrip = ({ route }) => {
     dispatch(fetchSingleTrip(tripId));
   }, []);
   const travelers = tripInfo.users || [];
+
+
+  //MIDDLE TAB
+  const FirstRoute = () => (
+    <Center>
+      <Itinerary />
+    </Center>
+  );
+  const SecondRoute = () => (
+    <Center>
+      <Memories tripId={tripId} />
+    </Center>
+  );
+
+  const initialLayout = {
+    width: Dimensions.get("window").width,
+  };
+  const renderScene = SceneMap({
+    first: FirstRoute,
+    second: SecondRoute,
+  });
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    {
+      key: "first",
+      title: "Itinerary",
+    },
+    {
+      key: "second",
+      title: "Memories",
+    },
+  ]);
+
+  const renderTabBar = (props) => {
+    console.log(`Line 97 Home screen: `, props);
+    const inputRange = props.navigationState.routes.map((x, i) => i);
+    return (
+      <Box flexDirection="row">
+        {props.navigationState.routes.map((route, i) => {
+          const opacity = props.position.interpolate({
+            inputRange,
+            outputRange: inputRange.map((inputIndex) =>
+              inputIndex === i ? 1 : 0.5
+            ),
+          });
+          const color =
+            index === i
+              ? useColorModeValue("#000", "#e5e5e5")
+              : useColorModeValue("#1f2937", "#a1a1aa");
+          const borderColor =
+            index === i
+              ? "cyan.500"
+              : useColorModeValue("coolGray.200", "gray.400");
+          return (
+            <Box
+              borderBottomWidth="3"
+              borderColor={borderColor}
+              flex={1}
+              alignItems="center"
+              p="3"
+            >
+              <Pressable
+                onPress={() => {
+                  //console.log(i);
+                  setIndex(i);
+                }}
+              >
+                <Animated.Text
+                  style={{
+                    color,
+                  }}
+                >
+                  {route.title}
+                </Animated.Text>
+              </Pressable>
+            </Box>
+          );
+        })}
+      </Box>
+    );
+  };
+
 
   return (
     <ScrollView w="100%">
@@ -60,19 +155,20 @@ const SingleTrip = ({ route }) => {
           </Center>
         </Box>
 
-        <Center>
-          <Button
-            size="lg"
-            mb="6"
-            onPress={() =>
-              navigation.navigate("Memories", {
-                tripId,
-              })
-            }
-          >
-            Memories
-          </Button>
-        </Center>
+        <TabView
+          navigationState={{
+            index,
+            routes,
+          }}
+          renderScene={renderScene}
+          renderTabBar={renderTabBar}
+          onIndexChange={setIndex}
+          initialLayout={initialLayout}
+          style={{
+            marginTop: StatusBar.currentHeight,
+          }}
+        />
+
       </Stack>
     </ScrollView>
   );
