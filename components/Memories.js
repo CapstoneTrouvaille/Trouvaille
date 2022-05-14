@@ -24,25 +24,17 @@ import { useNavigation } from "@react-navigation/core";
 import { db } from "../firebase";
 import Voice from "./Voice";
 import ImageUpload from "./ImageUpload";
+import SingleMemory from "./SingleMemory";
 
 const Memories = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = route.params.tripId;
   const memories = useSelector((state) => state.memories);
-  const [isClicked, setIsClicked] = useState(false)
-  console.log(isClicked)
-
-
-  console.log(memories);
 
   useEffect(() => {
     dispatch(fetchMemories(tripId));
   }, []);
-
-  const handleClick=()=>{
-    setIsClicked(!isClicked)
-  }
 
   return (
     <ScrollView w="100%">
@@ -101,17 +93,7 @@ const Memories = ({ route }) => {
               >
                 <HStack space={3} justifyContent="space-between">
                   <VStack>
-                    <Text
-                      _dark={{
-                        color: "warmGray.50",
-                      }}
-                      color="coolGray.800"
-                      bold
-                      onPress={handleClick}
-                    >
-                      {item.journalName}
-                    </Text>
-                    {isClicked? <Text>hiiii</Text>: null}
+                    <SingleMemory memory={item} />
                   </VStack>
                   <Spacer />
                   <Text
