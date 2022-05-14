@@ -37,7 +37,9 @@ const Memories = (props) => {
   }, []);
 
   return (
+
     <ScrollView w="100%">
+
       <Stack
         space={2.5}
         alignSelf="center"

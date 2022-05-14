@@ -24,6 +24,7 @@
     "axios": "^0.27.2",
     "expo": "~44.0.0",
     "expo-auth-session": "~3.5.0",
+    "expo-av": "~10.2.0",
     "expo-google-app-auth": "~8.3.0",
     "expo-image-picker": "^13.1.1",
     "expo-status-bar": "~1.2.0",
@@ -46,8 +47,7 @@
     "react-redux": "^8.0.1",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
-    "to": "^0.2.9",
-    "expo-av": "~10.2.0"
+    "to": "^0.2.9"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

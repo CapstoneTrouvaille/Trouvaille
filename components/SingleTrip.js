@@ -33,6 +33,25 @@ import { TabView, SceneMap } from "react-native-tab-view";
 import Itinerary from "./Itinerary";
 import Memories from "./Memories";
 
+const FirstRoute = () => (
+  <Center>
+    <Itinerary />
+  </Center>
+);
+const SecondRoute = () => (
+  <Center>
+    <Memories tripId="RpEavfYi1OrxhAB9ebVK" />
+  </Center>
+);
+
+const initialLayout = {
+  width: Dimensions.get("window").width,
+};
+const renderScene = SceneMap({
+  first: FirstRoute,
+  second: SecondRoute,
+});
+
 const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -43,27 +62,7 @@ const SingleTrip = ({ route }) => {
   }, []);
   const travelers = tripInfo.users || [];
 
-
   //MIDDLE TAB
-  const FirstRoute = () => (
-    <Center>
-      <Itinerary />
-    </Center>
-  );
-  const SecondRoute = () => (
-    <Center>
-      <Memories tripId={tripId} />
-    </Center>
-  );
-
-  const initialLayout = {
-    width: Dimensions.get("window").width,
-  };
-  const renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-  });
-
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {
@@ -124,51 +123,50 @@ const SingleTrip = ({ route }) => {
     );
   };
 
-
   return (
-    <ScrollView w="100%">
-      <Stack
-        space={2.5}
-        alignSelf="center"
-        px="4"
-        safeArea
-        mt="0"
-        w={{
-          base: "100%",
-          md: "25%",
+    <>
+      <View>
+        <Stack
+          space={2.5}
+          alignSelf="center"
+          px="4"
+          safeArea
+          mt="0"
+          w={{
+            base: "100%",
+            md: "25%",
+          }}
+        >
+          <Box>
+            <Center>
+              <Stack space={2}>
+                <Heading fontSize="xl" p="4" pb="3">
+                  {tripInfo.tripName}
+                </Heading>
+              </Stack>
+              <Text fontWeight="400">Location: {tripInfo.location}</Text>
+              <Text fontWeight="400">
+                {tripInfo.startDate} - {tripInfo.endDate}
+              </Text>
+              <Text fontWeight="400">Travelers: {travelers}</Text>
+            </Center>
+          </Box>
+        </Stack>
+      </View>
+      <TabView
+        navigationState={{
+          index,
+          routes,
         }}
-      >
-        <Box>
-          <Center>
-            <Stack space={2}>
-              <Heading fontSize="xl" p="4" pb="3">
-                {tripInfo.tripName}
-              </Heading>
-            </Stack>
-            <Text fontWeight="400">Location: {tripInfo.location}</Text>
-            <Text fontWeight="400">
-              {tripInfo.startDate} - {tripInfo.endDate}
-            </Text>
-            <Text fontWeight="400">Travelers: {travelers}</Text>
-          </Center>
-        </Box>
-
-        <TabView
-          navigationState={{
-            index,
-            routes,
-          }}
-          renderScene={renderScene}
-          renderTabBar={renderTabBar}
-          onIndexChange={setIndex}
-          initialLayout={initialLayout}
-          style={{
-            marginTop: StatusBar.currentHeight,
-          }}
-        />
-
-      </Stack>
-    </ScrollView>
+        renderScene={renderScene}
+        renderTabBar={renderTabBar}
+        onIndexChange={setIndex}
+        initialLayout={initialLayout}
+        style={{
+          marginTop: StatusBar.currentHeight,
+        }}
+      />
+    </>
   );
 };
 
