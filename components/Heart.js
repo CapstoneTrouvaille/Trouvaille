@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { TouchableOpacity } from "react-native-web";
+import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const Heart = () => {

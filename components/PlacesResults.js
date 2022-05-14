@@ -14,12 +14,9 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Heart from "./Heart";
 
-{
-  /* <Text key={index}>{place.name}</Text> */
-}
+
 const PlacesResults = () => {
   const placesList = useSelector((state) => state.places) || [null];
-  console.log("placeslist", placesList);
   return (
     <Box alignItems="center">
       {placesList.map((place, index) => (
