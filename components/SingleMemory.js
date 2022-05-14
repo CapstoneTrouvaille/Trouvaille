@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import {Text} from "native-base"
 
 const SingleMemory = (props) => {
-  console.log("PROPS", props);
   const [isClicked, setIsClicked] = useState(false);
   const memory = props.memory || "";
 

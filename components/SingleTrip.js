@@ -37,7 +37,6 @@ const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = route.params.tripId;
-  console.log("PARAMS, SINGLETRIP", tripId);
   const tripInfo = useSelector((state) => state.trip);
   useEffect(() => {
     dispatch(fetchSingleTrip(tripId));
@@ -78,7 +77,6 @@ const SingleTrip = ({ route }) => {
   ]);
 
   const renderTabBar = (props) => {
-    console.log(`Line 97 Home screen: `, props);
     const inputRange = props.navigationState.routes.map((x, i) => i);
     return (
       <Box flexDirection="row">

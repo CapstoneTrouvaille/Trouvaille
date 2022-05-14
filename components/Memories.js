@@ -26,12 +26,10 @@ import Voice from "./Voice";
 import ImageUpload from "./ImageUpload";
 import SingleMemory from "./SingleMemory";
 
-
 const Memories = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = props.tripId;
-  console.log("PARAMS IN MEM", props);
   const memories = useSelector((state) => state.memories);
 
   useEffect(() => {
@@ -51,29 +49,35 @@ const Memories = (props) => {
           md: "25%",
         }}
       >
-        <Center>
-          <Button
-            size="lg"
-            mb="6"
-            onPress={() =>
-              navigation.navigate("AddMemories", {
-                tripId: props.tripId,
-              })
-            }
-          >
-            Add a memory
-          </Button>
-        </Center>
-        <Center>
-          <Voice />
-          Memories
-        </Center>
-        <Box alignItems="center" mb="6">
-          <Button size="lg" onPress={() => navigation.navigate("ImageUpload")}>
-            Upload Image
-          </Button>
-        </Box>
+        <Box flexDirection="row" justifyContent="center">
+          <Center>
+            <Button
+              size="md"
+              m="2.5"
+              onPress={() =>
+                navigation.navigate("AddMemories", {
+                  tripId: props.tripId,
+                })
+              }
+            >
+              Add a memory
+            </Button>
+          </Center>
 
+          <Center>
+            <Voice />
+          </Center>
+
+          <Center>
+            <Button
+              size="md"
+              m="2.5"
+              onPress={() => navigation.navigate("ImageUpload")}
+            >
+              Upload Image
+            </Button>
+          </Center>
+        </Box>
         <Divider mv="8" />
 
         <Box>
