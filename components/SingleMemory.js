@@ -1,32 +1,23 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
-
+import {Text} from "native-base"
 
 const SingleMemory = (props) => {
   console.log("PROPS", props);
-  const [isClicked, setIsClicked] = useState(false)
+  const [isClicked, setIsClicked] = useState(false);
   const memory = props.memory || "";
 
-
-  const handleClick=()=>{
-    setIsClicked(!isClicked)
-  }
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+  };
 
   return (
     <View>
-      <Text
-        onPress={handleClick}
-        _dark={{
-          color: "warmGray.50",
-        }}
-        color="coolGray.800"
-        bold
-      >
+      <Text onPress={handleClick} bold>
         {memory.journalName}
       </Text>
 
       {isClicked ? <Text>{memory.journal}</Text> : null}
-
     </View>
   );
 };

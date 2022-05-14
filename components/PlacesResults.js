@@ -12,7 +12,7 @@ import {
   Link,
 } from "native-base";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
+import Heart from "./Heart";
 
 {
   /* <Text key={index}>{place.name}</Text> */
@@ -73,10 +73,11 @@ const PlacesResults = () => {
             </Center>
           </Box>
           <Stack p="4" space={3}>
-            <Stack space={2}>
+            <Stack space={2} direction="row" justifyContent="space-between">
               <Heading size="md" ml="-1">
                 {place.name}
               </Heading>
+              <Heart />
             </Stack>
             <Text fontWeight="400">{place.ranking}</Text>
             <Text numberOfLines={4} fontWeight="400">

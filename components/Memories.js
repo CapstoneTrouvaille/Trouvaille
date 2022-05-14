@@ -96,14 +96,7 @@ const Memories = ({ route }) => {
                     <SingleMemory memory={item} />
                   </VStack>
                   <Spacer />
-                  <Text
-                    fontSize="xs"
-                    _dark={{
-                      color: "warmGray.50",
-                    }}
-                    color="coolGray.800"
-                    alignSelf="flex-start"
-                  >
+                  <Text fontSize="xs" alignSelf="flex-start">
                     {item.journalDate}
                   </Text>
                 </HStack>
