@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
   Modal,
@@ -9,10 +10,12 @@ import {
   Checkbox,
 } from "native-base";
 
+
 const Itinerary = () => {
   const [showModal, setShowModal] = useState(false);
   const [groupValues, setGroupValues] = useState([]);
   console.log(groupValues);
+
 
   return (
     <Center>
@@ -27,10 +30,10 @@ const Itinerary = () => {
               value={groupValues}
               accessibilityLabel="choose numbers"
             >
-              <Checkbox value="one" my={2}>
-                UX Research
+              <Checkbox value="Palais Garnier" my={2}>
+              Palais Garnier
               </Checkbox>
-              <Checkbox value="two">Software Development</Checkbox>
+              <Checkbox value="Grand Palais">Grand Palaist</Checkbox>
             </Checkbox.Group>
           </Modal.Body>
           <Modal.Footer>

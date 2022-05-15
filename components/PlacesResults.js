@@ -74,7 +74,7 @@ const PlacesResults = () => {
               <Heading size="md" ml="-1">
                 {place.name}
               </Heading>
-              <Heart />
+              <Heart name={place.name} />
             </Stack>
             <Text fontWeight="400">{place.ranking}</Text>
             <Text numberOfLines={4} fontWeight="400">

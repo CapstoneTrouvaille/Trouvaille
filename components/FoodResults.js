@@ -73,7 +73,7 @@ const FoodResults = () => {
               <Heading size="md" ml="-1">
                 {food.name}
               </Heading>
-              <Heart />
+              <Heart name={food.name}/>
             </Stack>
             <Text fontWeight="400">
               <Ionicons name="star" size={17} color="orange" />
