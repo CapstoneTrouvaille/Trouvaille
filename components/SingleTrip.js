@@ -63,6 +63,28 @@ const SingleTrip = ({ route }) => {
 
         <Center>
           <Button
+            size="md"
+            mb="6"
+            onPress={() =>
+              navigation.navigate("InviteFriends", {
+                tripId,
+              })
+            }
+          >
+            Invite Friends
+          </Button>
+          <Button
+            size="md"
+            mb="6"
+            onPress={() =>
+              navigation.navigate("InviteAcceptDecline", {
+                tripId,
+              })
+            }
+          >
+            Temporary Button - Accept Trip Invite
+          </Button>
+          <Button
             size="lg"
             mb="6"
             onPress={() =>

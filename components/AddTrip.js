@@ -7,7 +7,6 @@ import {
   Input,
   Box,
   Divider,
-  WarningOutlineIcon,
   Heading,
   Text,
   Button,
@@ -20,6 +19,8 @@ import { addTrip, fetchTrips } from "./store/trip";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/core";
 import InviteTripMember from "./InviteTripMember";
+import InviteAcceptDecline from "./InviteAcceptDecline";
+import NewTripInviteMsg from "./NewTripInviteMsg";
 
 const AddTrip = () => {
   const dispatch = useDispatch();

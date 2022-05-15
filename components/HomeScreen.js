@@ -7,26 +7,20 @@ import {
   Animated,
   Pressable,
 } from "react-native"; //rnfes
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "./store/user";
 import { fetchTrips } from "./store/trip";
 import {
-  ScrollView,
   Stack,
-  FormControl,
-  Input,
   Box,
   Divider,
-  WarningOutlineIcon,
   Heading,
   Text,
   Button,
-  DatePicker,
   Avatar,
-  NativeBaseProvider,
   useColorModeValue,
   Center,
 } from "native-base";
@@ -37,6 +31,7 @@ import { logoutUser } from "./store";
 import { TabView, SceneMap } from "react-native-tab-view";
 import CurrentTripScreen from "./CurrentTripScreen";
 import PastTripsScreen from "./PastTripsScreen";
+import NewTripInviteMsg from "./NewTripInviteMsg";
 
 //ROUTES FOR MIDDLE TAB
 const FirstRoute = () => (
@@ -60,6 +55,8 @@ const renderScene = SceneMap({
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  const [showNewInvite, setShowNewInvite] = useState(true);
 
   const userInfo = useSelector((state) => state.user);
   const tripInfo = useSelector((state) => state.trip);
@@ -175,6 +172,7 @@ const HomeScreen = () => {
           <Heading size="xl" mb="4">
             {userInfo.name}'s Trip Dashboard
           </Heading>
+          {showNewInvite && <NewTripInviteMsg />}
           <Text>Email: {userInfo.email}</Text>
           <Divider mb="8" />
         </Box>
@@ -204,7 +202,7 @@ const HomeScreen = () => {
               Add a Trip
             </Button>
           </Center>
-          <Center>
+          {/* <Center>
             <Button
               size="lg"
               mb="6"
@@ -212,7 +210,7 @@ const HomeScreen = () => {
             >
               Invite Friends
             </Button>
-          </Center>
+          </Center> */}
           <Center>
             <Button size="lg" mb="6" onPress={handleSignOut}>
               Sign Out

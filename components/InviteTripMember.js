@@ -45,7 +45,7 @@ const InviteTripMember = () => {
           }
         />
         <Box alignItems="center">
-          <Button onPress={handleSubmit}>Add friend</Button>
+          <Button onPress={handleSubmit}>Search friend</Button>
         </Box>
       </VStack>
     </View>

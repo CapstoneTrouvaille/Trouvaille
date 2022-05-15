@@ -3,6 +3,7 @@ import { db, auth } from "../../firebase";
 //ACTION TYPES
 const GET_USER = "GET_USER";
 const SIGNUP = "SIGNUP";
+const SEARCH_TO_INVITE = "SEARCH_TO_INVITE";
 
 //ACTION CREATOR
 export const getUser = (user) => ({
@@ -15,6 +16,11 @@ export const signup = (user) => ({
   user,
 });
 
+export const searchToInvite = (user) => ({
+  type: SEARCH_TO_INVITE,
+  user,
+});
+
 //THUNK
 export const fetchUser = (userId) => {
   return async (dispatch) => {
@@ -24,7 +30,7 @@ export const fetchUser = (userId) => {
       // console.log(`Line 24 - Fetch user userID:`, userId);
       // console.log("doc.empty", doc.docs[0].data());
       if (doc.empty) {
-        console.log("Cound not fetch user!");
+        console.log("Could not fetch user!");
       } else {
         doc.forEach((item) => {
           if (item.data().trip.length >= 0) {
@@ -33,13 +39,27 @@ export const fetchUser = (userId) => {
           }
         });
       }
-      // if (!doc.docs[0]) {
-      //   console.log("Cound not fetch user!");
-      // } else {
-      //   const data = doc.docs[0].data();
-      //   console.log(`Line 29 - Fetch user:`, data);
-      //   dispatch(getUser(data));
-      // }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const fetchUserToInvite = (userEmail, tripId) => {
+  return async (dispatch) => {
+    try {
+      const q = query(collection(db, "user"), where("email", "==", userEmail));
+      const userRecord = await getDocs(q);
+      const userReference = doc(db, "user", userRecord.docs[0].id);
+      if (userReference.empty) {
+        console.log(
+          "There are no registered users with that email address! Tell user to register."
+        );
+      } else {
+        await updateDoc(userReference, {
+          pendingTrips: arrayUnion(tripId),
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -80,6 +100,8 @@ export default function user(state = {}, action) {
     case GET_USER:
       return action.user;
     case SIGNUP:
+      return action.user;
+    case SEARCH_TO_INVITE:
       return action.user;
     default:
       return state;
