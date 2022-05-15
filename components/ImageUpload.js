@@ -10,9 +10,10 @@ import {
   Image,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { v4 as uuidv4 } from "uuid";
 //NEED FIREBASE AUTH STILL??****
 import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const ImageUpload = () => {
   useEffect(() => {
@@ -36,10 +37,11 @@ const ImageUpload = () => {
     });
     if (!result.cancelled) {
       const storage = getStorage(); //the storage itself
-      const ref_con = ref(storage, "image.jpg"); //how image will be addressed inside storage
+      const imageName = uuidv4();
+      const ref_con = ref(storage, `${imageName}.jpg`); //how image will be addressed inside storage
       //convert images to bytes
       const img = await fetch(result.uri);
-      console.log("IMG",img)
+      console.log("IMG", img);
       const bytes = await img.blob();
 
       await uploadBytes(ref_con, bytes); //upload image
