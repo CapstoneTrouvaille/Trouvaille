@@ -12,13 +12,10 @@ import {
   Link,
 } from "native-base";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Heart from "./Heart";
 
-{
-  /* <Text key={index}>{place.name}</Text> */
-}
 const PlacesResults = () => {
   const placesList = useSelector((state) => state.places) || [null];
-  console.log("placeslist", placesList);
   return (
     <Box alignItems="center">
       {placesList.map((place, index) => (
@@ -72,10 +69,11 @@ const PlacesResults = () => {
             </Center>
           </Box>
           <Stack p="4" space={3}>
-            <Stack space={2}>
+            <Stack space={2} direction="row" justifyContent="space-between">
               <Heading size="md" ml="-1">
                 {place.name}
               </Heading>
+              <Heart name={place.name} />
             </Stack>
             <Text fontWeight="400">{place.ranking}</Text>
             <Text numberOfLines={4} fontWeight="400">

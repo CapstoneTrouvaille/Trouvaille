@@ -2,13 +2,21 @@ import { StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { Center, Text, Button } from "native-base";
 import { Audio } from "expo-av";
-import { db } from "../firebase";
+import { auth, firebase, db } from "../firebase";
+import "firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
-const Voice = () => {
+const Voice = (props) => {
   // Voice Memo
   const [recording, setRecording] = useState();
   const [recordings, setRecordings] = useState([]);
   const [message, setMessage] = useState("");
+
+  const tripInfo = useSelector((state) => state.trip);
+  console.log("tripInfo in Voice", tripInfo);
+  console.log("tripIdin Voice", props);
+  const tripId = props.tripId;
 
   async function startRecording() {
     try {
@@ -42,9 +50,45 @@ const Voice = () => {
       duration: getDurationFormatted(status.durationMillis),
       file: recording.getURI(),
     });
-
+    audioUpload(recording.getURI());
+    console.log("updatedRecordings", updatedRecordings);
     setRecordings(updatedRecordings);
   }
+
+  const audioUpload = async () => {
+    const recNum = recordings.length;
+    const storage = getStorage(); //the storage itself
+    if (recording) {
+      const path = `audio/${tripId}/${recNum + 1}.mp3`;
+      const ref_con = ref(storage, path); //how image will be addressed inside storage
+      //convert images to bytes
+      const voiceFile = await fetch(recording.file);
+      console.log("Voice", voiceFile);
+      const bytes = await voiceFile.blob();
+
+      await uploadBytes(ref_con, bytes); //upload image
+    }
+  };
+  // return new Promise(async (res, rej) => {
+  //   const storage = getStorage();
+  //   const response = await fetch(uri);
+  //   const file = await response.blob();
+  //   const path = `audio/${tripId}/${Date.now()}.mp3`;
+  //   const upload = ref(storage, path).put(file);
+  //   //   let upload = storage.ref(path).;
+  //   upload.on(
+  //     "state_changed",
+  //     (snapshot) => {
+  //       console.log("Audio is uploading...");
+  //     },
+  //     (err) => {
+  //       rej(err);
+  //     },
+  //     async () => {
+  //       const url = await upload.snapshot.ref.getDownloadURL();
+  //       res(url);
+  //     }
+  //   );
 
   function getDurationFormatted(millis) {
     const minutes = millis / 1000 / 60;

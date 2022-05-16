@@ -10,9 +10,10 @@ import {
   Image,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { pickImage } from "./helperFunctions/upload";
 //NEED FIREBASE AUTH STILL??****
 import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const ImageUpload = () => {
   useEffect(() => {
@@ -26,25 +27,6 @@ const ImageUpload = () => {
       }
     })();
   }, []);
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.cancelled) {
-      const storage = getStorage(); //the storage itself
-      const ref_con = ref(storage, "image.jpg"); //how image will be addressed inside storage
-      //convert images to bytes
-      const img = await fetch(result.uri);
-      console.log("IMG",img)
-      const bytes = await img.blob();
-
-      await uploadBytes(ref_con, bytes); //upload image
-    }
-  };
 
   return (
     <View

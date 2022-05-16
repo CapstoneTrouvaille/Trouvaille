@@ -102,6 +102,7 @@ export const signupUser = (name, email, password) => {
         name: name,
         email: email,
         trip: [],
+        savedItems: []
       };
       await db.collection("user").add(userData);
       dispatch(signup(userData));

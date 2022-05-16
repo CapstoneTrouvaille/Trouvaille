@@ -20,14 +20,14 @@ import { addTrip, fetchTrips } from "./store/trip";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/core";
 import InviteTripMember from "./InviteTripMember";
-import { addMemories } from "./store/memories";
+import Voice from "./Voice";
 
-const AddMemories = ({ route }) => {
+const AddMemories = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  console.log("PARAMS, ADDMEM", route.params);
-
+  console.log("PARAMS, ADDMEM", props.route.params.tripId);
+  const tripId = props.route.params.tripId;
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
@@ -38,7 +38,7 @@ const AddMemories = ({ route }) => {
   const [journal, setJournal] = useState("");
 
   const journalEntry = useSelector((state) => state.journalEntry);
-  const tripId = route.params;
+  //   const tripId = route.params;
   //console.log(`TRIPS FROM REDUX!!!:`, trip);
 
   const onChange = (event, selectedDate) => {
@@ -147,6 +147,9 @@ const AddMemories = ({ route }) => {
               onChange={onChange}
             />
           </FormControl> */}
+        </Box>
+        <Box alignItems="flex-start" mb="6">
+          <Voice tripId={tripId} />
         </Box>
         <Box alignItems="center" mb="6">
           <Button size="lg" onPress={handleSubmit}>
