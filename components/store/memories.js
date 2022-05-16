@@ -33,11 +33,13 @@ export const _addMemories = (newMemories) => ({
 export const fetchMemories = (tripId) => {
   return async (dispatch) => {
     try {
-      console.log("fetch memories thunk")
+      console.log("TRIPID", tripId)
       const docRef = doc(db, "trips", tripId)
       const tripInfo = await getDoc(docRef)
       const tripMemories = tripInfo.data().tripMemories
+      tripMemories ?
       dispatch(_getMemories(tripMemories))
+      : console.log("There are no memories")
     } catch (error) {
       console.log(error);
     }

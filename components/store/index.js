@@ -6,6 +6,8 @@ import trip from "./trip";
 import places from "./places";
 import memories from "./memories";
 import food from "./food";
+import savedItems from "./saved";
+import itinerary from "./itinerary";
 
 const rootReducer = combineReducers({
   user,
@@ -13,6 +15,8 @@ const rootReducer = combineReducers({
   places,
   memories,
   food,
+  savedItems,
+  itinerary
 });
 
 const middleware = applyMiddleware(thunkMiddleware);

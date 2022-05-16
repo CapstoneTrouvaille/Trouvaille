@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
@@ -8,57 +8,77 @@ import {
   Input,
   Center,
   Checkbox,
+  Box,
+  Item,
+  Stack
 } from "native-base";
+import SelectModal from "./SelectModal";
+import { addItineraryDay, getItinerary } from "./store/itinerary";
 
 
-const Itinerary = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [groupValues, setGroupValues] = useState([]);
-  console.log(groupValues);
 
+const Itinerary = (props) => {
+  const dispatch = useDispatch()
+  const itinerary = useSelector((state) => state.itinerary);
+  const [dayName, setDayName] = useState("")
+  const [plans, setPlans] = useState("")
+  const tripId = props.tripId
+  let days = itinerary.length
+
+  const populateDays = [];
+  for (let i = 0; i < days; i++) {
+    populateDays.push(<SelectModal index={i}/>);
+  }
+
+  useEffect(() => {
+    dispatch(getItinerary(tripId))
+  }, [dayName,plans]);
+
+
+  const addDays = () => {
+    dispatch(addItineraryDay(tripId, dayName, plans))
+    setDayName("")
+    setPlans("")
+  }
 
   return (
-    <Center>
-      <Button onPress={() => setShowModal(true)}>Button</Button>
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-        <Modal.Content maxWidth="400px">
-          <Modal.CloseButton />
-          <Modal.Header>Add saved items to your itinerary!</Modal.Header>
-          <Modal.Body>
-            <Checkbox.Group
-              onChange={setGroupValues}
-              value={groupValues}
-              accessibilityLabel="choose numbers"
-            >
-              <Checkbox value="Palais Garnier" my={2}>
-              Palais Garnier
-              </Checkbox>
-              <Checkbox value="Grand Palais">Grand Palaist</Checkbox>
-            </Checkbox.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button.Group space={2}>
-              <Button
-                variant="ghost"
-                colorScheme="blueGray"
-                onPress={() => {
-                  setShowModal(false);
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
-                onPress={() => {
-                  setShowModal(false);
-                }}
-              >
-                Save
-              </Button>
-            </Button.Group>
-          </Modal.Footer>
-        </Modal.Content>
-      </Modal>
-    </Center>
+    <View>
+    <FormControl mb="4">
+          <FormControl.Label>
+            Day
+          </FormControl.Label>
+          <Input
+            value={dayName}
+            size="md"
+            placeholder="Add a day on your itinerary"
+            onChangeText={(text) => setDayName(text)}
+          />
+          <FormControl.Label>
+            Plans for the day
+          </FormControl.Label>
+          <Input
+            value={plans}
+            size="md"
+            placeholder="Add a day on your itinerary"
+            onChangeText={(text) => setPlans(text)}
+          />
+        </FormControl>
+
+        <Stack direction="row" space={5} justifyContent="center">
+          <Button
+            size="sm"
+            mb="4"
+            onPress={() => {
+              addDays();
+            }}
+          >
+            Add Days
+          </Button>
+        </Stack>
+      <Box>
+        {populateDays}
+      </Box>
+    </View>
   );
 };
 
