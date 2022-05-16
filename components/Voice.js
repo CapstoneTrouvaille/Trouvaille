@@ -17,6 +17,7 @@ const Voice = (props) => {
   console.log("tripInfo in Voice", tripInfo);
   console.log("tripIdin Voice", props);
   const tripId = props.tripId;
+
   async function startRecording() {
     try {
       const permission = await Audio.requestPermissionsAsync();
