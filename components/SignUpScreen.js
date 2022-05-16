@@ -38,50 +38,6 @@ const SignUpScreen = () => {
 
   const dispatch = useDispatch();
 
-  //   return (
-  //     <KeyboardAvoidingView style={styles.container} behavior="padding">
-  //       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-  //         <View style={styles.inputContainer}>
-  //           <TextInput
-  //             placeholder="First Name"
-  //             value={name}
-  //             onChangeText={(text) => setName(text)}
-  //             style={styles.input}
-  //           />
-
-  //           <TextInput
-  //             placeholder="Email"
-  //             value={email}
-  //             onChangeText={(text) => setEmail(text)}
-  //             style={styles.input}
-  //           />
-
-  //           <TextInput
-  //             placeholder="Password"
-  //             value={password}
-  //             onChangeText={(text) => setPassword(text)}
-  //             style={styles.input}
-  //             secureTextEntry
-  //           />
-  //         </View>
-
-  //         <View style={styles.buttonContainer}>
-  //           <TouchableOpacity
-  //             onPress={() => {
-  //               if (name != "") {
-  //                 dispatch(signupUser(name, email, password));
-  //               } else {
-  //                 alert("Please fill everything out to register!");
-  //               }
-  //             }}
-  //             style={styles.button}
-  //           >
-  //             <Text style={styles.buttonText}>Sign Up</Text>
-  //           </TouchableOpacity>
-  //         </View>
-  //       </ImageBackground>
-  //     </KeyboardAvoidingView>
-  //   );
   return (
     <ScrollView w="100%">
       <Stack

@@ -65,13 +65,17 @@ const AddTrip = () => {
       tripMemories: [],
       messages: [],
     };
-    console.log(`Get Planning! clicked:`, newTripInfo);
-    dispatch(addTrip(newTripInfo));
-    setTripName("");
-    setLocation("");
-    setStartDate("");
-    setEndDate("");
-    navigation.navigate("InviteFriends");
+    if (tripName != "" && location != "" && startDate != "" && endDate != "") {
+      console.log(`Get Planning! clicked:`, newTripInfo);
+      dispatch(addTrip(newTripInfo));
+      setTripName("");
+      setLocation("");
+      setStartDate("");
+      setEndDate("");
+      navigation.navigate("InviteFriends");
+    } else {
+      alert("Please fill out ALL the fields to proceed!");
+    }
   };
 
   return (
