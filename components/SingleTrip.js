@@ -57,6 +57,7 @@ const SingleTrip = ({ route }) => {
   const dispatch = useDispatch();
   const tripId = route.params.tripId;
   const tripInfo = useSelector((state) => state.trip);
+  console.log("tripINfo in SingleTrip", tripInfo);
   useEffect(() => {
     dispatch(fetchSingleTrip(tripId));
   }, []);

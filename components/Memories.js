@@ -24,13 +24,19 @@ import { useNavigation } from "@react-navigation/core";
 import { db } from "../firebase";
 import Voice from "./Voice";
 import ImageUpload from "./ImageUpload";
+
+import VoiceDownload from "./VoiceDownload";
+
 import SingleMemory from "./SingleMemory";
+
 
 const Memories = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = props.tripId;
   const memories = useSelector((state) => state.memories);
+  console.log(memories);
+  const tripId = route.params.tripId;
 
   useEffect(() => {
     dispatch(fetchMemories(tripId));
@@ -51,25 +57,29 @@ const Memories = (props) => {
           md: "25%",
         }}
       >
-        <Box flexDirection="row" justifyContent="center">
-          <Center>
-            <Button
-              size="md"
-              m="2.5"
-              onPress={() =>
-                navigation.navigate("AddMemories", {
-                  tripId: props.tripId,
-                })
-              }
-            >
-              Add a memory
-            </Button>
-          </Center>
 
-          <Center>
-            <Voice />
-          </Center>
-
+        <Center>
+          <Button
+            size="lg"
+            mb="6"
+            onPress={() =>
+              navigation.navigate("AddMemories", {
+                tripId: route.params.tripId,
+              })
+            }
+          >
+            Add a memory
+          </Button>
+        </Center>
+        <Center>
+          <Voice tripId={route.params.tripId} />
+          <VoiceDownload tripId={route.params.tripId} />
+        </Center>
+        <Box alignItems="center" mb="6">
+          <Button size="lg" onPress={() => navigation.navigate("ImageUpload")}>
+            Upload Image
+          </Button>
+        </Box>
           <Center>
             <Button
               size="md"
@@ -101,10 +111,32 @@ const Memories = (props) => {
               >
                 <HStack space={3} justifyContent="space-between">
                   <VStack>
+
+                    <Text
+                      _dark={{
+                        color: "warmGray.50",
+                      }}
+                      color="coolGray.800"
+                      bold
+                    >
+                      {item.journalName}
+                    </Text>
+                  </VStack>
+                  <Spacer />
+                  <Text
+                    fontSize="xs"
+                    _dark={{
+                      color: "warmGray.50",
+                    }}
+                    color="coolGray.800"
+                    alignSelf="flex-start"
+                  >
+
                     <SingleMemory memory={item} />
                   </VStack>
                   <Spacer />
                   <Text fontSize="xs" alignSelf="flex-start">
+
                     {item.journalDate}
                   </Text>
                 </HStack>
