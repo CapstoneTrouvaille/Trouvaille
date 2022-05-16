@@ -8,57 +8,31 @@ import {
   Input,
   Center,
   Checkbox,
+  Box,
 } from "native-base";
+import SelectModal from "./SelectModal";
+
 
 
 const Itinerary = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [groupValues, setGroupValues] = useState([]);
-  console.log(groupValues);
+  // const days = itinerary length from db
+  let days = 5
+  const populateDays = [];
+  for (let i = 0; i < days; i++) {
+    populateDays.push(<SelectModal num={i+1}/>);
+  }
 
+  const addDays = () => {
+    console.log("addDAy")
+  }
 
   return (
-    <Center>
-      <Button onPress={() => setShowModal(true)}>Button</Button>
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-        <Modal.Content maxWidth="400px">
-          <Modal.CloseButton />
-          <Modal.Header>Add saved items to your itinerary!</Modal.Header>
-          <Modal.Body>
-            <Checkbox.Group
-              onChange={setGroupValues}
-              value={groupValues}
-              accessibilityLabel="choose numbers"
-            >
-              <Checkbox value="Palais Garnier" my={2}>
-              Palais Garnier
-              </Checkbox>
-              <Checkbox value="Grand Palais">Grand Palaist</Checkbox>
-            </Checkbox.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button.Group space={2}>
-              <Button
-                variant="ghost"
-                colorScheme="blueGray"
-                onPress={() => {
-                  setShowModal(false);
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
-                onPress={() => {
-                  setShowModal(false);
-                }}
-              >
-                Save
-              </Button>
-            </Button.Group>
-          </Modal.Footer>
-        </Modal.Content>
-      </Modal>
-    </Center>
+    <View>
+    <Button onPress={addDays}>Add Days</Button>
+      <Box>
+        {populateDays}
+      </Box>
+    </View>
   );
 };
 

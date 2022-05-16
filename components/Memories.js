@@ -34,7 +34,7 @@ const Memories = (props) => {
   const dispatch = useDispatch();
   const tripId = props.tripId;
   const memories = useSelector((state) => state.memories);
-  console.log(memories);
+  // console.log(memories);
 
   useEffect(() => {
     dispatch(fetchMemories(tripId));

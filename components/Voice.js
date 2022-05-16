@@ -14,8 +14,8 @@ const Voice = (props) => {
   const [message, setMessage] = useState("");
 
   const tripInfo = useSelector((state) => state.trip);
-  console.log("tripInfo in Voice", tripInfo);
-  console.log("tripIdin Voice", props);
+  // console.log("tripInfo in Voice", tripInfo);
+  // console.log("tripIdin Voice", props);
   const tripId = props.tripId;
 
   async function startRecording() {
