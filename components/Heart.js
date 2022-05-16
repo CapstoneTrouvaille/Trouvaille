@@ -14,8 +14,6 @@ const Heart = (props) => {
     dispatch(saveItem(props.name, !saveStatus))
   }
 
-
-
   return (
     <TouchableOpacity onPress={toggleHeart}>
       <Ionicons
