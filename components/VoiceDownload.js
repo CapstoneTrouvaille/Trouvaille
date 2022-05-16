@@ -28,9 +28,9 @@ const VoiceDownload = (props) => {
 
   return (
     <View>
-      <Button onPress={playing ? startPlaying : stopPlaying}>
+      {/* <Button onPress={playing ? startPlaying : stopPlaying}>
         {playing ? "startPlaying" : "stopPlaying"}
-      </Button>
+      </Button> */}
     </View>
   );
 };
