@@ -34,8 +34,6 @@ const InviteTripMember = ({ route }) => {
       tripId
     );
     dispatch(fetchUserToInvite(friendEmail, tripId));
-    // dispatch(addTrip(newTripInfo));
-    // navigation.replace("Invite friends");
     setFriendEmail("");
   };
 

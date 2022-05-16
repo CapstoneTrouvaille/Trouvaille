@@ -15,6 +15,7 @@ import { db, auth } from "../../firebase";
 const GET_USER = "GET_USER";
 const SIGNUP = "SIGNUP";
 const SEARCH_TO_INVITE = "SEARCH_TO_INVITE";
+const SEARCH_TO_INVITE_FAIL = "SEARCH_TO_INVITE_FAIL";
 
 //ACTION CREATOR
 export const getUser = (user) => ({
@@ -30,6 +31,11 @@ export const signup = (user) => ({
 export const searchToInvite = (user) => ({
   type: SEARCH_TO_INVITE,
   user,
+});
+
+export const searchToInviteFail = (error) => ({
+  type: SEARCH_TO_INVITE_FAIL,
+  errorAdd: error,
 });
 
 //THUNK
@@ -66,14 +72,12 @@ export const fetchUserToInvite = (userEmail, tripId) => {
       const q = query(collection(db, "user"), where("email", "==", userEmail));
       const userRecord = await getDocs(q);
       const userReference = doc(db, "user", userRecord.docs[0].id);
-      console.log(
-        `FETCHUSERTOINVITE thunk userReference.id: `,
-        userReference.id
-      );
+      // console.log(
+      //   `FETCHUSERTOINVITE thunk userReference.id: `,
+      //   userReference.id
+      // );
       if (userReference.empty) {
-        alert(
-          "There are no registered users with that email address! Tell user to register."
-        );
+        dispatch(searchToInviteFail(error));
       } else {
         await updateDoc(tripReference, {
           pendingUsers: arrayUnion(userReference.id),
@@ -126,6 +130,8 @@ export default function user(state = {}, action) {
       return action.user;
     case SEARCH_TO_INVITE:
       return action.user;
+    case SEARCH_TO_INVITE_FAIL:
+      return { ...state, errorAdd: action.errorAdd };
     default:
       return state;
   }

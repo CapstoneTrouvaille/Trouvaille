@@ -202,15 +202,6 @@ const HomeScreen = () => {
               Add a Trip
             </Button>
           </Center>
-          {/* <Center>
-            <Button
-              size="lg"
-              mb="6"
-              onPress={() => navigation.navigate("InviteFriends")}
-            >
-              Invite Friends
-            </Button>
-          </Center> */}
           <Center>
             <Button size="lg" mb="6" onPress={handleSignOut}>
               Sign Out
