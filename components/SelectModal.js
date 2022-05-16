@@ -12,7 +12,7 @@ import {
 
 
 
-const SelectModal = () => {
+const SelectModal = (props) => {
   //USE EFFECT TO FETCH SAVED ITEMS
 
   const savedItems = useSelector((state) => state.savedItems);
@@ -25,7 +25,7 @@ const SelectModal = () => {
     <View>
      <Center>
 
-     <Text>Day </Text>
+     <Text>Day {props.num}</Text>
         <Button onPress={() => setShowModal(true)}>+</Button>
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
           <Modal.Content maxWidth="400px">

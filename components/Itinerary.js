@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
@@ -11,12 +11,22 @@ import {
   Box,
 } from "native-base";
 import SelectModal from "./SelectModal";
+import { addItineraryDay, getItinerary } from "./store/itinerary";
 
 
 
-const Itinerary = () => {
+const Itinerary = (props) => {
+  const dispatch = useDispatch()
+  const itinerary = useSelector((state) => state.itinerary);
+  const tripId = props.tripId
+  console.log(itinerary)
+
+  useEffect(() => {
+    dispatch(getItinerary(tripId))
+  }, []);
+
   // const days = itinerary length from db
-  let days = 5
+  let days = itinerary.length
   const populateDays = [];
   for (let i = 0; i < days; i++) {
     populateDays.push(<SelectModal num={i+1}/>);
@@ -24,6 +34,8 @@ const Itinerary = () => {
 
   const addDays = () => {
     console.log("addDAy")
+    const key = `Day ${days+1}`
+    dispatch(addItineraryDay(tripId, key))
   }
 
   return (

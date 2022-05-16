@@ -33,7 +33,6 @@ export const _addMemories = (newMemories) => ({
 export const fetchMemories = (tripId) => {
   return async (dispatch) => {
     try {
-      console.log("fetch memories thunk")
       const docRef = doc(db, "trips", tripId)
       const tripInfo = await getDoc(docRef)
       const tripMemories = tripInfo.data().tripMemories
