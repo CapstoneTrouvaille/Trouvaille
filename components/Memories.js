@@ -29,23 +29,19 @@ import VoiceDownload from "./VoiceDownload";
 
 import SingleMemory from "./SingleMemory";
 
-
 const Memories = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = props.tripId;
   const memories = useSelector((state) => state.memories);
   console.log(memories);
-  const tripId = route.params.tripId;
 
   useEffect(() => {
     dispatch(fetchMemories(tripId));
   }, []);
 
   return (
-
     <ScrollView w="100%">
-
       <Stack
         space={2.5}
         alignSelf="center"
@@ -57,14 +53,13 @@ const Memories = (props) => {
           md: "25%",
         }}
       >
-
         <Center>
           <Button
             size="lg"
             mb="6"
             onPress={() =>
               navigation.navigate("AddMemories", {
-                tripId: route.params.tripId,
+                tripId: tripId,
               })
             }
           >
@@ -72,14 +67,10 @@ const Memories = (props) => {
           </Button>
         </Center>
         <Center>
-          <Voice tripId={route.params.tripId} />
-          <VoiceDownload tripId={route.params.tripId} />
+          <Voice tripId={tripId} />
+          {/* <VoiceDownload tripId={tripId} /> */}
         </Center>
         <Box alignItems="center" mb="6">
-          <Button size="lg" onPress={() => navigation.navigate("ImageUpload")}>
-            Upload Image
-          </Button>
-        </Box>
           <Center>
             <Button
               size="md"
@@ -98,8 +89,9 @@ const Memories = (props) => {
           </Heading>
           <FlatList
             data={memories}
-            renderItem={({ item }) => (
+            renderItem={({ item }, i) => (
               <Box
+                key={i}
                 borderBottomWidth="1"
                 _dark={{
                   borderColor: "gray.600",
@@ -111,7 +103,6 @@ const Memories = (props) => {
               >
                 <HStack space={3} justifyContent="space-between">
                   <VStack>
-
                     <Text
                       _dark={{
                         color: "warmGray.50",
@@ -121,22 +112,21 @@ const Memories = (props) => {
                     >
                       {item.journalName}
                     </Text>
-                  </VStack>
-                  <Spacer />
-                  <Text
-                    fontSize="xs"
-                    _dark={{
-                      color: "warmGray.50",
-                    }}
-                    color="coolGray.800"
-                    alignSelf="flex-start"
-                  >
 
-                    <SingleMemory memory={item} />
+                    <Spacer />
+                    <Text
+                      fontSize="xs"
+                      _dark={{
+                        color: "warmGray.50",
+                      }}
+                      color="coolGray.800"
+                      alignSelf="flex-start"
+                    >
+                      <SingleMemory memory={item} />
+                    </Text>
                   </VStack>
                   <Spacer />
                   <Text fontSize="xs" alignSelf="flex-start">
-
                     {item.journalDate}
                   </Text>
                 </HStack>

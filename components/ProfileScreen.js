@@ -15,7 +15,7 @@ import {
   Center,
   useColorModeValue,
   Container,
-  Avatar
+  Avatar,
 } from "native-base";
 import React from "react";
 import CurrentTripScreen from "./CurrentTripScreen";
@@ -27,8 +27,17 @@ import PastTripsScreen from "./PastTripsScreen";
 
 // const TopTab = createMaterialTopTabNavigator();
 
-const FirstRoute = () => <Center> <CurrentTripScreen /></Center>;
-const SecondRoute = () => <Center><PastTripsScreen/></Center>;
+const FirstRoute = () => (
+  <Center>
+    {" "}
+    <CurrentTripScreen />
+  </Center>
+);
+const SecondRoute = () => (
+  <Center>
+    <PastTripsScreen />
+  </Center>
+);
 const initialLayout = {
   width: Dimensions.get("window").width,
 };
@@ -36,7 +45,6 @@ const renderScene = SceneMap({
   first: FirstRoute,
   second: SecondRoute,
 });
-
 
 const ProfileScreen = () => {
   const [index, setIndex] = React.useState(0);
@@ -52,7 +60,7 @@ const ProfileScreen = () => {
   ]);
 
   const renderTabBar = (props) => {
-    console.log(props.navigationState.routes)
+    console.log(props.navigationState.routes);
     const inputRange = props.navigationState.routes.map((x, i) => i);
     return (
       <Box flexDirection="row">
@@ -73,6 +81,7 @@ const ProfileScreen = () => {
               : useColorModeValue("coolGray.200", "gray.400");
           return (
             <Box
+              key={i}
               borderBottomWidth="3"
               borderColor={borderColor}
               flex={1}
@@ -102,31 +111,31 @@ const ProfileScreen = () => {
 
   return (
     <>
-    <Box>
-    <Avatar
-            bg="purple.600"
-            alignSelf="center"
-            size="xl"
-            source={{
-              uri: "https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80",
-            }}
-          >
-            RB
-          </Avatar>
-    </Box>
-    <TabView
-      navigationState={{
-        index,
-        routes,
-      }}
-      renderScene={renderScene}
-      renderTabBar={renderTabBar}
-      onIndexChange={setIndex}
-      initialLayout={initialLayout}
-      style={{
-        marginTop: StatusBar.currentHeight,
-      }}
-    />
+      <Box>
+        <Avatar
+          bg="purple.600"
+          alignSelf="center"
+          size="xl"
+          source={{
+            uri: "https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80",
+          }}
+        >
+          RB
+        </Avatar>
+      </Box>
+      <TabView
+        navigationState={{
+          index,
+          routes,
+        }}
+        renderScene={renderScene}
+        renderTabBar={renderTabBar}
+        onIndexChange={setIndex}
+        initialLayout={initialLayout}
+        style={{
+          marginTop: StatusBar.currentHeight,
+        }}
+      />
     </>
   );
 };

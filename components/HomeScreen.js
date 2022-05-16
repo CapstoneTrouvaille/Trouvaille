@@ -121,6 +121,7 @@ const HomeScreen = () => {
               : useColorModeValue("coolGray.200", "gray.400");
           return (
             <Box
+              key={i}
               borderBottomWidth="3"
               borderColor={borderColor}
               flex={1}
