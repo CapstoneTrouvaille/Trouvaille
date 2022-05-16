@@ -64,6 +64,8 @@ const AddTrip = () => {
       users: [auth.currentUser.uid],
       tripMemories: [],
       messages: [],
+      pendingUsers:[],
+      Itinerary:[]
     };
     console.log(`Get Planning! clicked:`, newTripInfo);
     dispatch(addTrip(newTripInfo));

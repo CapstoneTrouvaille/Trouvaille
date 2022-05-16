@@ -41,10 +41,10 @@ export const getItinerary = (tripId) => {
   }
 }
 
-export const addItineraryDay = (tripId,day) => {
+export const addItineraryDay = (tripId, day, plans) => {
   return async(dispatch) => {
     try {
-      let newDay = {[day]: []}
+      let newDay = {[day]: [plans]}
       const tripDocRef = doc(db, "trips", tripId)
       await updateDoc(tripDocRef, {
         Itinerary: arrayUnion(newDay)

@@ -33,24 +33,7 @@ import { TabView, SceneMap } from "react-native-tab-view";
 import Itinerary from "./Itinerary";
 import Memories from "./Memories";
 
-const FirstRoute = () => (
-  <Center>
-    <Itinerary tripId="RpEavfYi1OrxhAB9ebVK" />
-  </Center>
-);
-const SecondRoute = () => (
-  <Center>
-    <Memories tripId="RpEavfYi1OrxhAB9ebVK" />
-  </Center>
-);
 
-const initialLayout = {
-  width: Dimensions.get("window").width,
-};
-const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute,
-});
 
 
 const SingleTrip = ({ route }) => {
@@ -64,6 +47,25 @@ const SingleTrip = ({ route }) => {
     dispatch(fetchSingleTrip(tripId))
   }, []);
   const travelers = tripInfo.users || [];
+
+  const FirstRoute = () => (
+    <Center>
+      <Itinerary tripId={tripId }/>
+    </Center>
+  );
+  const SecondRoute = () => (
+    <Center>
+      <Memories tripId={tripId} />
+    </Center>
+  );
+
+  const initialLayout = {
+    width: Dimensions.get("window").width,
+  };
+  const renderScene = SceneMap({
+    first: FirstRoute,
+    second: SecondRoute,
+  });
 
   //MIDDLE TAB
   const [index, setIndex] = React.useState(0);

@@ -21,28 +21,29 @@ const Itinerary = (props) => {
   const dispatch = useDispatch()
   const itinerary = useSelector((state) => state.itinerary);
   const [dayName, setDayName] = useState("")
+  const [plans, setPlans] = useState("")
   const tripId = props.tripId
-
-  useEffect(() => {
-    dispatch(getItinerary(tripId))
-  }, []);
-
-  // const days = itinerary length from db
   let days = itinerary.length
+
   const populateDays = [];
   for (let i = 0; i < days; i++) {
     populateDays.push(<SelectModal index={i}/>);
   }
 
+  useEffect(() => {
+    dispatch(getItinerary(tripId))
+  }, [dayName,plans]);
+
+
   const addDays = () => {
-    console.log(dayName)
-    dispatch(addItineraryDay(tripId, dayName))
+    dispatch(addItineraryDay(tripId, dayName, plans))
     setDayName("")
+    setPlans("")
   }
 
   return (
     <View>
-    <FormControl mt = "15%" mb="4">
+    <FormControl mb="4">
           <FormControl.Label>
             Day
           </FormControl.Label>
@@ -52,7 +53,17 @@ const Itinerary = (props) => {
             placeholder="Add a day on your itinerary"
             onChangeText={(text) => setDayName(text)}
           />
+          <FormControl.Label>
+            Plans for the day
+          </FormControl.Label>
+          <Input
+            value={plans}
+            size="md"
+            placeholder="Add a day on your itinerary"
+            onChangeText={(text) => setPlans(text)}
+          />
         </FormControl>
+
         <Stack direction="row" space={5} justifyContent="center">
           <Button
             size="sm"
@@ -64,7 +75,6 @@ const Itinerary = (props) => {
             Add Days
           </Button>
         </Stack>
-    {/* <Button onPress={addDays}>Add Days</Button> */}
       <Box>
         {populateDays}
       </Box>
