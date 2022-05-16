@@ -24,22 +24,22 @@ import { useNavigation } from "@react-navigation/core";
 import { db } from "../firebase";
 import Voice from "./Voice";
 import ImageUpload from "./ImageUpload";
+import SingleMemory from "./SingleMemory";
 
-const Memories = ({ route }) => {
+const Memories = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const tripId = props.tripId;
   const memories = useSelector((state) => state.memories);
-  console.log(memories)
-  const tripId = route.params.tripId;
-
 
   useEffect(() => {
     dispatch(fetchMemories(tripId));
-  },[]);
-
+  }, []);
 
   return (
+
     <ScrollView w="100%">
+
       <Stack
         space={2.5}
         alignSelf="center"
@@ -51,57 +51,68 @@ const Memories = ({ route }) => {
           md: "25%",
         }}
       >
-        <Center>
-          <Button
-            size="lg"
-            mb="6"
-            onPress={() =>
-              navigation.navigate("AddMemories", {
-                tripId: route.params.tripId,
-              })
-            }
-          >
-            Add a memory
-          </Button>
-        </Center>
-        <Center>
-          <Voice />
-          Memories
-        </Center>
-        <Box alignItems="center" mb="6">
-          <Button size="lg" onPress={() => navigation.navigate("ImageUpload")}>
-            Upload Image
-          </Button>
-        </Box>
+        <Box flexDirection="row" justifyContent="center">
+          <Center>
+            <Button
+              size="md"
+              m="2.5"
+              onPress={() =>
+                navigation.navigate("AddMemories", {
+                  tripId: props.tripId,
+                })
+              }
+            >
+              Add a memory
+            </Button>
+          </Center>
 
+          <Center>
+            <Voice />
+          </Center>
+
+          <Center>
+            <Button
+              size="md"
+              m="2.5"
+              onPress={() => navigation.navigate("ImageUpload")}
+            >
+              Upload Image
+            </Button>
+          </Center>
+        </Box>
         <Divider mv="8" />
 
         <Box>
-      <Heading fontSize="xl" p="4" pb="3">
-        Memories
-      </Heading>
-      <FlatList data={memories} renderItem={({
-      item
-    }) => <Box borderBottomWidth="1" _dark={{
-      borderColor: "gray.600"
-    }} borderColor="coolGray.200" pl="4" pr="5" py="2">
-            <HStack space={3} justifyContent="space-between">
-              <VStack>
-                <Text _dark={{
-            color: "warmGray.50"
-          }} color="coolGray.800" bold>
-                  {item.journalName}
-                </Text>
-              </VStack>
-              <Spacer />
-              <Text fontSize="xs" _dark={{
-          color: "warmGray.50"
-        }} color="coolGray.800" alignSelf="flex-start">
-                {item.journalDate}
-              </Text>
-            </HStack>
-          </Box>} keyExtractor={item => item.id} />
-    </Box>
+          <Heading fontSize="xl" p="4" pb="3">
+            Memories
+          </Heading>
+          <FlatList
+            data={memories}
+            renderItem={({ item }) => (
+              <Box
+                borderBottomWidth="1"
+                _dark={{
+                  borderColor: "gray.600",
+                }}
+                borderColor="coolGray.200"
+                pl="4"
+                pr="5"
+                py="2"
+              >
+                <HStack space={3} justifyContent="space-between">
+                  <VStack>
+                    <SingleMemory memory={item} />
+                  </VStack>
+                  <Spacer />
+                  <Text fontSize="xs" alignSelf="flex-start">
+                    {item.journalDate}
+                  </Text>
+                </HStack>
+              </Box>
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        </Box>
       </Stack>
     </ScrollView>
   );
