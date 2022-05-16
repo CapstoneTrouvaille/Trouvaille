@@ -9,6 +9,8 @@ import {
   Center,
   Checkbox,
   Box,
+  Item,
+  Stack
 } from "native-base";
 import SelectModal from "./SelectModal";
 import { addItineraryDay, getItinerary } from "./store/itinerary";
@@ -18,8 +20,8 @@ import { addItineraryDay, getItinerary } from "./store/itinerary";
 const Itinerary = (props) => {
   const dispatch = useDispatch()
   const itinerary = useSelector((state) => state.itinerary);
+  const [dayName, setDayName] = useState("")
   const tripId = props.tripId
-  console.log(itinerary)
 
   useEffect(() => {
     dispatch(getItinerary(tripId))
@@ -29,18 +31,40 @@ const Itinerary = (props) => {
   let days = itinerary.length
   const populateDays = [];
   for (let i = 0; i < days; i++) {
-    populateDays.push(<SelectModal num={i+1}/>);
+    populateDays.push(<SelectModal index={i}/>);
   }
 
   const addDays = () => {
-    console.log("addDAy")
-    const key = `Day ${days+1}`
-    dispatch(addItineraryDay(tripId, key))
+    console.log(dayName)
+    dispatch(addItineraryDay(tripId, dayName))
+    setDayName("")
   }
 
   return (
     <View>
-    <Button onPress={addDays}>Add Days</Button>
+    <FormControl mt = "15%" mb="4">
+          <FormControl.Label>
+            Day
+          </FormControl.Label>
+          <Input
+            value={dayName}
+            size="md"
+            placeholder="Add a day on your itinerary"
+            onChangeText={(text) => setDayName(text)}
+          />
+        </FormControl>
+        <Stack direction="row" space={5} justifyContent="center">
+          <Button
+            size="sm"
+            mb="4"
+            onPress={() => {
+              addDays();
+            }}
+          >
+            Add Days
+          </Button>
+        </Stack>
+    {/* <Button onPress={addDays}>Add Days</Button> */}
       <Box>
         {populateDays}
       </Box>

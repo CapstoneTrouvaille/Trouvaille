@@ -16,6 +16,10 @@ const SelectModal = (props) => {
   //USE EFFECT TO FETCH SAVED ITEMS
 
   const savedItems = useSelector((state) => state.savedItems);
+  const itinerary = useSelector((state) => state.itinerary);
+
+  const dayName = Object.keys(itinerary[props.index])[0]
+  console.log(dayName)
 
   const [showModal, setShowModal] = useState(false);
   const [groupValues, setGroupValues] = useState([]);
@@ -25,7 +29,7 @@ const SelectModal = (props) => {
     <View>
      <Center>
 
-     <Text>Day {props.num}</Text>
+     <Text>{dayName}</Text>
         <Button onPress={() => setShowModal(true)}>+</Button>
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
           <Modal.Content maxWidth="400px">
