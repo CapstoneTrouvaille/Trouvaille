@@ -1,3 +1,14 @@
+import {
+  arrayUnion,
+  doc,
+  getDoc,
+  query,
+  updateDoc,
+  where,
+  onSnapshot,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 import { db, auth } from "../../firebase";
 
 //ACTION TYPES
@@ -27,7 +38,7 @@ export const fetchUser = (userId) => {
     try {
       const userRef = db.collection("user");
       const doc = await userRef.where("UID", "==", userId).get();
-      // console.log(`Line 24 - Fetch user userID:`, userId);
+      //console.log(`Line 30 - Fetch user userID:`, userId);
       // console.log("doc.empty", doc.docs[0].data());
       if (doc.empty) {
         console.log("Could not fetch user!");
@@ -48,17 +59,29 @@ export const fetchUser = (userId) => {
 export const fetchUserToInvite = (userEmail, tripId) => {
   return async (dispatch) => {
     try {
+      const tripRecord = db.collection("trips").doc(tripId);
+      const tripReference = doc(db, "trips", tripRecord.id);
+      //console.log(`This is the tripDoc:`, tripReference);
+
       const q = query(collection(db, "user"), where("email", "==", userEmail));
       const userRecord = await getDocs(q);
       const userReference = doc(db, "user", userRecord.docs[0].id);
+      console.log(
+        `FETCHUSERTOINVITE thunk userReference.id: `,
+        userReference.id
+      );
       if (userReference.empty) {
-        console.log(
+        alert(
           "There are no registered users with that email address! Tell user to register."
         );
       } else {
+        await updateDoc(tripReference, {
+          pendingUsers: arrayUnion(userReference.id),
+        });
         await updateDoc(userReference, {
           pendingTrips: arrayUnion(tripId),
         });
+        console.log(`User added to trip array!`);
       }
     } catch (error) {
       console.log(error);

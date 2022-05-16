@@ -2,24 +2,16 @@ import { StyleSheet, View } from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleTrip } from "./store/trip";
+import { useNavigation } from "@react-navigation/core";
 import {
   ScrollView,
   Stack,
-  FormControl,
-  Input,
   Box,
-  Divider,
-  Spacer,
   Heading,
   Text,
   Button,
-  Avatar,
-  FlatList,
-  VStack,
-  HStack,
   Center,
 } from "native-base";
-import { useNavigation } from "@react-navigation/core";
 
 const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
@@ -63,10 +55,11 @@ const SingleTrip = ({ route }) => {
 
         <Center>
           <Button
-            size="md"
+            size="lg"
+            mt="4"
             mb="6"
             onPress={() =>
-              navigation.navigate("InviteFriends", {
+              navigation.navigate("InviteTripMember", {
                 tripId,
               })
             }

@@ -42,8 +42,8 @@ const InviteAcceptDecline = ({ route }) => {
         }}
       >
         <Center>
-          <Heading size="lg">
-            Accept or Decline the Trip Invitation to {tripInfo.tripName} on{" "}
+          <Heading size="md">
+            You have a pending trip invitation for {tripInfo.tripName} on{" "}
             {tripInfo.startDate}
           </Heading>
           <Button size="md" mb="4" mt="4" onPress={handleSubmitAccept}>
