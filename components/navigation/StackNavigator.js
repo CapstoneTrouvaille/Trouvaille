@@ -53,7 +53,6 @@ const ExploreStackNavigator = () => {
       screenOptions={{ headerBackVisible: true, headerShown: false }}
     >
       <Stack.Screen name="Explore" component={ExploreScreen} />
-      <Stack.Screen name="Places" component={PlacesResults} />
     </Stack.Navigator>
   );
 };

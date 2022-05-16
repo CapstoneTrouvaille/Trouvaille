@@ -12,10 +12,11 @@ import {
   Link,
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
+import Heart from "./Heart";
 
 const FoodResults = () => {
   const foodList = useSelector((state) => state.food) || [null];
-  console.log("placeslist", foodList);
+
   return (
     <Box alignItems="center">
       {foodList.map((food, index) => (
@@ -72,14 +73,14 @@ const FoodResults = () => {
               <Heading size="md" ml="-1">
                 {food.name}
               </Heading>
-              <Ionicons name="heart-outline" size={25} color="red" />
+              <Heart name={food.name}/>
             </Stack>
             <Text fontWeight="400">
               <Ionicons name="star" size={17} color="orange" />
               {food.rating}
             </Text>
             <Text fontWeight="400">{food.ranking}</Text>
-            <Text >
+            <Text>
               {food.cuisine
                 ? food.cuisine.map((type) => type.name).join(", ")
                 : ""}

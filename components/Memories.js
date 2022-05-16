@@ -24,11 +24,16 @@ import { useNavigation } from "@react-navigation/core";
 import { db } from "../firebase";
 import Voice from "./Voice";
 import ImageUpload from "./ImageUpload";
+
 import VoiceDownload from "./VoiceDownload";
 
-const Memories = ({ route }) => {
+import SingleMemory from "./SingleMemory";
+
+
+const Memories = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const tripId = props.tripId;
   const memories = useSelector((state) => state.memories);
   console.log(memories);
   const tripId = route.params.tripId;
@@ -38,7 +43,9 @@ const Memories = ({ route }) => {
   }, []);
 
   return (
+
     <ScrollView w="100%">
+
       <Stack
         space={2.5}
         alignSelf="center"
@@ -50,6 +57,7 @@ const Memories = ({ route }) => {
           md: "25%",
         }}
       >
+
         <Center>
           <Button
             size="lg"
@@ -72,7 +80,16 @@ const Memories = ({ route }) => {
             Upload Image
           </Button>
         </Box>
-
+          <Center>
+            <Button
+              size="md"
+              m="2.5"
+              onPress={() => navigation.navigate("ImageUpload")}
+            >
+              Upload Image
+            </Button>
+          </Center>
+        </Box>
         <Divider mv="8" />
 
         <Box>
@@ -94,6 +111,7 @@ const Memories = ({ route }) => {
               >
                 <HStack space={3} justifyContent="space-between">
                   <VStack>
+
                     <Text
                       _dark={{
                         color: "warmGray.50",
@@ -113,6 +131,12 @@ const Memories = ({ route }) => {
                     color="coolGray.800"
                     alignSelf="flex-start"
                   >
+
+                    <SingleMemory memory={item} />
+                  </VStack>
+                  <Spacer />
+                  <Text fontSize="xs" alignSelf="flex-start">
+
                     {item.journalDate}
                   </Text>
                 </HStack>
