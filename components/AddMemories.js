@@ -21,6 +21,8 @@ import { setStatusBarBackgroundColor } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/core";
 import InviteTripMember from "./InviteTripMember";
 import Voice from "./Voice";
+import { addMemories } from "./store/memories";
+
 
 const AddMemories = (props) => {
   const dispatch = useDispatch();
@@ -70,11 +72,12 @@ const AddMemories = (props) => {
     };
     console.log(`post memories! clicked:`, newJournalEntry);
     console.log(`post memories! clicked: tripId passed in `, tripId);
-    dispatch(addMemories(newJournalEntry, tripId.tripId));
+    dispatch(addMemories(newJournalEntry, tripId));
     setJournalName("");
     setLocation("");
     setJournalDate("");
     setJournal("");
+    navigation.goBack()
     // navigation.navigate("Memories");
   };
 

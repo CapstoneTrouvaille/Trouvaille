@@ -46,7 +46,7 @@ const ExploreScreen = () => {
   return (
     <>
       <View>
-        <FormControl mt = "15%" mb="4">
+        <FormControl  mb="4">
           <FormControl.Label>
             EXPLORE
           </FormControl.Label>

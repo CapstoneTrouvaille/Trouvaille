@@ -103,17 +103,6 @@ const Memories = (props) => {
                 <HStack space={3} justifyContent="space-between">
                   <VStack>
                     <Text
-                      _dark={{
-                        color: "warmGray.50",
-                      }}
-                      color="coolGray.800"
-                      bold
-                    >
-                      {item.journalName}
-                    </Text>
-
-                    <Spacer />
-                    <Text
                       fontSize="xs"
                       _dark={{
                         color: "warmGray.50",
