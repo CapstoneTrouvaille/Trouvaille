@@ -32,6 +32,8 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import { initializeApp } from "firebase/app";
 
+// import "firebase/compat/analytics";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCB_TW1oRHt6Rv_LzODz_c9GCPGFzViHPA",
   authDomain: "trouvaille-auth.firebaseapp.com",
@@ -51,5 +53,7 @@ if (firebase.apps.length === 0) {
 
 const db = app.firestore();
 const auth = firebase.auth();
+// const analytics = firebase.analytics();
+const firestore = firebase.firestore();
 
-export { db, auth, firebase };
+export { db, auth, firebase, firestore };
