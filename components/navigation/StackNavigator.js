@@ -1,5 +1,8 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Button } from "native-base";
+import { Ionicons } from "@expo/vector-icons";
+import { firebase, auth } from "../../firebase";
 
 //screens
 import HomeScreen from "../HomeScreen";
@@ -18,7 +21,19 @@ const Stack = createNativeStackNavigator();
 
 const HomeStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerBackVisible: true }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerBackVisible: true,
+        headerRight: () => (
+          <Ionicons
+            name="exit-outline"
+            size={30}
+            color="#BABFE0"
+            onPress={() => firebase.auth().signOut()}
+          />
+        ),
+      }}
+    >
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="AddTrip" component={AddTrip} />
       <Stack.Screen name="InviteFriends" component={InviteTripMember} />
@@ -33,7 +48,19 @@ const HomeStackNavigator = () => {
 
 const ProfileStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerBackVisible: true }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerBackVisible: true,
+        headerRight: () => (
+          <Ionicons
+            name="exit-outline"
+            size={30}
+            color="#BABFE0"
+            onPress={() => firebase.auth().signOut()}
+          />
+        ),
+      }}
+    >
       <Stack.Screen name="Profile" component={ProfileScreen} />
     </Stack.Navigator>
   );
@@ -41,7 +68,19 @@ const ProfileStackNavigator = () => {
 
 const ChatStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerBackVisible: true }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerBackVisible: true,
+        headerRight: () => (
+          <Ionicons
+            name="exit-outline"
+            size={30}
+            color="#BABFE0"
+            onPress={() => firebase.auth().signOut()}
+          />
+        ),
+      }}
+    >
       <Stack.Screen name="Chat" component={ChatScreen} />
     </Stack.Navigator>
   );
@@ -50,7 +89,17 @@ const ChatStackNavigator = () => {
 const ExploreStackNavigator = () => {
   return (
     <Stack.Navigator
-      screenOptions={{ headerBackVisible: true, headerShown: false }}
+      screenOptions={{
+        headerBackVisible: true,
+        headerRight: () => (
+          <Ionicons
+            name="exit-outline"
+            size={30}
+            color="#BABFE0"
+            onPress={() => firebase.auth().signOut()}
+          />
+        ),
+      }}
     >
       <Stack.Screen name="Explore" component={ExploreScreen} />
     </Stack.Navigator>

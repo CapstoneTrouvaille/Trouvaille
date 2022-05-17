@@ -36,7 +36,7 @@
     "react-native": "0.64.3",
     "react-native-google-button": "^0.1.0",
     "react-native-image-picker": "^4.8.3",
-    "react-native-ionicons": "^4.6.5",
+    "react-native-s": "^4.6.5",
     "react-native-neat-date-picker": "^1.2.2",
     "react-native-pager-view": "5.4.9",
     "react-native-safe-area-context": "3.3.2",
