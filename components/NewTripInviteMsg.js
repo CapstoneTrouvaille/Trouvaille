@@ -8,7 +8,7 @@ const NewTripInviteMsg = () => {
 
   const handleOnClick = () => {
     console.log("Accept/Decline button clicked");
-    //Navigation TBD this it temporary - navigation.navigate("InviteTripMember");
+    navigation.navigate("InviteAcceptDecline");
   };
 
   return (

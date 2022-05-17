@@ -54,13 +54,13 @@ export const _addUserToTripRequest = () => ({
   type: ADD_USER_TO_TRIP_REQUEST,
 });
 
-export const _addUserToTripSuccess = (tripID, userUID) => ({
+export const _addUserToTripSuccess = () => ({
   type: ADD_USER_TO_TRIP_SUCCESS,
 });
 
 export const _addUserToTripFail = (error) => ({
   type: ADD_USER_TO_TRIP_FAIL,
-  errorAdd: error,
+  errorAddUser: error,
 });
 
 //THUNK
@@ -133,12 +133,14 @@ export const addTrip = (newTripInfo) => {
 export const addUserToTrip = (tripId, userUID) => {
   return async (dispatch) => {
     try {
+      console.log(`AddUserToTrip Thunk:`, tripId, userUID);
       dispatch(_addUserToTripRequest());
-      const tripReference = doc(db, "trips", tripId);
+      const tripReference = await doc(db, "trips", tripId);
+      console.log(`This is trip reference: `, tripReference);
       await updateDoc(tripReference, {
         users: arrayUnion(userUID),
       });
-      dispatch(_addUserToTripSuccess(tripId, userUID));
+      dispatch(_addUserToTripSuccess());
       console.error("Successfully added user to trip!");
     } catch (error) {
       dispatch(_addUserToTripFail(error));
@@ -161,11 +163,15 @@ export default function trip(state = {}, action) {
     case SINGLE_TRIP:
       return action.trip;
     case ADD_USER_TO_TRIP_REQUEST:
-      return { ...state, loadingAdd: true };
+      return { ...state, loadingAddUser: true };
     case ADD_USER_TO_TRIP_SUCCESS:
-      return { ...state, loadingAdd: false, successAdd: true };
+      return { ...state, loadingAddUser: false, successAddUser: true };
     case ADD_USER_TO_TRIP_FAIL:
-      return { ...state, loadingAdd: false, errorAdd: action.errorAdd };
+      return {
+        ...state,
+        loadingAddUser: false,
+        errorAddUser: action.errorAddUser,
+      };
     default:
       return state;
   }

@@ -57,36 +57,20 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const [showNewInvite, setShowNewInvite] = useState(true);
-
   const userInfo = useSelector((state) => state.user);
-  // const tripInfo = useSelector((state) => state.trip);
-
-
-  // const checkPendingTrips = () => {
-  //   if (userInfo.pendingTrips.length > 0) {
-  //     setShowNewInvite(true);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   dispatch(fetchTrips());
-  //   console.log(`This is userInfo did mount: `, userInfo);
-  // }, []);
-
-  // useEffect(() => {
-  //   checkPendingTrips();
-  // }, [userInfo.pendingTrips]);
-
-  // useEffect(() => {
-  //   dispatch(fetchUser(auth.currentUser.uid));
-  // }, [tripInfo.successAdd]);
+  const tripInfo = useSelector((state) => state.trip);
+  const showPendingTrips = userInfo.pendingTrips
+    ? userInfo.pendingTrips.length
+    : 0;
 
   useEffect(() => {
-    dispatch(fetchTrips())
-    dispatch(getSavedItems())
+    dispatch(fetchTrips());
+    dispatch(getSavedItems());
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchUser(auth.currentUser.uid));
+  }, [tripInfo.successAdd]);
 
   const handleSignOut = () => {
     dispatch(logoutUser());
@@ -189,7 +173,7 @@ const HomeScreen = () => {
           <Heading size="xl" mb="4">
             {userInfo.name}'s Trip Dashboard
           </Heading>
-          {showNewInvite && <NewTripInviteMsg />}
+          {showPendingTrips !== 0 && <NewTripInviteMsg />}
           <Text>Email: {userInfo.email}</Text>
           <Divider mb="8" />
         </Box>

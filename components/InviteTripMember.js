@@ -37,8 +37,6 @@ const InviteTripMember = ({ route }) => {
     setFriendEmail("");
   };
 
-
-
   return (
     <View>
       <VStack w="100%" space={5} alignSelf="center">
@@ -56,7 +54,7 @@ const InviteTripMember = ({ route }) => {
             placeholder="Enter email address"
           />
           <Box mt="6" mb="6" alignItems="center">
-            <Button onPress={handleSubmit}>Send Trip Invitation</Button>
+            <Button onPress={handleSubmit}>Send Trip Invite</Button>
           </Box>
           <Divider />
           <Text fontSize="lg" mt="4" mb="4">
