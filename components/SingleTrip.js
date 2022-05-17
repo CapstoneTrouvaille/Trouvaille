@@ -32,6 +32,7 @@ import { useNavigation } from "@react-navigation/core";
 import { TabView, SceneMap } from "react-native-tab-view";
 import Itinerary from "./Itinerary";
 import Memories from "./Memories";
+import firebase from "firebase/compat";
 
 
 
@@ -47,6 +48,18 @@ const SingleTrip = ({ route }) => {
     dispatch(fetchSingleTrip(tripId))
   }, []);
   const travelers = tripInfo.users || [];
+  //may need to delete?
+  const startDate = tripInfo.startDate || "";
+  const fireBaseTime = new Date(
+    startDate.seconds * 1000 + startDate.nanoseconds / 1000000
+  );
+  const newStartDate = fireBaseTime.toDateString();
+
+  const endDate = tripInfo.endDate || "";
+  const eFireBaseTime = new Date(
+    endDate.seconds * 1000 + endDate.nanoseconds / 1000000
+  );
+  const newEndDate = eFireBaseTime.toDateString();
 
   const FirstRoute = () => (
     <Center>
@@ -79,6 +92,8 @@ const SingleTrip = ({ route }) => {
       title: "Memories",
     },
   ]);
+
+  //console.log("DDDAAATTEEEEEEEEEE", tripInfo.startDate);
 
   const renderTabBar = (props) => {
     const inputRange = props.navigationState.routes.map((x, i) => i);
@@ -152,7 +167,16 @@ const SingleTrip = ({ route }) => {
               </Stack>
               <Text fontWeight="400">Location: {tripInfo.location}</Text>
               <Text fontWeight="400">
-                {tripInfo.startDate} - {tripInfo.endDate}
+                {newStartDate} - {newEndDate}
+                {/* {JSON.stringify(tripInfo.startDate.toDate()).replace(
+                  /['"]+/g,
+                  ""
+                )}{" "}
+                -{" "}
+                {JSON.stringify(tripInfo.endDate.toDate()).replace(
+                  /['"]+/g,
+                  ""
+                )} */}
               </Text>
               <Text fontWeight="400">Travelers: {travelers}</Text>
             </Center>
