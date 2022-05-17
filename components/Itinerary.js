@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
+  ScrollView,
   Modal,
   FormControl,
   Input,
@@ -32,7 +33,7 @@ const Itinerary = (props) => {
 
   useEffect(() => {
     dispatch(getItinerary(tripId))
-  }, [dayName,plans]);
+  }, []);
 
 
   const addDays = () => {
@@ -42,7 +43,7 @@ const Itinerary = (props) => {
   }
 
   return (
-    <View>
+    <ScrollView>
     <FormControl mb="4">
           <FormControl.Label>
             Day
@@ -78,7 +79,7 @@ const Itinerary = (props) => {
       <Box>
         {populateDays}
       </Box>
-    </View>
+    </ScrollView>
   );
 };
 

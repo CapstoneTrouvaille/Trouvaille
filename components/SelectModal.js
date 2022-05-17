@@ -24,7 +24,6 @@ const SelectModal = (props) => {
   return (
     <View>
      <Center>
-
      <Text>{dayName}</Text>
         <Button onPress={() => setShowModal(true)}>+</Button>
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>

@@ -44,6 +44,7 @@ export const getItinerary = (tripId) => {
 export const addItineraryDay = (tripId, day, plans) => {
   return async(dispatch) => {
     try {
+      console.log("add day called")
       let newDay = {[day]: [plans]}
       const tripDocRef = doc(db, "trips", tripId)
       await updateDoc(tripDocRef, {
