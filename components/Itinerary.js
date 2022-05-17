@@ -25,6 +25,7 @@ const Itinerary = (props) => {
   const [plans, setPlans] = useState("")
   const tripId = props.tripId
   let days = itinerary.length
+  // console.log("ITINERARY",itinerary)
 
   const populateDays = [];
   for (let i = 0; i < days; i++) {

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -8,6 +8,7 @@ import {
   Input,
   Center,
   Checkbox,
+  Text
 } from "native-base";
 
 
@@ -16,6 +17,8 @@ const SelectModal = (props) => {
   const savedItems = useSelector((state) => state.savedItems);
   const itinerary = useSelector((state) => state.itinerary);
   const dayName = Object.keys(itinerary[props.index])[0]
+  const plansList = itinerary[props.index][dayName]
+  console.log("ITINERARY IN MODAL",plansList)
 
   const [showModal, setShowModal] = useState(false);
   const [groupValues, setGroupValues] = useState([]);
@@ -24,7 +27,7 @@ const SelectModal = (props) => {
   return (
     <View>
      <Center>
-     <Text>{dayName}</Text>
+     <Text bold>{dayName}</Text>
         <Button onPress={() => setShowModal(true)}>+</Button>
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
           <Modal.Content maxWidth="400px">
@@ -66,6 +69,9 @@ const SelectModal = (props) => {
           </Modal.Content>
         </Modal>
       </Center>
+      {plansList.map((plan, i)=> (
+        <Text key={i}>{plan}</Text>
+      ))}
        {groupValues.map((value, index) => (
         <Text key={index}>{value}</Text>
       ))}
