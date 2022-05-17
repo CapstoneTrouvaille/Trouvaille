@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text as ReactNativeText } from "react-native";
 import React, { useState, useEffect } from "react";
 import {
   ScrollView,
@@ -10,10 +10,10 @@ import {
   Heading,
   Text,
   Button,
-  DatePicker,
+  //DatePicker,
 } from "native-base";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { auth } from "../firebase";
+//import DateTimePicker from "@react-native-community/datetimepicker";
+import { auth, firebase } from "../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrip, fetchTrips } from "./store/trip";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
@@ -21,12 +21,15 @@ import { useNavigation } from "@react-navigation/core";
 import InviteTripMember from "./InviteTripMember";
 import InviteAcceptDecline from "./InviteAcceptDecline";
 import NewTripInviteMsg from "./NewTripInviteMsg";
+import DatePicker from "react-native-datepicker";
+//native base doesn't have a date picker so you have to use the react native one
+
 
 const AddTrip = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState("05-16-2022");
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
@@ -56,27 +59,49 @@ const AddTrip = () => {
   };
 
   const handleSubmit = () => {
+    //need to change date to yyyy-mm-dd format to put into date function
+    const newStartDate = firebase.firestore.Timestamp.fromDate(
+      new Date(
+        `${startDate.slice(6)}-${startDate.slice(0, 2)}-${startDate.slice(
+          3,
+          5
+        )}`
+      )
+    );
+
+    const newEndDate = firebase.firestore.Timestamp.fromDate(
+      new Date(
+        `${endDate.slice(6)}-${endDate.slice(0, 2)}-${endDate.slice(3, 5)}`
+      )
+    );
+
     const newTripInfo = {
       tripName,
       location,
-      startDate,
-      endDate,
+      startDate: newStartDate,
+      endDate: newEndDate,
       status: "planning",
       tripLead: auth.currentUser.uid,
       users: [auth.currentUser.uid],
       tripMemories: [],
       messages: [],
-      pendingUsers: [],
-      Itinerary: [],
+      pendingUsers:[],
+      Itinerary:[]
     };
-    console.log(`Get Planning! clicked:`, newTripInfo);
-    dispatch(addTrip(newTripInfo));
-    setTripName("");
-    setLocation("");
-    setStartDate("");
-    setEndDate("");
-    navigation.navigate("InviteTripMember", { tripId });
+    if (tripName != "" && location != "" && startDate != "" && endDate != "") {
+      console.log(`Get Planning! clicked:`, newTripInfo);
+      dispatch(addTrip(newTripInfo));
+      setTripName("");
+      setLocation("");
+      setStartDate("");
+      setEndDate("");
+      navigation.navigate("InviteTripMember", { tripId });
+    } else {
+      alert("Please fill out ALL the fields to proceed!");
+    }
   };
+
+  console.log(Date.now());
 
   return (
     <ScrollView w="100%">
@@ -121,7 +146,7 @@ const AddTrip = () => {
               onChangeText={(text) => setLocation(text)}
             />
           </FormControl>
-          <FormControl mb="4">
+          {/* <FormControl mb="4">
             <FormControl.Label>Trip start date</FormControl.Label>
             <Input
               value={startDate}
@@ -129,8 +154,10 @@ const AddTrip = () => {
               placeholder="Enter trip start date"
               onChangeText={(text) => setStartDate(text)}
             />
-          </FormControl>
-          <FormControl mb="4">
+          </FormControl> */}
+        </Box>
+
+        {/* <FormControl mb="4">
             <FormControl.Label>Trip end date</FormControl.Label>
             <Input
               value={endDate}
@@ -148,8 +175,88 @@ const AddTrip = () => {
               is24Hour={true}
               onChange={onChange}
             />
-          </FormControl>
-        </Box>
+          </FormControl> */}
+
+        <View style={styles.container}>
+          <ReactNativeText style={styles.text}>
+            Trip Start Date :
+          </ReactNativeText>
+          <DatePicker
+            style={styles.datePickerStyle}
+            date={startDate}
+            mode="date"
+            placeholder="select start date"
+            format="MM/DD/YYYY"
+            minDate="01-01-2022"
+            maxDate="01-01-3022"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                position: "absolute",
+                right: -5,
+                top: 4,
+                marginLeft: 0,
+              },
+              dateInput: {
+                borderColor: "gray",
+                alignItems: "flex-start",
+                borderWidth: 0,
+                borderBottomWidth: 1,
+              },
+              placeholderText: {
+                fontSize: 17,
+                color: "gray",
+              },
+              dateText: {
+                fontSize: 17,
+              },
+            }}
+            onDateChange={(date) => {
+              setStartDate(date);
+            }}
+          />
+        </View>
+
+        <View style={styles.container}>
+          <ReactNativeText style={styles.text}>Trip End Date :</ReactNativeText>
+          <DatePicker
+            style={styles.datePickerStyle}
+            date={endDate}
+            mode="date"
+            placeholder="select start date"
+            format="MM/DD/YYYY"
+            minDate="01-01-2022"
+            maxDate="01-01-3022"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                position: "absolute",
+                right: -5,
+                top: 4,
+                marginLeft: 0,
+              },
+              dateInput: {
+                borderColor: "gray",
+                alignItems: "flex-start",
+                borderWidth: 0,
+                borderBottomWidth: 1,
+              },
+              placeholderText: {
+                fontSize: 17,
+                color: "gray",
+              },
+              dateText: {
+                fontSize: 17,
+              },
+            }}
+            onDateChange={(date) => {
+              setEndDate(date);
+            }}
+          />
+        </View>
+
         <Box alignItems="center" mb="6">
           <Button size="lg" onPress={handleSubmit}>
             Get Planning!
@@ -162,4 +269,26 @@ const AddTrip = () => {
 
 export default AddTrip;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#A8E9CA",
+  },
+  title: {
+    textAlign: "left",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  datePickerStyle: {
+    width: 230,
+  },
+  text: {
+    textAlign: "left",
+    width: 230,
+    fontSize: 16,
+    color: "#000",
+  },
+});

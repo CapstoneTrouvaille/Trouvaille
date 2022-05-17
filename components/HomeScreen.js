@@ -32,6 +32,7 @@ import { TabView, SceneMap } from "react-native-tab-view";
 import CurrentTripScreen from "./CurrentTripScreen";
 import PastTripsScreen from "./PastTripsScreen";
 import NewTripInviteMsg from "./NewTripInviteMsg";
+import { getSavedItems } from "./store/saved";
 
 //ROUTES FOR MIDDLE TAB
 const FirstRoute = () => (
@@ -80,6 +81,12 @@ const HomeScreen = () => {
   // useEffect(() => {
   //   dispatch(fetchUser(auth.currentUser.uid));
   // }, [tripInfo.successAdd]);
+
+  useEffect(() => {
+    dispatch(fetchTrips())
+    dispatch(getSavedItems())
+  }, []);
+
 
   const handleSignOut = () => {
     dispatch(logoutUser());

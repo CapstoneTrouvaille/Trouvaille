@@ -24,36 +24,53 @@ import {
 import { TabView, SceneMap } from "react-native-tab-view";
 import Itinerary from "./Itinerary";
 import Memories from "./Memories";
+import firebase from "firebase/compat";
 
-const FirstRoute = () => (
-  <Center>
-    <Itinerary />
-  </Center>
-);
-const SecondRoute = () => (
-  <Center>
-    <Memories tripId="RpEavfYi1OrxhAB9ebVK" />
-  </Center>
-);
 
-const initialLayout = {
-  width: Dimensions.get("window").width,
-};
-const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute,
-});
+
 
 const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = route.params.tripId;
   const tripInfo = useSelector((state) => state.trip);
-  console.log("tripINfo in SingleTrip", tripInfo);
+  // console.log("tripINfo in SingleTrip", tripInfo);
+
   useEffect(() => {
-    dispatch(fetchSingleTrip(tripId));
+    dispatch(fetchSingleTrip(tripId))
   }, []);
   const travelers = tripInfo.users || [];
+  //may need to delete?
+  const startDate = tripInfo.startDate || "";
+  const fireBaseTime = new Date(
+    startDate.seconds * 1000 + startDate.nanoseconds / 1000000
+  );
+  const newStartDate = fireBaseTime.toDateString();
+
+  const endDate = tripInfo.endDate || "";
+  const eFireBaseTime = new Date(
+    endDate.seconds * 1000 + endDate.nanoseconds / 1000000
+  );
+  const newEndDate = eFireBaseTime.toDateString();
+
+  const FirstRoute = () => (
+    <Center>
+      <Itinerary tripId={tripId }/>
+    </Center>
+  );
+  const SecondRoute = () => (
+    <Center>
+      <Memories tripId={tripId} />
+    </Center>
+  );
+
+  const initialLayout = {
+    width: Dimensions.get("window").width,
+  };
+  const renderScene = SceneMap({
+    first: FirstRoute,
+    second: SecondRoute,
+  });
 
   //MIDDLE TAB
   const [index, setIndex] = React.useState(0);
@@ -67,6 +84,8 @@ const SingleTrip = ({ route }) => {
       title: "Memories",
     },
   ]);
+
+  //console.log("DDDAAATTEEEEEEEEEE", tripInfo.startDate);
 
   const renderTabBar = (props) => {
     const inputRange = props.navigationState.routes.map((x, i) => i);
@@ -140,7 +159,16 @@ const SingleTrip = ({ route }) => {
               </Stack>
               <Text fontWeight="400">Location: {tripInfo.location}</Text>
               <Text fontWeight="400">
-                {tripInfo.startDate} - {tripInfo.endDate}
+                {newStartDate} - {newEndDate}
+                {/* {JSON.stringify(tripInfo.startDate.toDate()).replace(
+                  /['"]+/g,
+                  ""
+                )}{" "}
+                -{" "}
+                {JSON.stringify(tripInfo.endDate.toDate()).replace(
+                  /['"]+/g,
+                  ""
+                )} */}
               </Text>
               <Text fontWeight="400">Travelers: {travelers}</Text>
               <Button

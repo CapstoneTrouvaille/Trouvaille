@@ -5,7 +5,7 @@
     "description": "Plan, Travel, and Reminisce with Trouvaille's group trip collaboration mobile app. ",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon2.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -18,8 +18,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.nikkintech.Trouvaille"
+      "supportsTablet": true  
     },
     "android": {
       "adaptiveIcon": {

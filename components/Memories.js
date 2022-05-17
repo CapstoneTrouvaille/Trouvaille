@@ -33,15 +33,14 @@ const Memories = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = props.tripId;
-  const memories = useSelector((state) => state.memories);
-  console.log(memories);
+  const memories = useSelector((state) => state.memories)
 
   useEffect(() => {
     dispatch(fetchMemories(tripId));
   }, []);
 
   return (
-    <ScrollView w="100%">
+    <View w="100%">
       <Stack
         space={2.5}
         alignSelf="center"
@@ -104,17 +103,6 @@ const Memories = (props) => {
                 <HStack space={3} justifyContent="space-between">
                   <VStack>
                     <Text
-                      _dark={{
-                        color: "warmGray.50",
-                      }}
-                      color="coolGray.800"
-                      bold
-                    >
-                      {item.journalName}
-                    </Text>
-
-                    <Spacer />
-                    <Text
                       fontSize="xs"
                       _dark={{
                         color: "warmGray.50",
@@ -136,7 +124,7 @@ const Memories = (props) => {
           />
         </Box>
       </Stack>
-    </ScrollView>
+    </View>
   );
 };
 
