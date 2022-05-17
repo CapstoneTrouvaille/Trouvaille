@@ -14,7 +14,6 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Heart from "./Heart";
 
-
 const PlacesResults = () => {
   const placesList = useSelector((state) => state.places) || [null];
   return (

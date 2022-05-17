@@ -9,15 +9,14 @@ import InitialNavigator from "./components/navigation/InitialNavigator";
 import { auth } from "./firebase";
 import InviteTripMember from "./components/InviteTripMember";
 
-
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(
     () => {
       const unsubscribe = auth.onAuthStateChanged((user) => {
+        // console.log("USER", user);
         if (user) {
-          // console.log("USER", user);
           setIsLoggedIn(true);
         } else {
           setIsLoggedIn(false);

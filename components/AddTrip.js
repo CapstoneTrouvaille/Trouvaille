@@ -7,22 +7,23 @@ import {
   Input,
   Box,
   Divider,
-  WarningOutlineIcon,
   Heading,
   Text,
   Button,
   //DatePicker,
 } from "native-base";
 //import DateTimePicker from "@react-native-community/datetimepicker";
-import { auth } from "../firebase";
+import { auth, firebase } from "../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrip, fetchTrips } from "./store/trip";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/core";
 import InviteTripMember from "./InviteTripMember";
+import InviteAcceptDecline from "./InviteAcceptDecline";
+import NewTripInviteMsg from "./NewTripInviteMsg";
 import DatePicker from "react-native-datepicker";
 //native base doesn't have a date picker so you have to use the react native one
-import firebase from "firebase/compat"; //is this right?
+
 
 const AddTrip = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const AddTrip = () => {
   const [endDate, setEndDate] = useState("");
 
   const trip = useSelector((state) => state.trip);
+  const tripId = trip.id;
 
   //console.log(`TRIPS FROM REDUX!!!:`, trip);
 
@@ -93,7 +95,7 @@ const AddTrip = () => {
       setLocation("");
       setStartDate("");
       setEndDate("");
-      navigation.navigate("InviteFriends");
+      navigation.navigate("InviteTripMember", { tripId });
     } else {
       alert("Please fill out ALL the fields to proceed!");
     }

@@ -10,9 +10,6 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { db, auth } from "../../firebase";
-import { useNavigation } from "@react-navigation/core";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { fetchUser } from './user';
 
 //ACTION TYPES
 const GET_TRIPS = "GET_TRIPS";
@@ -20,6 +17,10 @@ const ADD_TRIP_REQUEST = "ADD_TRIP_REQUEST";
 const ADD_TRIP_SUCCESS = "ADD_TRIP_SUCCESS";
 const ADD_TRIP_FAIL = "ADD_TRIP_FAIL";
 const SINGLE_TRIP = "SINGLE_TRIP";
+//const INVITE_TRIP_MEMBER = "INVITE_TRIP_MEMBER"
+const ADD_USER_TO_TRIP_REQUEST = "ADD_USER_TO_TRIP_REQUEST";
+const ADD_USER_TO_TRIP_SUCCESS = "ADD_USER_TO_TRIP_SUCCESS";
+const ADD_USER_TO_TRIP_FAIL = "ADD_USER_TO_TRIP_FAIL";
 
 //ACTION CREATOR
 export const _getTrips = (trips) => ({
@@ -47,6 +48,19 @@ export const _set_active_trip = (tripId) => ({
 export const getSingleTrip = (trip) => ({
   type: SINGLE_TRIP,
   trip,
+});
+
+export const _addUserToTripRequest = () => ({
+  type: ADD_USER_TO_TRIP_REQUEST,
+});
+
+export const _addUserToTripSuccess = (tripID, userUID) => ({
+  type: ADD_USER_TO_TRIP_SUCCESS,
+});
+
+export const _addUserToTripFail = (error) => ({
+  type: ADD_USER_TO_TRIP_FAIL,
+  errorAdd: error,
 });
 
 //THUNK
@@ -103,16 +117,32 @@ export const addTrip = (newTripInfo) => {
         where("UID", "==", auth.currentUser.uid)
       );
       const userRecord = await getDocs(q);
-      // console.log(`this is userRecord.docs[0].id:`, userRecord.docs[0].id);
       const userReference = doc(db, "user", userRecord.docs[0].id);
 
       await updateDoc(userReference, {
         trip: arrayUnion(addedTrip.id),
       });
-      dispatch(_addTripSuccess(addedTrip));
+      dispatch(_addTripSuccess(addedTrip.id, auth.currentUser.uid));
     } catch (error) {
       dispatch(_addTripFail(error));
       console.error("Error adding trip: ", error);
+    }
+  };
+};
+
+export const addUserToTrip = (tripId, userUID) => {
+  return async (dispatch) => {
+    try {
+      dispatch(_addUserToTripRequest());
+      const tripReference = doc(db, "trips", tripId);
+      await updateDoc(tripReference, {
+        users: arrayUnion(userUID),
+      });
+      dispatch(_addUserToTripSuccess(tripId, userUID));
+      console.error("Successfully added user to trip!");
+    } catch (error) {
+      dispatch(_addUserToTripFail(error));
+      console.error("Error adding user to trip: ", error);
     }
   };
 };
@@ -130,6 +160,12 @@ export default function trip(state = {}, action) {
       return { ...state, loadingAdd: false, errorAdd: action.errorAdd };
     case SINGLE_TRIP:
       return action.trip;
+    case ADD_USER_TO_TRIP_REQUEST:
+      return { ...state, loadingAdd: true };
+    case ADD_USER_TO_TRIP_SUCCESS:
+      return { ...state, loadingAdd: false, successAdd: true };
+    case ADD_USER_TO_TRIP_FAIL:
+      return { ...state, loadingAdd: false, errorAdd: action.errorAdd };
     default:
       return state;
   }

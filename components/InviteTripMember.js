@@ -1,5 +1,8 @@
 import { StyleSheet, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserToInvite } from "./store/user";
+import { useNavigation } from "@react-navigation/core";
 import {
   Input,
   Box,
@@ -9,44 +12,61 @@ import {
   VStack,
   Center,
   Icon,
-  Ionicons,
+  Divider,
 } from "native-base";
 
-const InviteTripMember = () => {
+const InviteTripMember = ({ route }) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const tripId = route.params.tripId;
+  const tripInfo = useSelector((state) => state.trip);
+
+  const tripPendingUsers = tripInfo.pendingUsers;
+
   const [friendEmail, setFriendEmail] = useState("");
 
+  const handleChange = (text) => setFriendEmail(text);
+
   const handleSubmit = () => {
-    console.log(`Add friend clicked:`, friendEmail);
-    dispatch(addTrip(newTripInfo));
-    navigation.replace("Invite friends");
+    console.log(
+      `Add friend clicked - friendEmail, TripId:`,
+      friendEmail,
+      tripId
+    );
+    dispatch(fetchUserToInvite(friendEmail, tripId));
+    setFriendEmail("");
   };
+
+
 
   return (
     <View>
       <VStack w="100%" space={5} alignSelf="center">
-        <Heading fontSize="lg">Invite friends by email</Heading>
-        <Input
-          value={friendEmail}
-          onChangeText={(e) => setFriendEmail(e.target.value)}
-          placeholder="Search"
-          variant="filled"
-          width="100%"
-          borderRadius="10"
-          py="1"
-          px="2"
-          borderWidth="0"
-          InputLeftElement={
-            <Icon
-              ml="2"
-              size="4"
-              color="gray.400"
-              // as={<Ionicons name="ios-search" />}
-            />
-          }
-        />
-        <Box alignItems="center">
-          <Button onPress={handleSubmit}>Add friend</Button>
-        </Box>
+        <Center>
+          <Heading mt="6" fontSize="xl">
+            Invite Trip Members By Email
+          </Heading>
+          <Input
+            size="lg"
+            mt="4"
+            value={friendEmail}
+            w="90%"
+            maxW="400px"
+            onChangeText={handleChange}
+            placeholder="Enter email address"
+          />
+          <Box mt="6" mb="6" alignItems="center">
+            <Button onPress={handleSubmit}>Send Trip Invitation</Button>
+          </Box>
+          <Divider />
+          <Text fontSize="lg" mt="4" mb="4">
+            Pending Trip Member Invitations
+          </Text>
+          {tripPendingUsers &&
+            tripPendingUsers.map((userId, index) => (
+              <Text key={index}>{userId}</Text>
+            ))}
+        </Center>
       </VStack>
     </View>
   );

@@ -10,25 +10,17 @@ import {
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleTrip } from "./store/trip";
+import { useNavigation } from "@react-navigation/core";
 import {
   ScrollView,
   Stack,
-  FormControl,
-  Input,
   Box,
-  Divider,
-  Spacer,
   Heading,
   Text,
   Button,
-  Avatar,
-  FlatList,
-  VStack,
-  HStack,
   Center,
   useColorModeValue,
 } from "native-base";
-import { useNavigation } from "@react-navigation/core";
 import { TabView, SceneMap } from "react-native-tab-view";
 import Itinerary from "./Itinerary";
 import Memories from "./Memories";
@@ -179,6 +171,29 @@ const SingleTrip = ({ route }) => {
                 )} */}
               </Text>
               <Text fontWeight="400">Travelers: {travelers}</Text>
+              <Button
+                size="sm"
+                mt="4"
+                mb="2"
+                onPress={() =>
+                  navigation.navigate("InviteTripMember", {
+                    tripId,
+                  })
+                }
+              >
+                Invite Friends
+              </Button>
+              <Button
+                size="sm"
+                mb="2"
+                onPress={() =>
+                  navigation.navigate("InviteAcceptDecline", {
+                    tripId,
+                  })
+                }
+              >
+                Temporary Button - Accept Trip Invite
+              </Button>
             </Center>
           </Box>
         </Stack>

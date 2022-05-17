@@ -7,26 +7,20 @@ import {
   Animated,
   Pressable,
 } from "react-native"; //rnfes
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "./store/user";
+import { fetchUser, fetchUserToInvite } from "./store/user";
 import { fetchTrips } from "./store/trip";
 import {
-  ScrollView,
   Stack,
-  FormControl,
-  Input,
   Box,
   Divider,
-  WarningOutlineIcon,
   Heading,
   Text,
   Button,
-  DatePicker,
   Avatar,
-  NativeBaseProvider,
   useColorModeValue,
   Center,
 } from "native-base";
@@ -37,6 +31,7 @@ import { logoutUser } from "./store";
 import { TabView, SceneMap } from "react-native-tab-view";
 import CurrentTripScreen from "./CurrentTripScreen";
 import PastTripsScreen from "./PastTripsScreen";
+import NewTripInviteMsg from "./NewTripInviteMsg";
 import { getSavedItems } from "./store/saved";
 
 //ROUTES FOR MIDDLE TAB
@@ -62,20 +57,36 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const [showNewInvite, setShowNewInvite] = useState(true);
+
   const userInfo = useSelector((state) => state.user);
-  const tripInfo = useSelector((state) => state.trip);
+  // const tripInfo = useSelector((state) => state.trip);
 
-  // console.log("Line 63 inside useEffect - userINFO", userInfo);
-  // console.log(`Trip info:`, tripInfo);
 
-  useEffect(() => {
-    dispatch(fetchUser(auth.currentUser.uid));
-  }, [tripInfo.successAdd]);
+  // const checkPendingTrips = () => {
+  //   if (userInfo.pendingTrips.length > 0) {
+  //     setShowNewInvite(true);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   dispatch(fetchTrips());
+  //   console.log(`This is userInfo did mount: `, userInfo);
+  // }, []);
+
+  // useEffect(() => {
+  //   checkPendingTrips();
+  // }, [userInfo.pendingTrips]);
+
+  // useEffect(() => {
+  //   dispatch(fetchUser(auth.currentUser.uid));
+  // }, [tripInfo.successAdd]);
 
   useEffect(() => {
     dispatch(fetchTrips())
     dispatch(getSavedItems())
   }, []);
+
 
   const handleSignOut = () => {
     dispatch(logoutUser());
@@ -178,6 +189,7 @@ const HomeScreen = () => {
           <Heading size="xl" mb="4">
             {userInfo.name}'s Trip Dashboard
           </Heading>
+          {showNewInvite && <NewTripInviteMsg />}
           <Text>Email: {userInfo.email}</Text>
           <Divider mb="8" />
         </Box>
@@ -205,15 +217,6 @@ const HomeScreen = () => {
               onPress={() => navigation.navigate("AddTrip")}
             >
               Add a Trip
-            </Button>
-          </Center>
-          <Center>
-            <Button
-              size="lg"
-              mb="6"
-              onPress={() => navigation.navigate("InviteFriends")}
-            >
-              Invite Friends
             </Button>
           </Center>
           <Center>

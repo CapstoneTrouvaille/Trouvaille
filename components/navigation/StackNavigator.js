@@ -11,6 +11,8 @@ import ProfileScreen from "../ProfileScreen";
 import ChatScreen from "../ChatScreen";
 import ExploreScreen from "../ExploreScreen";
 import InviteTripMember from "../InviteTripMember";
+import NewTripInviteMsg from "../NewTripInviteMsg";
+import InviteAcceptDecline from "../InviteAcceptDecline";
 import PlacesResults from "../PlacesResults";
 import SingleTrip from "../SingleTrip";
 import Memories from "../Memories";
@@ -36,8 +38,12 @@ const HomeStackNavigator = () => {
     >
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="AddTrip" component={AddTrip} />
-      <Stack.Screen name="InviteFriends" component={InviteTripMember} />
-
+      <Stack.Screen name="InviteTripMember" component={InviteTripMember} />
+      <Stack.Screen
+        name="InviteAcceptDecline"
+        component={InviteAcceptDecline}
+      />
+      <Stack.Screen name="New Trip Invite" component={NewTripInviteMsg} />
       <Stack.Screen name="SingleTrip" component={SingleTrip} />
       <Stack.Screen name="Memories" component={Memories} />
       <Stack.Screen name="AddMemories" component={AddMemories} />
