@@ -122,7 +122,7 @@ export const addTrip = (newTripInfo) => {
       await updateDoc(userReference, {
         trip: arrayUnion(addedTrip.id),
       });
-      dispatch(_addTripSuccess(tripID, userUID));
+      dispatch(_addTripSuccess(addedTrip.id, auth.currentUser.uid));
     } catch (error) {
       dispatch(_addTripFail(error));
       console.error("Error adding trip: ", error);

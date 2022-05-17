@@ -11,7 +11,7 @@ import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "./store/user";
+import { fetchUser, fetchUserToInvite } from "./store/user";
 import { fetchTrips } from "./store/trip";
 import {
   Stack,
@@ -59,18 +59,27 @@ const HomeScreen = () => {
   const [showNewInvite, setShowNewInvite] = useState(true);
 
   const userInfo = useSelector((state) => state.user);
-  const tripInfo = useSelector((state) => state.trip);
+  // const tripInfo = useSelector((state) => state.trip);
 
-  // console.log("Line 63 inside useEffect - userINFO", userInfo);
-  // console.log(`Trip info:`, tripInfo);
 
-  useEffect(() => {
-    dispatch(fetchUser(auth.currentUser.uid));
-  }, [tripInfo.successAdd]);
+  // const checkPendingTrips = () => {
+  //   if (userInfo.pendingTrips.length > 0) {
+  //     setShowNewInvite(true);
+  //   }
+  // };
 
-  useEffect(() => {
-    dispatch(fetchTrips());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchTrips());
+  //   console.log(`This is userInfo did mount: `, userInfo);
+  // }, []);
+
+  // useEffect(() => {
+  //   checkPendingTrips();
+  // }, [userInfo.pendingTrips]);
+
+  // useEffect(() => {
+  //   dispatch(fetchUser(auth.currentUser.uid));
+  // }, [tripInfo.successAdd]);
 
   const handleSignOut = () => {
     dispatch(logoutUser());

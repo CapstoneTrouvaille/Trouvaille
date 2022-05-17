@@ -37,6 +37,8 @@ const InviteTripMember = ({ route }) => {
     setFriendEmail("");
   };
 
+
+
   return (
     <View>
       <VStack w="100%" space={5} alignSelf="center">

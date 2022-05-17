@@ -21,7 +21,6 @@ import {
   Center,
   useColorModeValue,
 } from "native-base";
-import { useNavigation } from "@react-navigation/core";
 import { TabView, SceneMap } from "react-native-tab-view";
 import Itinerary from "./Itinerary";
 import Memories from "./Memories";
@@ -144,6 +143,29 @@ const SingleTrip = ({ route }) => {
                 {tripInfo.startDate} - {tripInfo.endDate}
               </Text>
               <Text fontWeight="400">Travelers: {travelers}</Text>
+              <Button
+                size="sm"
+                mt="4"
+                mb="2"
+                onPress={() =>
+                  navigation.navigate("InviteTripMember", {
+                    tripId,
+                  })
+                }
+              >
+                Invite Friends
+              </Button>
+              <Button
+                size="sm"
+                mb="2"
+                onPress={() =>
+                  navigation.navigate("InviteAcceptDecline", {
+                    tripId,
+                  })
+                }
+              >
+                Temporary Button - Accept Trip Invite
+              </Button>
             </Center>
           </Box>
         </Stack>

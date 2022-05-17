@@ -36,6 +36,7 @@ const AddTrip = () => {
   const [endDate, setEndDate] = useState("");
 
   const trip = useSelector((state) => state.trip);
+  const tripId = trip.id;
 
   //console.log(`TRIPS FROM REDUX!!!:`, trip);
 
@@ -65,6 +66,8 @@ const AddTrip = () => {
       users: [auth.currentUser.uid],
       tripMemories: [],
       messages: [],
+      pendingUsers: [],
+      Itinerary: [],
     };
     console.log(`Get Planning! clicked:`, newTripInfo);
     dispatch(addTrip(newTripInfo));
@@ -72,7 +75,7 @@ const AddTrip = () => {
     setLocation("");
     setStartDate("");
     setEndDate("");
-    navigation.navigate("InviteFriends");
+    navigation.navigate("InviteTripMember", { tripId });
   };
 
   return (

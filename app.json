@@ -2,6 +2,7 @@
   "expo": {
     "name": "Trouvaille",
     "slug": "Trouvaille",
+    "description": "Plan, Travel, and Reminisce with Trouvaille's group trip collaboration mobile app. ",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,17 +18,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true   
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nikkintech.Trouvaille"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#9B6DBE"
-      }
+      },
+      "package": "com.nikkintech.Trouvaille"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     }
-   
   }
 }

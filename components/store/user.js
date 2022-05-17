@@ -72,10 +72,7 @@ export const fetchUserToInvite = (userEmail, tripId) => {
       const q = query(collection(db, "user"), where("email", "==", userEmail));
       const userRecord = await getDocs(q);
       const userReference = doc(db, "user", userRecord.docs[0].id);
-      // console.log(
-      //   `FETCHUSERTOINVITE thunk userReference.id: `,
-      //   userReference.id
-      // );
+      console.log(`FETCHUSERTOINVITE thunk userRecord: `, userRecord);
       if (userReference.empty) {
         dispatch(searchToInviteFail(error));
       } else {
@@ -102,7 +99,8 @@ export const signupUser = (name, email, password) => {
         name: name,
         email: email,
         trip: [],
-        savedItems: []
+        savedItems: [],
+        pendingTrips: [],
       };
       await db.collection("user").add(userData);
       dispatch(signup(userData));
