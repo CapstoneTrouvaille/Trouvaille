@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet,Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
 
 const ItineraryDay = (props) => {
   const itinerary = useSelector((state) => state.itinerary);
@@ -8,6 +9,7 @@ const ItineraryDay = (props) => {
     (obj) => obj !== "placesFromExplore"
   )[0];
 
+  console.log("itinerary", itinerary)
   const plansList = itinerary[props.index][dayName];
   const placesFromExplore = itinerary[props.index].placesFromExplore || [];
 

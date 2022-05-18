@@ -30,7 +30,7 @@ const SelectModal = (props) => {
   return (
     <View>
       <Center>
-        <Button onPress={() => setShowModal(true)}>+</Button>
+        <Button mb = "2%" width = "100%" size="sm" onPress={() => setShowModal(true)}>Select from saved items</Button>
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
           <Modal.Content maxWidth="400px">
             <Modal.CloseButton />
