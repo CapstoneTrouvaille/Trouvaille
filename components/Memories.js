@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Platform, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMemories } from "./store/memories";
@@ -22,18 +22,13 @@ import {
 
 import { useNavigation } from "@react-navigation/core";
 import { db } from "../firebase";
-import Voice from "./Voice";
-import ImageUpload from "./ImageUpload";
-
-import VoiceDownload from "./VoiceDownload";
-
 import SingleMemory from "./SingleMemory";
 
 const Memories = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = props.tripId;
-  const memories = useSelector((state) => state.memories)
+  const memories = useSelector((state) => state.memories);
 
   useEffect(() => {
     dispatch(fetchMemories(tripId));
@@ -65,21 +60,7 @@ const Memories = (props) => {
             Add a memory
           </Button>
         </Center>
-        <Center>
-          <Voice tripId={tripId} />
-          {/* <VoiceDownload tripId={tripId} /> */}
-        </Center>
-        <Box alignItems="center" mb="6">
-          <Center>
-            <Button
-              size="md"
-              m="2.5"
-              onPress={() => navigation.navigate("ImageUpload")}
-            >
-              Upload Image
-            </Button>
-          </Center>
-        </Box>
+
         <Divider mv="8" />
 
         <Box>

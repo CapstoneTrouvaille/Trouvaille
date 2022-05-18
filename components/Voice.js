@@ -51,7 +51,7 @@ const Voice = (props) => {
       file: recording.getURI(),
     });
     audioUpload(recording.getURI());
-    console.log("updatedRecordings", updatedRecordings);
+    // console.log("updatedRecordings", updatedRecordings);
     setRecordings(updatedRecordings);
   }
 
