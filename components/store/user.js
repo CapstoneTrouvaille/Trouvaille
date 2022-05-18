@@ -69,17 +69,18 @@ export const fetchUserToInvite = (userEmail, tripId) => {
       const tripReference = doc(db, "trips", tripRecord.id);
 
       const allUserRef = db.collection("user");
-      const userDoc = await allUserRef.where("email", "==", userEmail).get();
+      const userRec = await allUserRef.where("email", "==", userEmail).get();
 
-      const userReference = userDoc.docs[0].data();
+      const userRef = userRec.docs[0].data();
+      const userReference = doc(db, "user", userRec.docs[0].id);
 
-      console.log(`!!!userDoc: `, userReference.UID);
+      console.log(`!!!userDoc: `, userRef.UID);
 
-      if (userReference.empty) {
+      if (userRef.empty) {
         dispatch(searchToInviteFail(error));
       } else {
         await updateDoc(tripReference, {
-          pendingUsers: arrayUnion(userReference.UID),
+          pendingUsers: arrayUnion(userRef.UID),
         });
         await updateDoc(userReference, {
           pendingTrips: arrayUnion(tripId),

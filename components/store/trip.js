@@ -1,5 +1,6 @@
 import {
   arrayUnion,
+  arrayRemove,
   doc,
   getDoc,
   query,
@@ -92,12 +93,6 @@ export const fetchTrips = () => {
         .collection("trips")
         .where("users", "array-contains", auth.currentUser.uid)
         .get();
-      //console.log(`FetchTrips: This is the users trips:`, userTrips.docs);
-      // if (!userTrips.length) {
-      //   console.log("You have no trips!");
-      // } else {
-      //   console.log(`2 FetchTrips: This is the users trips:`, userTrips)
-      // }
     } catch (error) {
       console.log(error);
     }
@@ -133,13 +128,27 @@ export const addTrip = (newTripInfo) => {
 export const addUserToTrip = (tripId, userUID) => {
   return async (dispatch) => {
     try {
-      console.log(`AddUserToTrip Thunk:`, tripId, userUID);
       dispatch(_addUserToTripRequest());
       const tripReference = await doc(db, "trips", tripId);
-      console.log(`This is trip reference: `, tripReference);
+
+      const allUserRef = db.collection("user");
+      const userRec = await allUserRef.where("UID", "==", userUID).get();
+      const userRef = userRec.docs[0].data();
+      const userReference = doc(db, "user", userRec.docs[0].id);
+
       await updateDoc(tripReference, {
         users: arrayUnion(userUID),
       });
+      await updateDoc(tripReference, {
+        pendingUsers: arrayRemove(userUID),
+      });
+      await updateDoc(userReference, {
+        trip: arrayUnion(tripId),
+      });
+      await updateDoc(userReference, {
+        pendingTrips: arrayRemove(tripId),
+      });
+
       dispatch(_addUserToTripSuccess());
       console.log("Successfully added user to trip!");
     } catch (error) {

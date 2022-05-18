@@ -26,11 +26,15 @@ const InviteAcceptDecline = ({ route }) => {
   const handleSubmitAccept = (tripId) => {
     console.log(`User clicked  ** Invite Accepted ** !!`);
     dispatch(addUserToTrip(tripId, userInfo.UID));
-    navigation.navigate("SingleTrip", { tripId });
+    //  navigation.navigate("SingleTrip", { tripId });
   };
 
   const handleSubmitDecline = () => {
     console.log(`Invite Declined Clicked!!!!`);
+  };
+
+  const handleHomeOnClick = () => {
+    navigation.navigate("Home");
   };
 
   return (
@@ -65,7 +69,11 @@ const InviteAcceptDecline = ({ route }) => {
                 <Button size="sm" mb="6" onPress={handleSubmitDecline}>
                   Decline Trip Invite
                 </Button>
-                <Divider />
+                <Box mt="10" alignItems="center">
+                  <Button onPress={handleHomeOnClick}>
+                    View Trip Dashboard
+                  </Button>
+                </Box>
               </View>
             ))}
         </Center>

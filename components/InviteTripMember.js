@@ -2,6 +2,7 @@ import { StyleSheet, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserToInvite } from "./store/user";
+import { fetchTrips } from "./store/trip";
 import { useNavigation } from "@react-navigation/core";
 import {
   Input,
@@ -23,6 +24,7 @@ const InviteTripMember = ({ route }) => {
   const tripInfo = useSelector((state) => state.trip);
 
   const currentTripMembers = tripInfo.users;
+  console.log()
   const tripPendingUsers = tripInfo.pendingUsers;
   const declinedUsers = tripInfo.declinedUsers;
 
@@ -43,10 +45,6 @@ const InviteTripMember = ({ route }) => {
     dispatch(fetchUserToInvite(friendEmail, tripId));
     setFriendEmail("");
   };
-
-  useEffect(() => {
-    dispatch(fetchTrips());
-  }, []);
 
   return (
     <View>
@@ -86,9 +84,9 @@ const InviteTripMember = ({ route }) => {
             Pending Trip Member Invitations
           </Text>
           {tripPendingUsers &&
-            tripPendingUsers.map((userId, index) => (
+            tripPendingUsers.map((user, index) => (
               <Text key={index} mb="6">
-                {userId}
+                {user}
               </Text>
             ))}
           <Divider />
