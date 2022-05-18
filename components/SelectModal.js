@@ -19,10 +19,10 @@ const SelectModal = (props) => {
   const savedItems = useSelector((state) => state.savedItems);
   const itinerary = useSelector((state) => state.itinerary);
   //fix dayname, index changes
+  // console.log("ITINERARY IN MODAL", itinerary[props.index])
   const dayName = Object.keys(itinerary[props.index]).filter((obj)=>obj !== "placesFromExplore")
   const plansList = itinerary[props.index][dayName]
   const placesFromExplore = itinerary[props.index].placesFromExplore || []
-  console.log("Plans",itinerary[props.index])
 
   const [showModal, setShowModal] = useState(false);
   const [groupValues, setGroupValues] = useState([]);

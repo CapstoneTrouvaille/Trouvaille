@@ -86,7 +86,7 @@ const Memories = (props) => {
           <Heading fontSize="xl" p="4" pb="3">
             Memories
           </Heading>
-          <FlatList
+          {/* <FlatList
             data={memories}
             renderItem={({ item }, i) => (
               <Box
@@ -121,7 +121,7 @@ const Memories = (props) => {
               </Box>
             )}
             keyExtractor={(item) => item.id}
-          />
+          /> */}
         </Box>
       </Stack>
     </View>
