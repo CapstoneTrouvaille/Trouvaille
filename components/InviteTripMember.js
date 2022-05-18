@@ -35,12 +35,18 @@ const InviteTripMember = ({ route }) => {
   };
 
   const handleSubmit = () => {
-    console.log(`Send Invite Clicked (friendEmail, TripId):`,
-      friendEmail,tripId
+    console.log(
+      `Send Invite Clicked (friendEmail, TripId):`,
+      friendEmail,
+      tripId
     );
     dispatch(fetchUserToInvite(friendEmail, tripId));
     setFriendEmail("");
   };
+
+  useEffect(() => {
+    dispatch(fetchTrips());
+  }, []);
 
   return (
     <View>
