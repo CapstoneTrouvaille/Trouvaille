@@ -73,9 +73,10 @@ const AddTrip = () => {
       status: "planning",
       tripLead: auth.currentUser.uid,
       users: [auth.currentUser.uid],
+      pendingUsers: [],
+      declinedUsers: [],
       tripMemories: [],
       messages: [],
-      pendingUsers: [],
       Itinerary: itineraryDays,
     };
     if (tripName != "" && location != "" && startDate != "" && endDate != "") {
