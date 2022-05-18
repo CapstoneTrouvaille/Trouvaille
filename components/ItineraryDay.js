@@ -8,6 +8,7 @@ const ItineraryDay = (props) => {
     (obj) => obj !== "placesFromExplore"
   )[0];
 
+  console.log("itinerary", itinerary)
   const plansList = itinerary[props.index][dayName];
   const placesFromExplore = itinerary[props.index].placesFromExplore || [];
 

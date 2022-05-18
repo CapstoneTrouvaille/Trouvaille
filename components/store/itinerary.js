@@ -42,13 +42,20 @@ export const getItinerary = (tripId) => {
 export const addItineraryDay = (tripId, day, plans) => {
   return async (dispatch) => {
     try {
-      console.log("add day called");
-      let newDay = { [day]: [plans] };
+      console.log("add day called")
+      console.log("INTHUNK",tripId, day, plans);
       const tripDocRef = doc(db, "trips", tripId);
-      await updateDoc(tripDocRef, {
-        Itinerary: arrayUnion(newDay),
+      const tripInfo = await getDoc(tripDocRef);
+      const tripItinerary = tripInfo.data().Itinerary;
+      let index = tripItinerary.findIndex((e) => {
+        return e[day];
       });
-      dispatch(_addItineraryDay(newDay));
+      const updatedItinerary = tripItinerary;
+      updatedItinerary[index][day].push(plans)
+      await updateDoc(tripDocRef, {
+        Itinerary: updatedItinerary,
+      });
+      dispatch(_getItinerary(updatedItinerary));
       console.log("Successfully added a day onto itinerary");
     } catch (error) {
       console.log("Unable to add itinerary day", error);
@@ -59,6 +66,7 @@ export const addItineraryDay = (tripId, day, plans) => {
 export const addFromExplore = (tripId, dayName, explorePlans) => {
   return async (dispatch) => {
     try {
+
       const tripDocRef = doc(db, "trips", tripId);
       const tripInfo = await getDoc(tripDocRef);
       const tripItinerary = tripInfo.data().Itinerary;

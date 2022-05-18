@@ -19,41 +19,35 @@ import { addItineraryDay, getItinerary } from "./store/itinerary";
 import { auth, firebase } from "../firebase";
 import { getDates } from "./helperFunctions/getDates";
 import ItineraryDay from "./ItineraryDay";
+import ItineraryForm from "./ItineraryForm";
 
 const Itinerary = (props) => {
   const dispatch = useDispatch();
 
   // const tripInfo = useSelector((state) => state.trip);
   const itinerary = useSelector((state) => state.itinerary);
-  // const [dayName, setDayName] = useState("");
-  // const [plans, setPlans] = useState("");
   const tripId = props.tripId;
 
   useEffect(() => {
     dispatch(getItinerary(tripId));
   }, []);
 
-
-  // const addDays = () => {
-  //   dispatch(addItineraryDay(tripId, dayName, plans));
-  //   setDayName("");
-  //   setPlans("");
-  // };
-
   const populateDays = [];
 
   for (let i = 0; i < itinerary.length; i++) {
+    const dayString =  Object.keys(itinerary[i]).filter(
+      (key) => key !== "placesFromExplore"
+    )[0]
     populateDays.push(
-      <View key={i} >
-      <Box flexDirection="row">
+      <View key={i}>
         <Text bold>
           {
-            Object.keys(itinerary[i]).filter(
-              (key) => key !== "placesFromExplore"
-            )[0]
+           dayString
           }
         </Text>
-        <SelectModal index={i} tripId={tripId} />
+        <Box>
+          <SelectModal index={i} tripId={tripId} />
+          <ItineraryForm key={i} tripId={tripId} day={dayString} />
         </Box>
         <ItineraryDay index={i} tripId={tripId} />
       </View>
@@ -86,36 +80,7 @@ const Itinerary = (props) => {
 
   return (
     <ScrollView>
-      {/* <FormControl mb="4">
-        <FormControl.Label>Day</FormControl.Label>
-        <Input
-          value={dayName}
-          size="md"
-          placeholder="Add a day on your itinerary"
-          onChangeText={(text) => setDayName(text)}
-        />
-        <FormControl.Label>Plans for the day</FormControl.Label>
-        <Input
-          value={plans}
-          size="md"
-          placeholder="Add a day on your itinerary"
-          onChangeText={(text) => setPlans(text)}
-        />
-      </FormControl>
-
-      <Stack direction="row" space={5} justifyContent="center">
-        <Button
-          size="sm"
-          mb="4"
-          onPress={() => {
-            addDays();
-          }}
-        >
-          Add Days
-        </Button>
-      </Stack> */}
       <Box>{populateDays}</Box>
-
     </ScrollView>
   );
 };
