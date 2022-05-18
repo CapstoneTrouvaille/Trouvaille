@@ -131,7 +131,7 @@ const AddMemories = (props) => {
       duration: getDurationFormatted(status.durationMillis),
       file: recording.getURI(),
     });
-    audioUpload(recording.getURI());
+    audioUpload();
     // console.log("updatedRecordings", updatedRecordings);
     setRecordings(updatedRecordings);
   }
@@ -140,10 +140,11 @@ const AddMemories = (props) => {
     const recNum = recordings.length;
     const storage = getStorage(); //the storage itself
     if (recording) {
-      const path = `audio/${tripId}/${recNum + 1}.mp3`;
+      console.log("recording", recording);
+      const path = `audio/${tripId}/${recNum + 1}`;
       const ref_con = ref(storage, path);
       setVoiceInfo(path);
-      const voiceFile = await fetch(recording.file);
+      const voiceFile = await fetch(recording._uri);
       console.log("Voice", voiceFile);
       const bytes = await voiceFile.blob();
 
