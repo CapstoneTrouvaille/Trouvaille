@@ -11,6 +11,7 @@ import {
   Button,
   Heading,
   Divider,
+  Box,
 } from "native-base";
 
 const InviteAcceptDecline = ({ route }) => {
