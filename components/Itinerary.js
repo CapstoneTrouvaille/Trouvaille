@@ -19,9 +19,9 @@ import { addItineraryDay, getItinerary } from "./store/itinerary";
 import { auth, firebase } from "../firebase";
 import { getDates } from "./helperFunctions/getDates";
 
-
 const Itinerary = (props) => {
   const dispatch = useDispatch();
+
   const itinerary = useSelector((state) => state.itinerary);
   const [dayName, setDayName] = useState("");
   const [plans, setPlans] = useState("");
@@ -36,42 +36,52 @@ const Itinerary = (props) => {
     setDayName("");
     setPlans("");
   };
-
+  // console.log("Itinerary",Object.keys(itinerary[0]).filter((key)=>key!=="placesFromExplore")[0])
 
   const populateDays = [];
-  // for (let i = 0; i < days; i++) {
-  //   populateDays.push(<SelectModal key={i} index={i} tripId={tripId} />);
-  // }
-  const tripInfo = useSelector((state) => state.trip);
-  console.log("tripinfo", tripInfo);
-  let start;
-  let end;
-  let datesArray = [];
 
-  if (tripInfo.startDate) {
-    start = tripInfo.startDate.toDate();
-    end = tripInfo.endDate.toDate();
-    console.log("start", start, end);
-    datesArray = getDates(start, end);
-    datesArray.forEach((date, i) => {
-      populateDays.push(
-        <Box key={i}>
-          <Text bold>
-            {date.toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </Text>
-          {/* <SelectModal index={i} tripId={tripId} /> */}
-        </Box>
-      );
-    });
+  for (let i = 0; i < itinerary.length; i++) {
+    populateDays.push(
+      <Box key={i}>
+      <Text bold>
+        {
+          Object.keys(itinerary[i]).filter(
+            (key) => key !== "placesFromExplore"
+          )[0]
+        }
+      </Text>
+      <SelectModal index={i} tripId={tripId} />
+      </Box>
+    );
   }
+  // let start;
+  // let end;
+  // let datesArray = [];
+
+  // const tripInfo = useSelector((state) => state.trip);
+  // if (tripInfo.startDate) {
+  //   start = tripInfo.startDate.toDate();
+  //   end = tripInfo.endDate.toDate();
+  //   datesArray = getDates(start, end);
+  //   datesArray.forEach((date, i) => {
+  //     populateDays.push(
+  //       <Box key={i}>
+  //         <Text bold>
+  //           {date.toLocaleDateString("en-US", {
+  //             year: "numeric",
+  //             month: "long",
+  //             day: "numeric",
+  //           })}
+  //         </Text>
+  //         <SelectModal index={i} tripId={tripId} />
+  //       </Box>
+  //     );
+  //   });
+  // }
 
   return (
     <ScrollView>
-      <FormControl mb="4">
+      {/* <FormControl mb="4">
         <FormControl.Label>Day</FormControl.Label>
         <Input
           value={dayName}
@@ -98,19 +108,8 @@ const Itinerary = (props) => {
         >
           Add Days
         </Button>
-      </Stack>
+      </Stack> */}
       <Box>{populateDays}</Box>
-      {/* <Box>
-        {datesArray.map((date) => {
-          <Text>date:
-            {date.toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </Text>;
-        })}
-      </Box> */}
     </ScrollView>
   );
 };

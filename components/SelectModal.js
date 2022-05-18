@@ -20,8 +20,9 @@ const SelectModal = (props) => {
   const itinerary = useSelector((state) => state.itinerary);
   //fix dayname, index changes
   // console.log("ITINERARY IN MODAL", itinerary[props.index])
-  const dayName = Object.keys(itinerary[props.index]).filter((obj)=>obj !== "placesFromExplore")
+  const dayName = Object.keys(itinerary[props.index]).filter((obj)=>obj !== "placesFromExplore")[0]
   const plansList = itinerary[props.index][dayName]
+
   const placesFromExplore = itinerary[props.index].placesFromExplore || []
 
   const [showModal, setShowModal] = useState(false);
@@ -35,7 +36,6 @@ const SelectModal = (props) => {
   return (
     <View>
      <Center>
-     <Text bold>{dayName}</Text>
         <Button onPress={() => setShowModal(true)}>+</Button>
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
           <Modal.Content maxWidth="400px">
