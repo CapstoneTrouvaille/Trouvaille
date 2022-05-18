@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  Text,
   Button,
+  ScrollView,
   Modal,
   FormControl,
   Input,
@@ -10,78 +12,118 @@ import {
   Checkbox,
   Box,
   Item,
-  Stack
+  Stack,
 } from "native-base";
 import SelectModal from "./SelectModal";
 import { addItineraryDay, getItinerary } from "./store/itinerary";
-
-
+import { auth, firebase } from "../firebase";
+import { getDates } from "./helperFunctions/getDates";
+import ItineraryDay from "./ItineraryDay";
 
 const Itinerary = (props) => {
-  const dispatch = useDispatch()
-  const itinerary = useSelector((state) => state.itinerary);
-  const [dayName, setDayName] = useState("")
-  const [plans, setPlans] = useState("")
-  const tripId = props.tripId
-  let days = itinerary.length
+  const dispatch = useDispatch();
 
-  const populateDays = [];
-  for (let i = 0; i < days; i++) {
-    populateDays.push(<SelectModal key={i} index={i}/>);
-  }
+  // const tripInfo = useSelector((state) => state.trip);
+  const itinerary = useSelector((state) => state.itinerary);
+  // const [dayName, setDayName] = useState("");
+  // const [plans, setPlans] = useState("");
+  const tripId = props.tripId;
 
   useEffect(() => {
-    dispatch(getItinerary(tripId))
-  }, [dayName,plans]);
+    dispatch(getItinerary(tripId));
+  }, []);
 
 
-  const addDays = () => {
-    dispatch(addItineraryDay(tripId, dayName, plans))
-    setDayName("")
-    setPlans("")
+  // const addDays = () => {
+  //   dispatch(addItineraryDay(tripId, dayName, plans));
+  //   setDayName("");
+  //   setPlans("");
+  // };
+
+  const populateDays = [];
+
+  for (let i = 0; i < itinerary.length; i++) {
+    populateDays.push(
+      <View key={i} >
+      <Box flexDirection="row">
+        <Text bold>
+          {
+            Object.keys(itinerary[i]).filter(
+              (key) => key !== "placesFromExplore"
+            )[0]
+          }
+        </Text>
+        <SelectModal index={i} tripId={tripId} />
+        </Box>
+        <ItineraryDay index={i} tripId={tripId} />
+      </View>
+    );
   }
 
-  return (
-    <View>
-    <FormControl mb="4">
-          <FormControl.Label>
-            Day
-          </FormControl.Label>
-          <Input
-            value={dayName}
-            size="md"
-            placeholder="Add a day on your itinerary"
-            onChangeText={(text) => setDayName(text)}
-          />
-          <FormControl.Label>
-            Plans for the day
-          </FormControl.Label>
-          <Input
-            value={plans}
-            size="md"
-            placeholder="Add a day on your itinerary"
-            onChangeText={(text) => setPlans(text)}
-          />
-        </FormControl>
+  // let start;
+  // let end;
+  // let datesArray = [];
 
-        <Stack direction="row" space={5} justifyContent="center">
-          <Button
-            size="sm"
-            mb="4"
-            onPress={() => {
-              addDays();
-            }}
-          >
-            Add Days
-          </Button>
-        </Stack>
-      <Box>
-        {populateDays}
-      </Box>
-    </View>
+  // if (tripInfo.startDate) {
+  //   start = tripInfo.startDate.toDate();
+  //   end = tripInfo.endDate.toDate();
+  //   datesArray = getDates(start, end);
+  //   datesArray.forEach((date, i) => {
+  //     populateDays.push(
+  //       <Box key={i}>
+  //         <Text bold>
+  //           {date.toLocaleDateString("en-US", {
+  //             year: "numeric",
+  //             month: "long",
+  //             day: "numeric",
+  //           })}
+  //         </Text>
+  //         <SelectModal index={i} tripId={tripId} />
+  //       </Box>
+  //     );
+  //   });
+  // }
+
+  return (
+    <ScrollView>
+      {/* <FormControl mb="4">
+        <FormControl.Label>Day</FormControl.Label>
+        <Input
+          value={dayName}
+          size="md"
+          placeholder="Add a day on your itinerary"
+          onChangeText={(text) => setDayName(text)}
+        />
+        <FormControl.Label>Plans for the day</FormControl.Label>
+        <Input
+          value={plans}
+          size="md"
+          placeholder="Add a day on your itinerary"
+          onChangeText={(text) => setPlans(text)}
+        />
+      </FormControl>
+
+      <Stack direction="row" space={5} justifyContent="center">
+        <Button
+          size="sm"
+          mb="4"
+          onPress={() => {
+            addDays();
+          }}
+        >
+          Add Days
+        </Button>
+      </Stack> */}
+      <Box>{populateDays}</Box>
+
+    </ScrollView>
   );
 };
 
 export default Itinerary;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+  },
+});

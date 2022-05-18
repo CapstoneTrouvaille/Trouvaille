@@ -22,6 +22,7 @@ import InviteTripMember from "./InviteTripMember";
 import InviteAcceptDecline from "./InviteAcceptDecline";
 import NewTripInviteMsg from "./NewTripInviteMsg";
 import DatePicker from "react-native-datepicker";
+import { getDates } from "./helperFunctions/getDates";
 //native base doesn't have a date picker so you have to use the react native one
 
 const AddTrip = () => {
@@ -72,6 +73,19 @@ const AddTrip = () => {
       )
     );
 
+    const itineraryDays = getDates(new Date(startDate), new Date(endDate)).map(
+      (date) =>{
+      const obj ={}
+      let day =
+        date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      obj[day]=[]
+      return obj
+      });
+
     const newTripInfo = {
       tripName,
       location,
@@ -84,7 +98,7 @@ const AddTrip = () => {
       declinedUsers: [],
       tripMemories: [],
       messages: [],
-      Itinerary: [],
+      Itinerary: itineraryDays,
     };
     if (tripName != "" && location != "" && startDate != "" && endDate != "") {
       console.log(`Get Planning! clicked:`, newTripInfo);
