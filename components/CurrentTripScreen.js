@@ -28,18 +28,17 @@ const CurrentTripScreen = () => {
   return (
     <View>
       <Text>Trip's in Progress</Text>
-      {tripInfo &&
-        tripInfo.map((trip, index) => (
+      {userCurrentTrips &&
+        userCurrentTrips.map((tripId, index) => (
           <Text
             key={index}
             onPress={() =>
               navigation.navigate("SingleTrip", {
-                trip: trip,
-                tripId: userCurrentTrips[index],
+                tripId,
               })
             }
           >
-            {trip.tripName}
+            {tripId}
           </Text>
         ))}
     </View>
