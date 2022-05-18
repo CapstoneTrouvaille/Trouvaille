@@ -1,6 +1,6 @@
 import axios from "axios";
-import { RAPID_API_TRIP_ADVISOR_KEY } from "../../variables";
 import { getLocationId } from "./places";
+import Constants from "expo-constants";
 
 const GET_FOOD = "GET_FOOD";
 
@@ -32,7 +32,7 @@ export const getFood = (locationInput) => {
           },
           headers: {
             "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
-            "X-RapidAPI-Key": RAPID_API_TRIP_ADVISOR_KEY,
+            "X-RapidAPI-Key": Constants.manifest.extra.APIKey,
           },
         }
       );
@@ -43,14 +43,13 @@ export const getFood = (locationInput) => {
   };
 };
 
-
 const food = (state = [], action) => {
-  switch(action.type) {
+  switch (action.type) {
     case GET_FOOD:
-      return action.food
+      return action.food;
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default food
+export default food;

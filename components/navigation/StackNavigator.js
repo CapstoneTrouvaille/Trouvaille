@@ -7,7 +7,7 @@ import { firebase, auth } from "../../firebase";
 //screens
 import HomeScreen from "../HomeScreen";
 import AddTrip from "../AddTrip";
-import ProfileScreen from "../ProfileScreen";
+
 import ChatScreen from "../ChatScreen";
 import ExploreScreen from "../ExploreScreen";
 import InviteTripMember from "../InviteTripMember";
@@ -52,26 +52,6 @@ const HomeStackNavigator = () => {
   );
 };
 
-const ProfileStackNavigator = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerBackVisible: true,
-        headerRight: () => (
-          <Ionicons
-            name="exit-outline"
-            size={30}
-            color="#BABFE0"
-            onPress={() => firebase.auth().signOut()}
-          />
-        ),
-      }}
-    >
-      <Stack.Screen name="Profile" component={ProfileScreen} />
-    </Stack.Navigator>
-  );
-};
-
 const ChatStackNavigator = () => {
   return (
     <Stack.Navigator
@@ -112,9 +92,4 @@ const ExploreStackNavigator = () => {
   );
 };
 
-export {
-  HomeStackNavigator,
-  ProfileStackNavigator,
-  ChatStackNavigator,
-  ExploreStackNavigator,
-};
+export { HomeStackNavigator, ChatStackNavigator, ExploreStackNavigator };

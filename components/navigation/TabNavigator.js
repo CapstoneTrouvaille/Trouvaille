@@ -8,7 +8,6 @@ import {
   ChatStackNavigator,
   ExploreStackNavigator,
   HomeStackNavigator,
-  ProfileStackNavigator,
 } from "./StackNavigator";
 
 const Tab = createBottomTabNavigator();
@@ -39,8 +38,6 @@ const TabNavigator = () => {
               : "chatbubble-ellipses-outline";
           } else if (rn === "ExploreTab") {
             iconName = focused ? "map" : "map-outline";
-          } else if (rn === "ProfileTab") {
-            iconName = focused ? "person-circle" : "person-circle-outline";
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -50,7 +47,6 @@ const TabNavigator = () => {
       <Tab.Screen name="HomeTab" component={HomeStackNavigator} />
       <Tab.Screen name="ChatTab" component={ChatStackNavigator} />
       <Tab.Screen name="ExploreTab" component={ExploreStackNavigator} />
-      <Tab.Screen name="ProfileTab" component={ProfileStackNavigator} />
     </Tab.Navigator>
   );
 };
