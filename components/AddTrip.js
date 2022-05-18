@@ -24,7 +24,6 @@ import NewTripInviteMsg from "./NewTripInviteMsg";
 import DatePicker from "react-native-datepicker";
 //native base doesn't have a date picker so you have to use the react native one
 
-
 const AddTrip = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -40,8 +39,6 @@ const AddTrip = () => {
 
   const trip = useSelector((state) => state.trip);
   const tripId = trip.id;
-
-  //console.log(`TRIPS FROM REDUX!!!:`, trip);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -83,10 +80,11 @@ const AddTrip = () => {
       status: "planning",
       tripLead: auth.currentUser.uid,
       users: [auth.currentUser.uid],
+      pendingUsers: [],
+      declinedUsers: [],
       tripMemories: [],
       messages: [],
-      pendingUsers:[],
-      Itinerary:[]
+      Itinerary: [],
     };
     if (tripName != "" && location != "" && startDate != "" && endDate != "") {
       console.log(`Get Planning! clicked:`, newTripInfo);
@@ -146,37 +144,7 @@ const AddTrip = () => {
               onChangeText={(text) => setLocation(text)}
             />
           </FormControl>
-          {/* <FormControl mb="4">
-            <FormControl.Label>Trip start date</FormControl.Label>
-            <Input
-              value={startDate}
-              size="md"
-              placeholder="Enter trip start date"
-              onChangeText={(text) => setStartDate(text)}
-            />
-          </FormControl> */}
         </Box>
-
-        {/* <FormControl mb="4">
-            <FormControl.Label>Trip end date</FormControl.Label>
-            <Input
-              value={endDate}
-              size="md"
-              placeholder="Enter trip end date"
-              onChangeText={(text) => setEndDate(text)}
-            />
-          </FormControl>
-          <FormControl mb="4">
-            <FormControl.Label>Trip end date 2</FormControl.Label>
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode="date"
-              is24Hour={true}
-              onChange={onChange}
-            />
-          </FormControl> */}
-
         <View style={styles.container}>
           <ReactNativeText style={styles.text}>
             Trip Start Date :

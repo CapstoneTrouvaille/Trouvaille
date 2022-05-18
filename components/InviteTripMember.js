@@ -13,6 +13,7 @@ import {
   Center,
   Icon,
   Divider,
+  Spacer,
 } from "native-base";
 
 const InviteTripMember = ({ route }) => {
@@ -21,17 +22,21 @@ const InviteTripMember = ({ route }) => {
   const tripId = route.params.tripId;
   const tripInfo = useSelector((state) => state.trip);
 
+  const currentTripMembers = tripInfo.users;
   const tripPendingUsers = tripInfo.pendingUsers;
+  const declinedUsers = tripInfo.declinedUsers;
 
   const [friendEmail, setFriendEmail] = useState("");
 
   const handleChange = (text) => setFriendEmail(text);
 
+  const handleHomeOnClick = () => {
+    navigation.navigate("Home");
+  };
+
   const handleSubmit = () => {
-    console.log(
-      `Add friend clicked - friendEmail, TripId:`,
-      friendEmail,
-      tripId
+    console.log(`Send Invite Clicked (friendEmail, TripId):`,
+      friendEmail,tripId
     );
     dispatch(fetchUserToInvite(friendEmail, tripId));
     setFriendEmail("");
@@ -42,7 +47,7 @@ const InviteTripMember = ({ route }) => {
       <VStack w="100%" space={5} alignSelf="center">
         <Center>
           <Heading mt="6" fontSize="xl">
-            Invite Trip Members By Email
+            Search for Trip Members by Email
           </Heading>
           <Input
             size="lg"
@@ -53,17 +58,46 @@ const InviteTripMember = ({ route }) => {
             onChangeText={handleChange}
             placeholder="Enter email address"
           />
-          <Box mt="6" mb="6" alignItems="center">
-            <Button onPress={handleSubmit}>Send Trip Invite</Button>
+          <Text fontSize="xs" mt="4" italic>
+            ** User will be prompted to accept/decline your invite via their
+            Trouvaille HomeScreen
+          </Text>
+          <Box mt="2" mb="6" alignItems="center">
+            <Button onPress={handleSubmit}>Send Invite</Button>
           </Box>
+          <Divider thickness="2" />
+          <Text underline fontSize="md" mt="4" mb="4">
+            Current Trip Members
+          </Text>
+          {currentTripMembers &&
+            currentTripMembers.map((userId, index) => (
+              <Text key={index} mb="6">
+                {userId}
+              </Text>
+            ))}
           <Divider />
-          <Text fontSize="lg" mt="4" mb="4">
+          <Text underline fontSize="md" mt="4" mb="4">
             Pending Trip Member Invitations
           </Text>
           {tripPendingUsers &&
             tripPendingUsers.map((userId, index) => (
-              <Text key={index}>{userId}</Text>
+              <Text key={index} mb="6">
+                {userId}
+              </Text>
             ))}
+          <Divider />
+          <Text underline fontSize="md" mt="4" mb="4">
+            Declined Trip Member Invitations
+          </Text>
+          {declinedUsers &&
+            declinedUsers.map((userId, index) => (
+              <Text key={index} mb="6">
+                {userId}
+              </Text>
+            ))}
+          <Box mt="10" alignItems="center">
+            <Button onPress={handleHomeOnClick}>View Trip Dashboard</Button>
+          </Box>
         </Center>
       </VStack>
     </View>

@@ -20,7 +20,7 @@ const NewTripInviteMsg = () => {
           colorScheme="secondary"
           onPress={handleOnClick}
         >
-          Pending Trip Invitation
+          You Have a Pending Trip Invitation(s)!
         </Button>
       </Box>
     </View>

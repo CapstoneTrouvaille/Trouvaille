@@ -110,7 +110,6 @@ export const addTrip = (newTripInfo) => {
       // Add data to the store
       dispatch(_addTripRequest());
       const addedTrip = await db.collection("trips").add(newTripInfo);
-      alert("Your trip was successfully created");
 
       const q = query(
         collection(db, "user"),
@@ -123,6 +122,7 @@ export const addTrip = (newTripInfo) => {
         trip: arrayUnion(addedTrip.id),
       });
       dispatch(_addTripSuccess(addedTrip.id, auth.currentUser.uid));
+      alert("Your trip was successfully created");
     } catch (error) {
       dispatch(_addTripFail(error));
       console.error("Error adding trip: ", error);
@@ -141,7 +141,7 @@ export const addUserToTrip = (tripId, userUID) => {
         users: arrayUnion(userUID),
       });
       dispatch(_addUserToTripSuccess());
-      console.error("Successfully added user to trip!");
+      console.log("Successfully added user to trip!");
     } catch (error) {
       dispatch(_addUserToTripFail(error));
       console.error("Error adding user to trip: ", error);

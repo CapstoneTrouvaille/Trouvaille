@@ -3,7 +3,15 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleTrip, addUserToTrip } from "./store/trip";
 import { useNavigation } from "@react-navigation/core";
-import { ScrollView, Text, Stack, Center, Button, Heading } from "native-base";
+import {
+  ScrollView,
+  Text,
+  Stack,
+  Center,
+  Button,
+  Heading,
+  Divider,
+} from "native-base";
 
 const InviteAcceptDecline = ({ route }) => {
   const navigation = useNavigation();
@@ -30,7 +38,7 @@ const InviteAcceptDecline = ({ route }) => {
       <Stack
         space={2.5}
         alignSelf="center"
-        px="4"
+        px="2"
         safeArea
         mt="0"
         w={{
@@ -39,22 +47,25 @@ const InviteAcceptDecline = ({ route }) => {
         }}
       >
         <Center>
-          <Heading size="md">Pending Trip Invitations</Heading>
+          <Heading size="md" mb="6">
+            Pending Trip Invitations
+          </Heading>
           {pendingTripInvites &&
             pendingTripInvites.map((invite, index) => (
               <View key={index}>
                 <Text>You have a pending trip invitation for {invite}</Text>
                 <Button
-                  size="md"
+                  size="sm"
                   mb="4"
                   mt="4"
                   onPress={() => handleSubmitAccept(invite)}
                 >
                   Accept Trip Invite
                 </Button>
-                <Button size="md" mb="4" onPress={handleSubmitDecline}>
+                <Button size="sm" mb="6" onPress={handleSubmitDecline}>
                   Decline Trip Invite
                 </Button>
+                <Divider />
               </View>
             ))}
         </Center>

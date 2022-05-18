@@ -174,7 +174,7 @@ const HomeScreen = () => {
             {userInfo.name}'s Trip Dashboard
           </Heading>
           {showPendingTrips !== 0 && <NewTripInviteMsg />}
-          <Text>Email: {userInfo.email}</Text>
+          {/* <Text>Email: {userInfo.email}</Text> */}
           <Divider mb="8" />
         </Box>
       </Stack>
