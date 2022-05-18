@@ -33,8 +33,6 @@ import { Audio } from "expo-av";
 const AddMemories = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
-  console.log("PARAMS, ADDMEM", props.route.params.tripId);
   const tripId = props.route.params.tripId;
   // const [date, setDate] = useState(new Date());
   // const [mode, setMode] = useState("date");
@@ -76,7 +74,6 @@ const AddMemories = (props) => {
       quality: 1,
     });
 
-    console.log(result);
     console.log("Photo", result.uri);
     if (!result.cancelled) {
       setImage(result.uri);
@@ -194,8 +191,8 @@ const AddMemories = (props) => {
       location,
       journalDate,
       journal,
-      photo: imageInfo,
-      voice: voiceInfo,
+      photo: imageInfo || null,
+      voice: voiceInfo || null,
     };
     console.log(`post memories! clicked:`, newJournalEntry);
     console.log(`post memories! clicked: tripId passed in `, tripId);
