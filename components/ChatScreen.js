@@ -4,8 +4,9 @@ import { db, auth, firestore, firebase } from "../firebase";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useSelector } from "react-redux";
 
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import {
   FormControl,
   Input,
@@ -14,8 +15,10 @@ import {
   ScrollView,
   Image,
   Avatar,
+  Text,
 } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
+import user from "./store/user";
 
 function ChatScreen() {
   const [user] = useAuthState(auth);
@@ -31,19 +34,22 @@ function ChatRoom() {
   const [messages] = useCollectionData(query, { idField: "id" });
 
   const [formValue, setFormValue] = useState("");
+  const userName = useSelector((state) => state.user);
+  const name = userName.name;
 
   const sendMessage = async (e) => {
     // console.log("working???", e);
     const { uid, photoURL } = auth.currentUser;
-    console.log("current user in sendmessage", uid);
-    console.log("TIMESTAMP", firestore.Timestamp);
-    console.log(auth.currentUser);
+    // console.log("current user in sendmessage", uid);
+    // console.log("TIMESTAMP", firestore.Timestamp);
+    // console.log(auth.currentUser);
 
     await messagesRef.add({
       text: formValue,
       createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
       uid,
       photoURL,
+      name,
     });
 
     setFormValue("");
@@ -63,10 +69,16 @@ function ChatRoom() {
           value={formValue}
           onChangeText={(e) => setFormValue(e)}
           placeholder="say something nice"
+          style={styles.input}
         />
 
-        <Button type="submit" disabled={!formValue} onPress={sendMessage}>
-          🕊️
+        <Button
+          type="submit"
+          disabled={!formValue}
+          onPress={sendMessage}
+          style={styles.button}
+        >
+          💌
         </Button>
       </FormControl>
     </Stack>
@@ -74,23 +86,32 @@ function ChatRoom() {
 }
 
 function ChatMessage(props) {
-  const { text, uid, photoURL } = props.message;
-  console.log("chatMessage", props.message);
+  const { text, uid, photoURL, name } = props.message;
+  // console.log("chatMessage", props.message);
 
   const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
-
+  console.log("messageClass", messageClass);
   return (
     <>
-      <View className={`message ${messageClass}`} style={styles.row}>
-        <Avatar
-          bg="purple.600"
-          alignSelf="flex-start"
-          size="md"
-          source={{
-            uri: "https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80",
-          }}
-        ></Avatar>
-        <Text>{text}</Text>
+      <View
+        className={`message ${messageClass}`}
+        style={messageClass === "sent" ? styles.sent : styles.received}
+      >
+        <View>
+          <Avatar
+            bg="purple.600"
+            alignSelf="flex-start"
+            size="md"
+            source={{
+              uri: "https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80",
+            }}
+          ></Avatar>
+          <Text bold>{name}</Text>
+        </View>
+
+        <View>
+          <Text>{text}</Text>
+        </View>
       </View>
     </>
   );
@@ -100,5 +121,27 @@ export default ChatScreen;
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
+  },
+  sent: {
+    flexDirection: "row-reverse",
+    color: "blue",
+    backgroundColor: "#FFF5AB",
+    alignSelf: "flex-end",
+    borderRadius: 25,
+    padding: 10,
+  },
+  received: {
+    flexDirection: "row",
+    color: "red",
+    backgroundColor: "#FFBCD1",
+    alignSelf: "flex-start",
+    borderRadius: 25,
+    padding: 10,
+  },
+  button: {
+    backgroundColor: "#6867AC",
+  },
+  input: {
+    borderColor: "#6867AC",
   },
 });
