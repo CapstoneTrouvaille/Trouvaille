@@ -61,7 +61,7 @@ const Memories = (props) => {
           </Button>
         </Center>
 
-        <Box>
+        <Center>
           <Heading fontSize="xl" p="4" pb="3">
             Memories
           </Heading>
@@ -69,7 +69,7 @@ const Memories = (props) => {
           {memories.map((memory) => (
             <SingleMemory memory={memory} />
           ))}
-        </Box>
+        </Center>
       </Stack>
     </ScrollView>
   );

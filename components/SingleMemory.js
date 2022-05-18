@@ -1,7 +1,7 @@
-import { StyleSheet, View, Image, Button } from "react-native";
+import { StyleSheet, View, Image} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, Box } from "native-base";
+import { Text, Box, Button  } from "native-base";
 import { inMemoryPersistence } from "firebase/auth";
 
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
@@ -65,10 +65,10 @@ const SingleMemory = (props) => {
   };
 
   return (
-    <View>
-      <Text onPress={handleClick} bold>
+    <View mb="2%" >
+      <Button size ="sm" variant="outline" onPress={handleClick} bold>
         {memory.journalName}
-      </Text>
+      </Button>
 
       {isClicked ? (
         <>
