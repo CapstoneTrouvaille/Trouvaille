@@ -10,19 +10,27 @@ import {
   Checkbox,
   Text
 } from "native-base";
+import { addFromExplore } from "./store/itinerary";
 
 
 
 const SelectModal = (props) => {
+  const dispatch= useDispatch()
   const savedItems = useSelector((state) => state.savedItems);
   const itinerary = useSelector((state) => state.itinerary);
-  const dayName = Object.keys(itinerary[props.index])[0]
+  //fix dayname, index changes
+  const dayName = Object.keys(itinerary[props.index]).filter((obj)=>obj !== "placesFromExplore")
   const plansList = itinerary[props.index][dayName]
-  console.log("ITINERARY IN MODAL",plansList)
+  const placesFromExplore = itinerary[props.index].placesFromExplore
+  console.log("Plans",itinerary[props.index])
 
   const [showModal, setShowModal] = useState(false);
   const [groupValues, setGroupValues] = useState([]);
 
+
+  const handleSubmit =() => {
+    dispatch(addFromExplore(props.tripId, dayName, groupValues))
+  }
 
   return (
     <View>
@@ -59,6 +67,8 @@ const SelectModal = (props) => {
                 </Button>
                 <Button
                   onPress={() => {
+                    console.log("button pressed")
+                    handleSubmit()
                     setShowModal(false);
                   }}
                 >
@@ -72,8 +82,8 @@ const SelectModal = (props) => {
       {plansList.map((plan, i)=> (
         <Text key={i}>{plan}</Text>
       ))}
-       {groupValues.map((value, index) => (
-        <Text key={index}>{value}</Text>
+       {placesFromExplore.map((value, i) => (
+        <Text key={i}>{value}</Text>
       ))}
     </View>
   )

@@ -29,7 +29,7 @@ const Itinerary = (props) => {
 
   const populateDays = [];
   for (let i = 0; i < days; i++) {
-    populateDays.push(<SelectModal key={i} index={i}/>);
+    populateDays.push(<SelectModal key={i} index={i} tripId={tripId}/>);
   }
 
   useEffect(() => {
