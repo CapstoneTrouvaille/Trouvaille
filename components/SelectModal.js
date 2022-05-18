@@ -21,7 +21,7 @@ const SelectModal = (props) => {
   //fix dayname, index changes
   const dayName = Object.keys(itinerary[props.index]).filter((obj)=>obj !== "placesFromExplore")
   const plansList = itinerary[props.index][dayName]
-  const placesFromExplore = itinerary[props.index].placesFromExplore
+  const placesFromExplore = itinerary[props.index].placesFromExplore || []
   console.log("Plans",itinerary[props.index])
 
   const [showModal, setShowModal] = useState(false);
