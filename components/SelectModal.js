@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -8,41 +8,49 @@ import {
   Input,
   Center,
   Checkbox,
+  Text,
 } from "native-base";
-
-
+import { addFromExplore } from "./store/itinerary";
 
 const SelectModal = (props) => {
+  const dispatch = useDispatch();
   const savedItems = useSelector((state) => state.savedItems);
   const itinerary = useSelector((state) => state.itinerary);
-  const dayName = Object.keys(itinerary[props.index])[0]
+  const dayName = Object.keys(itinerary[props.index]).filter(
+    (obj) => obj !== "placesFromExplore"
+  )[0];
 
   const [showModal, setShowModal] = useState(false);
   const [groupValues, setGroupValues] = useState([]);
 
+  const handleSubmit = () => {
+    dispatch(addFromExplore(props.tripId, dayName, groupValues));
+  };
 
   return (
     <View>
-     <Center>
-
-     <Text>{dayName}</Text>
+      <Center>
         <Button onPress={() => setShowModal(true)}>+</Button>
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
           <Modal.Content maxWidth="400px">
             <Modal.CloseButton />
             <Modal.Header>Add saved items to your itinerary!</Modal.Header>
             <Modal.Body>
-              <Checkbox.Group
-                onChange={setGroupValues}
-                value={groupValues}
-                accessibilityLabel="choose numbers"
-              >
-                {savedItems.map((item, i) => (
-                  <Checkbox key={i} value={item} my={2}>
-                    {item}
-                  </Checkbox>
-                ))}
-              </Checkbox.Group>
+              {savedItems.length > 0 ? (
+                <Checkbox.Group
+                  onChange={setGroupValues}
+                  value={groupValues}
+                  accessibilityLabel="choose numbers"
+                >
+                  {savedItems.map((item, i) => (
+                    <Checkbox key={i} value={item} my={2}>
+                      {item}
+                    </Checkbox>
+                  ))}
+                </Checkbox.Group>
+              ) : (
+                <Text>You have no saved items</Text>
+              )}
             </Modal.Body>
             <Modal.Footer>
               <Button.Group space={2}>
@@ -57,6 +65,8 @@ const SelectModal = (props) => {
                 </Button>
                 <Button
                   onPress={() => {
+                    console.log("button pressed");
+                    handleSubmit();
                     setShowModal(false);
                   }}
                 >
@@ -67,13 +77,16 @@ const SelectModal = (props) => {
           </Modal.Content>
         </Modal>
       </Center>
-       {groupValues.map((value, index) => (
-        <Text key={index}>{value}</Text>
+      {/* {plansList.map((plan, i)=> (
+        <Text key={i}>{plan}</Text>
       ))}
+       {placesFromExplore.map((value, i) => (
+        <Text key={i}>{value}</Text>
+      ))} */}
     </View>
-  )
-}
+  );
+};
 
-export default SelectModal
+export default SelectModal;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

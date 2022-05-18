@@ -55,7 +55,7 @@ const SingleTrip = ({ route }) => {
 
   const FirstRoute = () => (
     <Center>
-      <Itinerary tripId={tripId }/>
+      <Itinerary tripId={tripId } />
     </Center>
   );
   const SecondRoute = () => (
