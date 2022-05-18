@@ -3,24 +3,29 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleTrip, addUserToTrip } from "./store/trip";
 import { useNavigation } from "@react-navigation/core";
-import { ScrollView, Text, Stack, Center, Button, Heading } from "native-base";
+import {
+  ScrollView,
+  Text,
+  Stack,
+  Center,
+  Button,
+  Heading,
+  Divider,
+} from "native-base";
 
 const InviteAcceptDecline = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const tripInfo = useSelector((state) => state.trip);
-  const userIdToAdd = "uE6SHKTSy3dvW0jGFwe1QhOozq32";
+  const userInfo = useSelector((state) => state.user);
+  //const userIdToAdd = "uE6SHKTSy3dvW0jGFwe1QhOozq32";
 
-  useEffect(() => {
-    dispatch(fetchSingleTrip(route.params.tripId));
-  }, []);
+  const pendingTripInvites = userInfo.pendingTrips;
+  console.log(`Pending Trips:`, pendingTripInvites);
 
-  // console.log(`Line 19 of Invite Accept Decline:`, tripInfo);
-
-  const handleSubmitAccept = () => {
+  const handleSubmitAccept = (tripId) => {
     console.log(`User clicked  ** Invite Accepted ** !!`);
-    dispatch(addUserToTrip(route.params.tripId, userIdToAdd));
+    dispatch(addUserToTrip(tripId, userInfo.UID));
     navigation.navigate("SingleTrip", { tripId });
   };
 
@@ -33,7 +38,7 @@ const InviteAcceptDecline = ({ route }) => {
       <Stack
         space={2.5}
         alignSelf="center"
-        px="4"
+        px="2"
         safeArea
         mt="0"
         w={{
@@ -42,16 +47,27 @@ const InviteAcceptDecline = ({ route }) => {
         }}
       >
         <Center>
-          <Heading size="md">
-            You have a pending trip invitation for {tripInfo.tripName} on{" "}
-            {tripInfo.startDate}
+          <Heading size="md" mb="6">
+            Pending Trip Invitations
           </Heading>
-          <Button size="md" mb="4" mt="4" onPress={handleSubmitAccept}>
-            Accept Trip Invite
-          </Button>
-          <Button size="md" mb="4" onPress={handleSubmitDecline}>
-            Decline Trip Invite
-          </Button>
+          {pendingTripInvites &&
+            pendingTripInvites.map((invite, index) => (
+              <View key={index}>
+                <Text>You have a pending trip invitation for {invite}</Text>
+                <Button
+                  size="sm"
+                  mb="4"
+                  mt="4"
+                  onPress={() => handleSubmitAccept(invite)}
+                >
+                  Accept Trip Invite
+                </Button>
+                <Button size="sm" mb="6" onPress={handleSubmitDecline}>
+                  Decline Trip Invite
+                </Button>
+                <Divider />
+              </View>
+            ))}
         </Center>
       </Stack>
     </ScrollView>

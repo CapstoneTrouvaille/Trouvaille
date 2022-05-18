@@ -11,10 +11,8 @@ import {
   Heading,
   Text,
   Button,
-  DatePicker,
   Center,
 } from "native-base";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { auth } from "../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrip, fetchTrips } from "./store/trip";
@@ -22,6 +20,7 @@ import { setStatusBarBackgroundColor } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/core";
 import InviteTripMember from "./InviteTripMember";
 import { addMemories } from "./store/memories";
+import DatePicker from "react-native-datepicker";
 //photos
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
@@ -33,12 +32,7 @@ import { Audio } from "expo-av";
 const AddMemories = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
-  console.log("PARAMS, ADDMEM", props.route.params.tripId);
   const tripId = props.route.params.tripId;
-  // const [date, setDate] = useState(new Date());
-  // const [mode, setMode] = useState("date");
-  // const [show, setShow] = useState(false);
 
   const [journalName, setJournalName] = useState("");
   const [location, setLocation] = useState("");
@@ -56,17 +50,6 @@ const AddMemories = (props) => {
 
   const journalEntry = useSelector((state) => state.journalEntry);
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    setDate(currentDate);
-  };
-
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -76,7 +59,6 @@ const AddMemories = (props) => {
       quality: 1,
     });
 
-    console.log(result);
     console.log("Photo", result.uri);
     if (!result.cancelled) {
       setImage(result.uri);
@@ -194,8 +176,8 @@ const AddMemories = (props) => {
       location,
       journalDate,
       journal,
-      photo: imageInfo,
-      voice: voiceInfo,
+      photo: imageInfo || null,
+      voice: voiceInfo || null,
     };
     console.log(`post memories! clicked:`, newJournalEntry);
     console.log(`post memories! clicked: tripId passed in `, tripId);
@@ -229,6 +211,46 @@ const AddMemories = (props) => {
             Add special, funny, memorable moments from your trip!
           </Text>
         </Box>
+
+        <View style={styles.container}>
+          <Text style={styles.text}>Journal Date</Text>
+          <DatePicker
+            style={styles.datePickerStyle}
+            date={journalDate}
+            mode="date"
+            placeholder="select start date"
+            format="MM/DD/YYYY"
+            minDate="01-01-2022"
+            maxDate="01-01-3022"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                position: "absolute",
+                right: -5,
+                top: 4,
+                marginLeft: 0,
+              },
+              dateInput: {
+                borderColor: "gray",
+                alignItems: "flex-start",
+                borderWidth: 0,
+                borderBottomWidth: 1,
+              },
+              placeholderText: {
+                fontSize: 17,
+                color: "gray",
+              },
+              dateText: {
+                fontSize: 17,
+              },
+            }}
+            onDateChange={(date) => {
+              setJournalDate(date);
+            }}
+          />
+        </View>
+
         <Box>
           <Divider mb="8" />
           <FormControl mb="4">
@@ -249,17 +271,9 @@ const AddMemories = (props) => {
               onChangeText={(text) => setLocation(text)}
             />
           </FormControl>
+
           <FormControl mb="4">
-            <FormControl.Label>Date</FormControl.Label>
-            <Input
-              value={journalDate}
-              size="md"
-              placeholder="Enter the date of the moment"
-              onChangeText={(text) => setJournalDate(text)}
-            />
-          </FormControl>
-          <FormControl mb="4">
-            <FormControl.Label>Journal</FormControl.Label>
+            <FormControl.Label>Journal Entry</FormControl.Label>
             <Input
               value={journal}
               size="lg"
@@ -295,4 +309,26 @@ const AddMemories = (props) => {
 
 export default AddMemories;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#A8E9CA",
+  },
+  title: {
+    textAlign: "left",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  datePickerStyle: {
+    width: 230,
+  },
+  text: {
+    textAlign: "left",
+    width: 230,
+    fontSize: 16,
+    color: "#000",
+  },
+});

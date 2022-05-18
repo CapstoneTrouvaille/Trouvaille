@@ -26,9 +26,6 @@ import Itinerary from "./Itinerary";
 import Memories from "./Memories";
 import firebase from "firebase/compat";
 
-
-
-
 const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -37,7 +34,7 @@ const SingleTrip = ({ route }) => {
   // console.log("tripINfo in SingleTrip", tripInfo);
 
   useEffect(() => {
-    dispatch(fetchSingleTrip(tripId))
+    dispatch(fetchSingleTrip(tripId));
   }, []);
   const travelers = tripInfo.users || [];
   //may need to delete?
@@ -172,7 +169,7 @@ const SingleTrip = ({ route }) => {
               </Text>
               <Text fontWeight="400">Travelers: {travelers}</Text>
               <Button
-                size="sm"
+                size="md"
                 mt="4"
                 mb="2"
                 onPress={() =>
@@ -181,18 +178,7 @@ const SingleTrip = ({ route }) => {
                   })
                 }
               >
-                Invite Friends
-              </Button>
-              <Button
-                size="sm"
-                mb="2"
-                onPress={() =>
-                  navigation.navigate("InviteAcceptDecline", {
-                    tripId,
-                  })
-                }
-              >
-                Temporary Button - Accept Trip Invite
+                Invite Trip Members
               </Button>
             </Center>
           </Box>

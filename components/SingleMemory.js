@@ -10,7 +10,7 @@ import { Audio } from "expo-av";
 const SingleMemory = (props) => {
   const [isClicked, setIsClicked] = useState(false);
   const memory = props.memory || "";
-  console.log("memory", memory.voice);
+  console.log("memory", memory);
   const [url, setUrl] = useState();
   const [voice, setVoice] = useState();
 
@@ -75,7 +75,7 @@ const SingleMemory = (props) => {
             <Image source={{ uri: url }} style={{ width: 150, height: 150 }} />
           )}
 
-          <Button title="Play Sound" onPress={playSound} />
+          {voice && <Button title="Play Sound" onPress={playSound} />}
         </>
       ) : null}
     </View>

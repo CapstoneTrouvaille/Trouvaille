@@ -8,7 +8,7 @@ const NewTripInviteMsg = () => {
 
   const handleOnClick = () => {
     console.log("Accept/Decline button clicked");
-    //Navigation TBD this it temporary - navigation.navigate("InviteTripMember");
+    navigation.navigate("InviteAcceptDecline");
   };
 
   return (
@@ -20,7 +20,7 @@ const NewTripInviteMsg = () => {
           colorScheme="secondary"
           onPress={handleOnClick}
         >
-          Pending Trip Invitation
+          You Have a Pending Trip Invitation(s)!
         </Button>
       </Box>
     </View>
