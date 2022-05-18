@@ -86,7 +86,8 @@ const AddTrip = () => {
       setLocation("");
       setStartDate("");
       setEndDate("");
-      navigation.navigate("InviteTripMember", { tripId });
+      // navigation.navigate("InviteTripMember", { tripId });
+      navigation.navigate("Home");
     } else {
       alert("Please fill out ALL the fields to proceed!");
     }
