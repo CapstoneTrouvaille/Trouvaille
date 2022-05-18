@@ -18,47 +18,53 @@ import SelectModal from "./SelectModal";
 import { addItineraryDay, getItinerary } from "./store/itinerary";
 import { auth, firebase } from "../firebase";
 import { getDates } from "./helperFunctions/getDates";
+import ItineraryDay from "./ItineraryDay";
 
 const Itinerary = (props) => {
   const dispatch = useDispatch();
 
+  // const tripInfo = useSelector((state) => state.trip);
   const itinerary = useSelector((state) => state.itinerary);
-  const [dayName, setDayName] = useState("");
-  const [plans, setPlans] = useState("");
+  // const [dayName, setDayName] = useState("");
+  // const [plans, setPlans] = useState("");
   const tripId = props.tripId;
 
   useEffect(() => {
     dispatch(getItinerary(tripId));
   }, []);
 
-  const addDays = () => {
-    dispatch(addItineraryDay(tripId, dayName, plans));
-    setDayName("");
-    setPlans("");
-  };
+
+  // const addDays = () => {
+  //   dispatch(addItineraryDay(tripId, dayName, plans));
+  //   setDayName("");
+  //   setPlans("");
+  // };
   // console.log("Itinerary",Object.keys(itinerary[0]).filter((key)=>key!=="placesFromExplore")[0])
 
   const populateDays = [];
 
   for (let i = 0; i < itinerary.length; i++) {
     populateDays.push(
-      <Box key={i}>
-      <Text bold>
-        {
-          Object.keys(itinerary[i]).filter(
-            (key) => key !== "placesFromExplore"
-          )[0]
-        }
-      </Text>
-      <SelectModal index={i} tripId={tripId} />
-      </Box>
+      <View key={i} >
+      <Box flexDirection="row">
+        <Text bold>
+          {
+            Object.keys(itinerary[i]).filter(
+              (key) => key !== "placesFromExplore"
+            )[0]
+          }
+        </Text>
+        <SelectModal index={i} tripId={tripId} />
+        </Box>
+        <ItineraryDay index={i} tripId={tripId} />
+      </View>
     );
   }
+
   // let start;
   // let end;
   // let datesArray = [];
 
-  // const tripInfo = useSelector((state) => state.trip);
   // if (tripInfo.startDate) {
   //   start = tripInfo.startDate.toDate();
   //   end = tripInfo.endDate.toDate();
@@ -110,10 +116,15 @@ const Itinerary = (props) => {
         </Button>
       </Stack> */}
       <Box>{populateDays}</Box>
+
     </ScrollView>
   );
 };
 
 export default Itinerary;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+  },
+});

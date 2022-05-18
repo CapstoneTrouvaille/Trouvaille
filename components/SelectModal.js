@@ -18,12 +18,8 @@ const SelectModal = (props) => {
   const dispatch= useDispatch()
   const savedItems = useSelector((state) => state.savedItems);
   const itinerary = useSelector((state) => state.itinerary);
-  //fix dayname, index changes
-  // console.log("ITINERARY IN MODAL", itinerary[props.index])
   const dayName = Object.keys(itinerary[props.index]).filter((obj)=>obj !== "placesFromExplore")[0]
-  const plansList = itinerary[props.index][dayName]
 
-  const placesFromExplore = itinerary[props.index].placesFromExplore || []
 
   const [showModal, setShowModal] = useState(false);
   const [groupValues, setGroupValues] = useState([]);
@@ -79,12 +75,12 @@ const SelectModal = (props) => {
           </Modal.Content>
         </Modal>
       </Center>
-      {plansList.map((plan, i)=> (
+      {/* {plansList.map((plan, i)=> (
         <Text key={i}>{plan}</Text>
       ))}
        {placesFromExplore.map((value, i) => (
         <Text key={i}>{value}</Text>
-      ))}
+      ))} */}
     </View>
   )
 }
