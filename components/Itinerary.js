@@ -39,7 +39,6 @@ const Itinerary = (props) => {
   //   setDayName("");
   //   setPlans("");
   // };
-  // console.log("Itinerary",Object.keys(itinerary[0]).filter((key)=>key!=="placesFromExplore")[0])
 
   const populateDays = [];
 
