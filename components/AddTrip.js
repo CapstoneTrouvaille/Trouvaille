@@ -10,9 +10,7 @@ import {
   Heading,
   Text,
   Button,
-  //DatePicker,
 } from "native-base";
-//import DateTimePicker from "@react-native-community/datetimepicker";
 import { auth, firebase } from "../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrip, fetchTrips } from "./store/trip";
@@ -29,10 +27,6 @@ const AddTrip = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const [date, setDate] = useState("05-16-2022");
-  const [mode, setMode] = useState("date");
-  const [show, setShow] = useState(false);
-
   const [tripName, setTripName] = useState("");
   const [location, setLocation] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -40,23 +34,6 @@ const AddTrip = () => {
 
   const trip = useSelector((state) => state.trip);
   const tripId = trip.id;
-
-  //console.log(`TRIPS FROM REDUX!!!:`, trip);
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    setDate(currentDate);
-  };
-
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode("date");
-  };
 
   const handleSubmit = () => {
     //need to change date to yyyy-mm-dd format to put into date function
@@ -76,17 +53,17 @@ const AddTrip = () => {
     );
 
     const itineraryDays = getDates(new Date(startDate), new Date(endDate)).map(
-      (date) =>{
-      const obj ={}
-      let day =
-        date.toLocaleDateString("en-US", {
+      (date) => {
+        const obj = {};
+        let day = date.toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
           day: "numeric",
-        })
-      obj[day]=[]
-      return obj
-      });
+        });
+        obj[day] = [];
+        return obj;
+      }
+    );
 
     const newTripInfo = {
       tripName,
@@ -159,36 +136,7 @@ const AddTrip = () => {
               onChangeText={(text) => setLocation(text)}
             />
           </FormControl>
-          {/* <FormControl mb="4">
-            <FormControl.Label>Trip start date</FormControl.Label>
-            <Input
-              value={startDate}
-              size="md"
-              placeholder="Enter trip start date"
-              onChangeText={(text) => setStartDate(text)}
-            />
-          </FormControl> */}
         </Box>
-
-        {/* <FormControl mb="4">
-            <FormControl.Label>Trip end date</FormControl.Label>
-            <Input
-              value={endDate}
-              size="md"
-              placeholder="Enter trip end date"
-              onChangeText={(text) => setEndDate(text)}
-            />
-          </FormControl>
-          <FormControl mb="4">
-            <FormControl.Label>Trip end date 2</FormControl.Label>
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode="date"
-              is24Hour={true}
-              onChange={onChange}
-            />
-          </FormControl> */}
 
         <View style={styles.container}>
           <ReactNativeText style={styles.text}>
