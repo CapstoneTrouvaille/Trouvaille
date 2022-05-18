@@ -9,11 +9,14 @@ import { Audio } from "expo-av";
 
 const SingleMemory = (props) => {
   const [isClicked, setIsClicked] = useState(false);
-  const memory = props.memory || "";
-  console.log("memory", memory);
+  const memory = props.memory || ""
   const [url, setUrl] = useState();
   const [voice, setVoice] = useState();
 
+
+  useEffect(()=> {
+
+  })
   //PHOTO
   useEffect(() => {
     const func = async () => {

@@ -35,7 +35,7 @@ const Memories = (props) => {
   }, []);
 
   return (
-    <View w="100%">
+    <ScrollView w="100%">
       <Stack
         space={2.5}
         alignSelf="center"
@@ -61,51 +61,17 @@ const Memories = (props) => {
           </Button>
         </Center>
 
-        <Divider mv="8" />
-
         <Box>
           <Heading fontSize="xl" p="4" pb="3">
             Memories
           </Heading>
-          <FlatList
-            data={memories}
-            renderItem={({ item }, i) => (
-              <Box
-                key={i}
-                borderBottomWidth="1"
-                _dark={{
-                  borderColor: "gray.600",
-                }}
-                borderColor="coolGray.200"
-                pl="4"
-                pr="5"
-                py="2"
-              >
-                <HStack space={3} justifyContent="space-between">
-                  <VStack>
-                    <Text
-                      fontSize="xs"
-                      _dark={{
-                        color: "warmGray.50",
-                      }}
-                      color="coolGray.800"
-                      alignSelf="flex-start"
-                    >
-                      <SingleMemory memory={item} />
-                    </Text>
-                  </VStack>
-                  <Spacer />
-                  <Text fontSize="xs" alignSelf="flex-start">
-                    {item.journalDate}
-                  </Text>
-                </HStack>
-              </Box>
-            )}
-            keyExtractor={(item) => item.id}
-          />
+
+          {memories.map((memory) => (
+            <SingleMemory memory={memory} />
+          ))}
         </Box>
       </Stack>
-    </View>
+    </ScrollView>
   );
 };
 
