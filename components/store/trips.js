@@ -23,28 +23,26 @@ export const getTrips = (trips) => ({
 });
 
 //THUNKS
-// export const fetchUserTrips = (userId) => {
-//   return async (dispatch) => {
-//     try {
-//       const userTrips = await db
-//         .collection("trips")
-//         .where("users", "array-contains", userId)
-//         .get();
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// };
-
 export const fetchUserTrips = (userTripsArr) => {
   return async (dispatch) => {
     try {
       console.log("userTripsArr", userTripsArr);
-      //   const data = userTripsArr.map(async (tripId) => {
-      //     await db.collection("trips").doc(tripId).get().data();
-      //   });
+      const tripArr = [];
+      for (let i = 0; i < userTripsArr.length; i++) {
+        const tripId = userTripsArr[i];
+        const answer = db.collection("trips").doc(tripId);
+        const doc = await answer.get();
+        const data = doc.data();
+        tripArr.push(data);
+      }
+      // console.log("for loop try with trips", tripArr);
+      dispatch(getTrips(tripArr));
+      // console.log("for loop try with trips????", tripArr);
+      // console.log("userTripsArr after map", userTripsArr);
+      // for (let i =0; i < userTripsArr.length i++)
       //   console.log("this is what we get from fetchUserTrips", data);
       //   dispatch(getTrips(data));
+      //console.log("tripArr", tripArr);
     } catch (error) {
       console.log(error);
     }
@@ -53,6 +51,7 @@ export const fetchUserTrips = (userTripsArr) => {
 
 //REDUCER
 export default function trips(state = [], action) {
+  console.log("redux", action);
   switch (action.type) {
     case GET_TRIPS:
       return action.trips;
