@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet,Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
 
 const ItineraryDay = (props) => {
   const itinerary = useSelector((state) => state.itinerary);

@@ -40,7 +40,7 @@ const Itinerary = (props) => {
     )[0]
     populateDays.push(
       <View key={i}>
-        <Text bold>
+        <Text bold fontSize="lg">
           {
            dayString
           }
