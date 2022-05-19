@@ -33,6 +33,7 @@ import CurrentTripScreen from "./CurrentTripScreen";
 import PastTripsScreen from "./PastTripsScreen";
 import NewTripInviteMsg from "./NewTripInviteMsg";
 import { getSavedItems } from "./store/saved";
+import { fetchUserTrips } from "./store/trips";
 
 //ROUTES FOR MIDDLE TAB
 const FirstRoute = () => (
@@ -65,7 +66,8 @@ const HomeScreen = () => {
 
   useEffect(() => {
     dispatch(fetchTrips());
-    dispatch(getSavedItems());
+    dispatch(getSavedItems())
+    dispatch(fetchUserTrips(userInfo.trip));
   }, []);
 
   useEffect(() => {
