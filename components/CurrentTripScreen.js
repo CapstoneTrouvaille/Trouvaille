@@ -15,7 +15,9 @@ const CurrentTripScreen = () => {
   const userCurrentTrips = userInfo.trip;
 
   console.log(` Current Trip Screen:`, userInfo.trip);
+  console.log("tripInfo", tripInfo);
 
+  console.log("userCurrentTrips", userCurrentTrips);
   // useEffect(() => {
   //   dispatch(fetchUser(auth.currentUser.uid));
   //   dispatch(fetchTrips());
@@ -28,17 +30,18 @@ const CurrentTripScreen = () => {
   return (
     <View>
       <Text>Trip's in Progress</Text>
-      {userCurrentTrips &&
-        userCurrentTrips.map((tripId, index) => (
+      {tripInfo &&
+        tripInfo.map((trip, index) => (
           <Text
             key={index}
             onPress={() =>
               navigation.navigate("SingleTrip", {
-                tripId,
+                trip,
+                tripId: userCurrentTrips[index],
               })
             }
           >
-            {tripId}
+            {trip.tripName}
           </Text>
         ))}
     </View>

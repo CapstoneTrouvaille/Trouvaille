@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "Trouvaille",
-    "slug": "Trouvaille",
-    "description": "Plan, Travel, and Reminisce with Trouvaille's group trip collaboration mobile app. ",
+    "slug": "trouvaille",
+    "description": "",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon2.png",
@@ -18,7 +18,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true  
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
