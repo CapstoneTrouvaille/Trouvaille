@@ -27,7 +27,8 @@ import { getStorage, ref, uploadBytes } from "firebase/storage";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 //audio
-import { Audio } from "expo-av";
+import { Audio, RecordingOptions } from "expo-av";
+import { RECORDING_OPTION_IOS_OUTPUT_FORMAT_LINEARPCM } from "expo-av/build/Audio";
 
 const AddMemories = (props) => {
   const dispatch = useDispatch();
@@ -80,6 +81,28 @@ const AddMemories = (props) => {
   };
 
   //VOICE RECORDING
+  const RECORDING_OPTIONS_PRESET_HIGH_QUALITY = {
+    isMeteringEnabled: true,
+    android: {
+      extension: ".m4a",
+      outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
+      audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_AAC,
+      sampleRate: 44100,
+      numberOfChannels: 2,
+      bitRate: 128000,
+    },
+    ios: {
+      extension: ".m4a",
+      outputFormat: Audio.RECORDING_OPTION_IOS_OUTPUT_FORMAT_MPEG4AAC,
+      audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_MAX,
+      sampleRate: 44100,
+      numberOfChannels: 2,
+      bitRate: 128000,
+      linearPCMBitDepth: 16,
+      linearPCMIsBigEndian: false,
+      linearPCMIsFloat: false,
+    },
+  };
 
   async function startRecording() {
     try {
@@ -91,7 +114,7 @@ const AddMemories = (props) => {
           playsInSilentModeIOS: true,
         });
         const { recording } = await Audio.Recording.createAsync(
-          Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
+          RECORDING_OPTIONS_PRESET_HIGH_QUALITY
         );
         setRecording(recording);
       } else {
@@ -122,8 +145,9 @@ const AddMemories = (props) => {
     const recNum = recordings.length;
     const storage = getStorage(); //the storage itself
     if (recording) {
+      const voiceName = uuidv4();
       console.log("recording", recording);
-      const path = `audio/${tripId}/${recNum + 1}`;
+      const path = `audio/${tripId}/${voiceName}`;
       const ref_con = ref(storage, path);
       setVoiceInfo(path);
       const voiceFile = await fetch(recording._uri);
