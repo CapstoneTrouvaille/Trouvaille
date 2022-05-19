@@ -20,11 +20,12 @@ import {
 const InviteTripMember = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const tripInfo = route.params.trip;
   const tripId = route.params.tripId;
-  const tripInfo = useSelector((state) => state.trip);
+  // const tripInfo = useSelector((state) => state.trip);
 
   const currentTripMembers = tripInfo.users;
-  console.log()
+  console.log();
   const tripPendingUsers = tripInfo.pendingUsers;
   const declinedUsers = tripInfo.declinedUsers;
 
@@ -84,9 +85,9 @@ const InviteTripMember = ({ route }) => {
             Pending Trip Member Invitations
           </Text>
           {tripPendingUsers &&
-            tripPendingUsers.map((user, index) => (
+            tripPendingUsers.map((userId, index) => (
               <Text key={index} mb="6">
-                {user}
+                {userId}
               </Text>
             ))}
           <Divider />
