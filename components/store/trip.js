@@ -22,6 +22,7 @@ const SINGLE_TRIP = "SINGLE_TRIP";
 const ADD_USER_TO_TRIP_REQUEST = "ADD_USER_TO_TRIP_REQUEST";
 const ADD_USER_TO_TRIP_SUCCESS = "ADD_USER_TO_TRIP_SUCCESS";
 const ADD_USER_TO_TRIP_FAIL = "ADD_USER_TO_TRIP_FAIL";
+const GET_TRIPMEMBER = "GET_TRIPMEMBER";
 
 //ACTION CREATOR
 export const _getTrips = (trips) => ({
@@ -64,11 +65,15 @@ export const _addUserToTripFail = (error) => ({
   errorAddUser: error,
 });
 
+export const getTripMember = (tripMembers) => ({
+  type: GET_TRIPMEMBER,
+  tripMembers,
+});
+
 //THUNK
 export const fetchSingleTrip = (tripId) => {
   return async (dispatch) => {
     try {
-      // console.log(`UUID from fetchTrips:`, auth.currentUser.uid);
       const tripRef = db.collection("trips").doc(tripId);
 
       const doc = await tripRef.get();
@@ -76,7 +81,6 @@ export const fetchSingleTrip = (tripId) => {
         console.log("No such document!");
       } else {
         const data = doc.data();
-        // console.log("Document data:", data);
         dispatch(getSingleTrip(data));
       }
     } catch (error) {
@@ -88,7 +92,6 @@ export const fetchSingleTrip = (tripId) => {
 export const fetchTrips = () => {
   return async (dispatch) => {
     try {
-      console.log(`UUID from fetchTrips:`, auth.currentUser.uid);
       const userTrips = await db
         .collection("trips")
         .where("users", "array-contains", auth.currentUser.uid)
@@ -158,6 +161,27 @@ export const addUserToTrip = (tripId, userUID) => {
   };
 };
 
+export const fetchTripMember = (tripMemberArr) => {
+  return async (dispatch) => {
+    try {
+      const member = [];
+      for (let i = 0; i < tripMemberArr.length; i++) {
+        const UID = tripMemberArr[i];
+        const allUserRef = db.collection("user");
+        const userRec = await allUserRef.where("UID", "==", UID).get();
+        const data = userRec.docs[0].data();
+        const memberName = data.name;
+        // console.log("name of the member", memberName);
+        member.push(memberName);
+      }
+      // console.log("for loop try with trips", tripArr);
+      dispatch(getTripMember(member));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 //REDUCER
 export default function trip(state = {}, action) {
   switch (action.type) {
@@ -181,6 +205,8 @@ export default function trip(state = {}, action) {
         loadingAddUser: false,
         errorAddUser: action.errorAddUser,
       };
+    case GET_TRIPMEMBER:
+      return { ...state, tripMembers: action.tripMembers };
     default:
       return state;
   }

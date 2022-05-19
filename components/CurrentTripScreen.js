@@ -25,7 +25,7 @@ const CurrentTripScreen = () => {
 
   useEffect(() => {
     dispatch(fetchUserTrips(userCurrentTrips));
-  },[userInfo])
+  }, [userInfo]);
 
   return (
     <View>
