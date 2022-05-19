@@ -11,13 +11,15 @@ import InviteTripMember from "./components/InviteTripMember";
 
 //fonts
 import { useFonts, Montserrat_400Regular, Montserrat_600SemiBold} from "@expo-google-fonts/montserrat";
-
+import {Jaldi_400Regular, Jaldi_700Bold} from "@expo-google-fonts/dev"
 
 const App = () => {
   //fonts
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular,
-    Montserrat_600SemiBold
+    Montserrat_600SemiBold,
+    Jaldi_400Regular,
+    Jaldi_700Bold
   })
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);

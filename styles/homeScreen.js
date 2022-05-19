@@ -12,20 +12,19 @@ export default StyleSheet.create({
   },
 
   header: {
-    fontFamily: "Montserrat_600SemiBold",
+    fontFamily: "Jaldi_700Bold",
     fontSize:30,
-    fontWeight: "bold",
     marginTop: "2%",
-    paddingTop:"3%",
+    paddingTop:"5%",
     height:30,
     textAlign: "center",
   },
   tabBar:{
-    fontFamily: "Montserrat_600SemiBold",
+    fontFamily:"Jaldi_700Bold",
     fontSize:20,
     alignItems:"center",
     padding: 10,
     flex:1,
-    borderBottomWidth: 3
+    borderBottomWidth: 3,
   }
 });
