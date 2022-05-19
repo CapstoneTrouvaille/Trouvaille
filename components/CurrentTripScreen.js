@@ -9,7 +9,7 @@ import { fetchUserTrips } from "./store/trips";
 
 const CurrentTripScreen = () => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user);
   const tripInfo = useSelector((state) => state.trips);
   const userCurrentTrips = userInfo.trip;
@@ -23,9 +23,9 @@ const CurrentTripScreen = () => {
   //   dispatch(fetchTrips());
   // }, []);
 
-  useEffect(() => {
-    dispatch(fetchUserTrips(userCurrentTrips));
-  }, [userInfo]);
+  // useEffect(() => {
+  //   dispatch(fetchUserTrips(userCurrentTrips));
+  // },[userInfo])
 
   return (
     <View>

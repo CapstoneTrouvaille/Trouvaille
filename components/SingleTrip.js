@@ -25,24 +25,19 @@ import { TabView, SceneMap } from "react-native-tab-view";
 import Itinerary from "./Itinerary";
 import Memories from "./Memories";
 import firebase from "firebase/compat";
-import { fetchTripMember } from "./store/trip";
 
 const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = route.params.tripId;
-  const trip = useSelector((state) => state.trip);
-  const tripInfo = route.params.trip;
-  console.log("tripinfo? ", route.params.trip);
+  const tripInfo = useSelector((state) => state.trip);
+  console.log("tripINfo in SingleTrip", route.params);
 
-  console.log("tripMembers?", trip.tripMembers);
-  const getTravelers = tripInfo.users;
-  const travelers = trip.tripMembers;
+  // useEffect(() => {
+  //   dispatch(fetchSingleTrip(tripId));
+  // }, []);
 
-  useEffect(() => {
-    dispatch(fetchTripMember(getTravelers));
-  }, []);
-
+  const travelers = tripInfo.users || [];
   //may need to delete?
   const startDate = tripInfo.startDate || "";
   const fireBaseTime = new Date(
@@ -88,6 +83,8 @@ const SingleTrip = ({ route }) => {
     },
   ]);
 
+  //console.log("DDDAAATTEEEEEEEEEE", tripInfo.startDate);
+
   const renderTabBar = (props) => {
     const inputRange = props.navigationState.routes.map((x, i) => i);
     return (
@@ -118,6 +115,7 @@ const SingleTrip = ({ route }) => {
             >
               <Pressable
                 onPress={() => {
+                  //console.log(i);
                   setIndex(i);
                 }}
               >
@@ -160,10 +158,17 @@ const SingleTrip = ({ route }) => {
               <Text fontWeight="400">Location: {tripInfo.location}</Text>
               <Text fontWeight="400">
                 {newStartDate} - {newEndDate}
+                {/* {JSON.stringify(tripInfo.startDate.toDate()).replace(
+                  /['"]+/g,
+                  ""
+                )}{" "}
+                -{" "}
+                {JSON.stringify(tripInfo.endDate.toDate()).replace(
+                  /['"]+/g,
+                  ""
+                )} */}
               </Text>
-              <Text fontWeight="400">
-                Travelers: {travelers && travelers.toString()}
-              </Text>
+              <Text fontWeight="400">Travelers: {travelers}</Text>
               <Button
                 size="md"
                 mt="4"

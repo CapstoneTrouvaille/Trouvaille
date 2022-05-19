@@ -35,44 +35,30 @@ import NewTripInviteMsg from "./NewTripInviteMsg";
 import { getSavedItems } from "./store/saved";
 import { fetchUserTrips } from "./store/trips";
 
-//ROUTES FOR MIDDLE TAB
-const FirstRoute = () => (
-  <Center>
-    <CurrentTripScreen />
-  </Center>
-);
-const SecondRoute = () => (
-  <Center>
-    <PastTripsScreen />
-  </Center>
-);
-const initialLayout = {
-  width: Dimensions.get("window").width,
-};
-const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute,
-});
-
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state) => state.user);
   const tripInfo = useSelector((state) => state.trip);
+  const userCurrentTrips = userInfo.trip;
   const showPendingTrips = userInfo.pendingTrips
     ? userInfo.pendingTrips.length
     : 0;
 
   useEffect(() => {
     dispatch(fetchTrips());
-    dispatch(getSavedItems())
+    dispatch(getSavedItems());
     dispatch(fetchUserTrips(userInfo.trip));
   }, []);
 
   useEffect(() => {
     dispatch(fetchUser(auth.currentUser.uid));
   }, [tripInfo.successAdd]);
+
+  useEffect(() => {
+    dispatch(fetchUserTrips(userCurrentTrips));
+  }, [userInfo]);
 
   const handleSignOut = () => {
     dispatch(logoutUser());
@@ -84,6 +70,25 @@ const HomeScreen = () => {
       })
       .catch((error) => alert(error.message));
   };
+
+  //ROUTES FOR MIDDLE TAB
+  const FirstRoute = () => (
+    <Center>
+      <CurrentTripScreen trips={userCurrentTrips} />
+    </Center>
+  );
+  const SecondRoute = () => (
+    <Center>
+      <PastTripsScreen trips={userCurrentTrips} />
+    </Center>
+  );
+  const initialLayout = {
+    width: Dimensions.get("window").width,
+  };
+  const renderScene = SceneMap({
+    first: FirstRoute,
+    second: SecondRoute,
+  });
 
   //MIDDLE TAB
   const [index, setIndex] = React.useState(0);
