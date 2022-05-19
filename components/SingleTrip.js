@@ -32,7 +32,9 @@ const SingleTrip = ({ route }) => {
   const dispatch = useDispatch();
   const tripId = route.params.tripId;
   const trip = useSelector((state) => state.trip);
-  const tripInfo = trip.trips[0];
+  const tripInfo = route.params.trip;
+  console.log("tripinfo? ", route.params.trip);
+
   console.log("tripMembers?", trip.tripMembers);
   const getTravelers = tripInfo.users;
   const travelers = trip.tripMembers;
