@@ -35,6 +35,8 @@ import NewTripInviteMsg from "./NewTripInviteMsg";
 import { getSavedItems } from "./store/saved";
 import { fetchUserTrips } from "./store/trips";
 
+import styles from "../styles/homeScreen";
+
 //ROUTES FOR MIDDLE TAB
 const FirstRoute = () => (
   <Center>
@@ -66,8 +68,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     dispatch(fetchTrips());
-    dispatch(getSavedItems())
-    dispatch(fetchUserTrips(userInfo.trip));
+    dispatch(getSavedItems());
   }, []);
 
   useEffect(() => {
@@ -116,20 +117,16 @@ const HomeScreen = () => {
               : useColorModeValue("#1f2937", "#a1a1aa");
           const borderColor =
             index === i
-              ? "cyan.500"
+              ? "#999DC3"
               : useColorModeValue("coolGray.200", "gray.400");
           return (
             <Box
               key={i}
-              borderBottomWidth="3"
               borderColor={borderColor}
-              flex={1}
-              alignItems="center"
-              p="3"
+              style={styles.tabBar}
             >
               <Pressable
                 onPress={() => {
-                  //console.log(i);
                   setIndex(i);
                 }}
               >
@@ -150,18 +147,8 @@ const HomeScreen = () => {
 
   return (
     <>
-      <Stack
-        space={2.5}
-        alignSelf="center"
-        px="4"
-        safeArea
-        mt="4"
-        w={{
-          base: "100%",
-          md: "25%",
-        }}
-      >
-        <Box alignItems="center">
+      <Stack style={styles.container} safeArea>
+        <Box style={styles.headbox}>
           <Avatar
             bg="purple.600"
             alignSelf="center"
@@ -170,14 +157,10 @@ const HomeScreen = () => {
               uri: "https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80",
             }}
           >
-            RB
+
           </Avatar>
-          <Heading size="xl" mb="4">
-            {userInfo.name}'s Trip Dashboard
-          </Heading>
+          <Text style= {styles.header} size="xl">{userInfo.name}'s Trip Dashboard</Text>
           {showPendingTrips !== 0 && <NewTripInviteMsg />}
-          {/* <Text>Email: {userInfo.email}</Text> */}
-          <Divider mb="8" />
         </Box>
       </Stack>
 
@@ -198,16 +181,12 @@ const HomeScreen = () => {
         <Stack direction="row" mb="2.5" mt="1.5" space={3}>
           <Center>
             <Button
+              style={styles.button}
               size="lg"
               mb="6"
               onPress={() => navigation.navigate("AddTrip")}
             >
               Add a Trip
-            </Button>
-          </Center>
-          <Center>
-            <Button size="lg" mb="6" onPress={handleSignOut}>
-              Sign Out
             </Button>
           </Center>
         </Stack>
@@ -216,5 +195,3 @@ const HomeScreen = () => {
   );
 };
 export default HomeScreen;
-
-const styles = StyleSheet.create({});
