@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useId } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUser } from "./store/user";
 import { auth } from "../firebase";
@@ -15,9 +15,9 @@ const CurrentTripScreen = () => {
   const userCurrentTrips = userInfo.trip;
 
   console.log(` Current Trip Screen:`, userInfo.trip);
-  console.log("tripInfo", tripInfo);
+  console.log("TRIPINFO", tripInfo);
 
-  console.log("userCurrentTrips", userCurrentTrips);
+  console.log("USE CURRENT TRIPS", userCurrentTrips);
   // useEffect(() => {
   //   dispatch(fetchUser(auth.currentUser.uid));
   //   dispatch(fetchTrips());
@@ -25,7 +25,7 @@ const CurrentTripScreen = () => {
 
   useEffect(() => {
     dispatch(fetchUserTrips(userCurrentTrips));
-  }, []);
+  },[userInfo])
 
   return (
     <View>
