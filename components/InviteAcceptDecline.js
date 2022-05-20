@@ -25,13 +25,11 @@ const InviteAcceptDecline = ({ route }) => {
   console.log(`Pending Trips:`, pendingTripInvites);
 
   const handleSubmitAccept = (tripId) => {
-    console.log(`User clicked  ** Invite Accepted ** !!`);
     dispatch(addUserToTrip(tripId, userInfo.UID));
-    //  navigation.navigate("SingleTrip", { tripId });
   };
 
-  const handleSubmitDecline = () => {
-    console.log(`Invite Declined Clicked!!!!`);
+  const handleSubmitDecline = (tripId) => {
+    dispatch(addUserToTrip(tripId, userInfo.UID));
   };
 
   const handleHomeOnClick = () => {

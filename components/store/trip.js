@@ -18,10 +18,12 @@ const ADD_TRIP_REQUEST = "ADD_TRIP_REQUEST";
 const ADD_TRIP_SUCCESS = "ADD_TRIP_SUCCESS";
 const ADD_TRIP_FAIL = "ADD_TRIP_FAIL";
 const SINGLE_TRIP = "SINGLE_TRIP";
-//const INVITE_TRIP_MEMBER = "INVITE_TRIP_MEMBER"
 const ADD_USER_TO_TRIP_REQUEST = "ADD_USER_TO_TRIP_REQUEST";
 const ADD_USER_TO_TRIP_SUCCESS = "ADD_USER_TO_TRIP_SUCCESS";
 const ADD_USER_TO_TRIP_FAIL = "ADD_USER_TO_TRIP_FAIL";
+const DECLINE_TRIP_REQUEST = "DECLINE_TRIP_REQUEST";
+const DECLINE_TRIP_SUCCESS = "DECLINE_TRIP_SUCCESS";
+const DECLINE_TRIP_FAIL = "DECLINE_TRIP_FAIL";
 const GET_TRIPMEMBER = "GET_TRIPMEMBER";
 const GET_PENDING_TRIP_MEMBERS = "GET_PENDING_TRIP_MEMBERS";
 const GET_CURRENT_TRIP_MEMBERS = "GET_CURRENT_TRIP_MEMBERS";
@@ -66,6 +68,19 @@ export const _addUserToTripSuccess = () => ({
 export const _addUserToTripFail = (error) => ({
   type: ADD_USER_TO_TRIP_FAIL,
   errorAddUser: error,
+});
+
+export const _declineTripRequest = () => ({
+  type: DECLINE_TRIP_REQUEST,
+});
+
+export const _declineTripSuccess = () => ({
+  type: DECLINE_TRIP_SUCCESS,
+});
+
+export const _declineTripFail = (error) => ({
+  type: DECLINE_TRIP_FAIL,
+  errorDecline: error,
 });
 
 export const getTripMember = (tripMembers) => ({
@@ -176,6 +191,35 @@ export const addUserToTrip = (tripId, userUID) => {
     }
   };
 };
+export const declineInviteToTrip = (tripId, userUID) => {
+  return async (dispatch) => {
+    try {
+      dispatch(_declineTripRequest());
+      const tripReference = await doc(db, "trips", tripId);
+      const allUserRef = db.collection("user");
+      const userRec = await allUserRef.where("UID", "==", userUID).get();
+      const userRef = userRec.docs[0].data();
+      const userReference = doc(db, "user", userRec.docs[0].id);
+      await updateDoc(tripReference, {
+        pendingUsers: arrayRemove(userUID),
+      });
+      await updateDoc(tripReference, {
+        declinedUsers: arrayUnion(userUID),
+      });
+      await updateDoc(userReference, {
+        pendingTrips: arrayRemove(tripId),
+      });
+      await updateDoc(userReference, {
+        declinedTrips: arrayUnion(tripId),
+      });
+      dispatch(_declineTripSuccess());
+      console.log("User declined invitation to trip!");
+    } catch (error) {
+      dispatch(_declineTripFail(error));
+      console.error("Error adding user to trip: ", error);
+    }
+  };
+};
 
 export const fetchTripMember = (tripMemberArr) => {
   return async (dispatch) => {
@@ -232,7 +276,6 @@ export const fetchTripMembers = (current, pending, declined) => {
       dispatch(getCurrentTripMembers(currentUsernames));
       dispatch(getPendingTripMembers(pendingUsernames));
       dispatch(getDeclinedTripMembers(declinedUsernames));
-
     } catch (error) {
       console.log(error);
     }
@@ -261,6 +304,16 @@ export default function trip(state = {}, action) {
         ...state,
         loadingAddUser: false,
         errorAddUser: action.errorAddUser,
+      };
+    case DECLINE_TRIP_REQUEST:
+      return { ...state, loadingDecline: true };
+    case DECLINE_TRIP_SUCCESS:
+      return { ...state, loadingDecline: false, successDecline: true };
+    case DECLINE_TRIP_FAIL:
+      return {
+        ...state,
+        loadingDecline: false,
+        errorDecline: action.errorDeclineAdd,
       };
     case GET_TRIPMEMBER:
       return { ...state, tripMembers: action.tripMembers };
