@@ -36,7 +36,7 @@ const HomeStackNavigator = () => {
         ),
       }}
     >
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Homeeeee" component={HomeScreen} />
       <Stack.Screen name="AddTrip" component={AddTrip} />
       <Stack.Screen name="InviteTripMember" component={InviteTripMember} />
       <Stack.Screen

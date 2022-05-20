@@ -136,6 +136,9 @@ const SingleTrip = ({ route }) => {
         <Box>
           <Center>
             <Text style={styles.header}>{tripInfo.tripName}</Text>
+            <Box style = {styles.box}>
+
+
             <Text style={styles.tripInfo}>Location: {tripInfo.location}</Text>
             <Text style={styles.tripInfo}>
               {newStartDate} - {newEndDate}
@@ -152,6 +155,7 @@ const SingleTrip = ({ route }) => {
             <Text style={styles.tripInfo}>
               Travelers: {tripMembers && tripMembers.toString()}
             </Text>
+            </Box>
             <Button
               style={styles.button}
               _text={styles.buttonText}

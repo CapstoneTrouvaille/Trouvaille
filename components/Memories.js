@@ -66,8 +66,8 @@ const Memories = (props) => {
             Memories
           </Heading>
 
-          {memories.map((memory) => (
-            <SingleMemory memory={memory} />
+          {memories.map((memory, index) => (
+            <SingleMemory key={index} memory={memory} />
           ))}
         </Center>
       </Stack>

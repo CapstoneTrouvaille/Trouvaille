@@ -12,9 +12,16 @@ export default StyleSheet.create({
   container: {
     width: "100%",
     alignItems: "center",
-    height: 210,
-    paddingTop: "5%",
-    backgroundColor:"pink"
+    height: 250,
+    paddingTop: "3%",
+
+  },
+  box:{
+    borderWidth:1,
+    borderColor:"gray",
+    borderRadius:5,
+    padding:"3%",
+    marginBottom:"1%"
   },
 
   header: {
@@ -26,7 +33,6 @@ export default StyleSheet.create({
     fontFamily: "Jaldi_400Regular",
     fontSize: 20,
     paddingTop: "1%",
-    backgroundColor:"pink",
   },
   tripButton: {
     color: "#999DC3",
