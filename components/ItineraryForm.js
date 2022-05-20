@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -14,31 +14,35 @@ import {
   Item,
   Stack,
 } from "native-base";
-import { addItineraryDay } from './store/itinerary';
+import { addItineraryDay } from "./store/itinerary";
 
 const ItineraryForm = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [plans, setPlans] = useState("");
 
   const addDays = () => {
-    dispatch(addItineraryDay(props.tripId, props.day, plans));
-    setPlans("");
+    if (plans != "") {
+      dispatch(addItineraryDay(props.tripId, props.day, plans));
+      setPlans("");
+    } else {
+      alert("Please write something to submit!");
+    }
   };
   return (
-    <View width="80%" >
-    <Stack flexDirection="row" space={5}>
-     <FormControl mb="4">
-        <Input
-        width="95%"
-          value={plans}
-          size="sm"
-          placeholder="Add Plans to your itinerary"
-          onChangeText={(text) => setPlans(text)}
-        />
-      </FormControl>
+    <View width="80%">
+      <Stack flexDirection="row" space={5}>
+        <FormControl mb="4">
+          <Input
+            width="95%"
+            value={plans}
+            size="sm"
+            placeholder="Add Plans to your itinerary"
+            onChangeText={(text) => setPlans(text)}
+          />
+        </FormControl>
 
-      {/* <Stack direction="row" space={5} justifyContent="center"> */}
+        {/* <Stack direction="row" space={5} justifyContent="center"> */}
         <Button
           size="sm"
           mb="4"
@@ -50,9 +54,9 @@ const ItineraryForm = (props) => {
         </Button>
       </Stack>
     </View>
-  )
-}
+  );
+};
 
-export default ItineraryForm
+export default ItineraryForm;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
