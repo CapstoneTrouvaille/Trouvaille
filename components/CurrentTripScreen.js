@@ -40,7 +40,7 @@ const CurrentTripScreen = () => {
               style={styles.tripList}
               _text={styles.tripButton}
               onPress={() =>
-                navigation.navigate("SingleTrip", {
+                navigation.navigate("Trip", {
                   trip,
                   tripId: userCurrentTrips[index],
                 })
