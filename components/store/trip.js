@@ -120,18 +120,18 @@ export const fetchSingleTrip = (tripId) => {
   };
 };
 
-export const fetchTrips = () => {
-  return async (dispatch) => {
-    try {
-      const userTrips = await db
-        .collection("trips")
-        .where("users", "array-contains", auth.currentUser.uid)
-        .get();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
+// export const fetchTrips = () => {
+//   return async (dispatch) => {
+//     try {
+//       const userTrips = await db
+//         .collection("trips")
+//         .where("users", "array-contains", auth.currentUser.uid)
+//         .get();
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+// };
 
 export const addTrip = (newTripInfo) => {
   return async (dispatch) => {

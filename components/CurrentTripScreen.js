@@ -13,7 +13,7 @@ const CurrentTripScreen = () => {
   const navigation = useNavigation();
   //const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user);
-  const tripInfo = useSelector((state) => state.trips);
+  const tripInfo = useSelector((state) => state.trips.trips);
   const userCurrentTrips = userInfo.trip;
 
   console.log(` Current Trip Screen:`, userInfo.trip);

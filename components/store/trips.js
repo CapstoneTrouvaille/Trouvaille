@@ -28,16 +28,18 @@ export const getPendingTrips = (pendingTrips) => ({
 });
 
 //THUNKS
-export const fetchUserTrips = (userTripsArr) => {
-  return async (dispatch) => {
+export const fetchUserTrips = () => {
+  return async (dispatch, getState) => {
     try {
+      const state = getState();
       const tripArr = [];
+      const userTripsArr = state.user.trip;
       for (let i = 0; i < userTripsArr.length; i++) {
         const tripId = userTripsArr[i];
         const answer = db.collection("trips").doc(tripId);
         const doc = await answer.get();
         const data = doc.data();
-        tripArr.push(data);
+        tripArr.push({ ...data, id: tripId });
       }
 
       dispatch(getTrips(tripArr));
@@ -69,13 +71,13 @@ export const fetchUserPendingTrips = (userPendingTripsArr) => {
 };
 
 //REDUCER
-export default function trips(state = [], action) {
+export default function trips(state = { trips: [], pendingTrips: [] }, action) {
   // console.log("redux", action);
   switch (action.type) {
     case GET_TRIPS:
-      return action.trips;
+      return { ...state, trips: action.trips };
     case GET_PENDING_TRIPS:
-      return action.pendingTrips;
+      return { ...state, pendingTrips: action.pendingTrips };
     default:
       return state;
   }

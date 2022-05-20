@@ -9,7 +9,7 @@ import styles from "../styles/currentAndPastTrip";
 const PastTripsScreen = () => {
   const navigation = useNavigation();
   const userInfo = useSelector((state) => state.user);
-  const tripInfo = useSelector((state) => state.trips);
+  const tripInfo = useSelector((state) => state.trips.trips);
   const userCurrentTrips = userInfo.trip;
 
   return (

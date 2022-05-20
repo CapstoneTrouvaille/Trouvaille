@@ -21,8 +21,10 @@ import {
 const InviteTripMember = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const tripInfo = route.params.trip;
+  //const tripInfo = route.params.trip;
   const tripId = route.params.tripId;
+  const tripsInfo = useSelector((state) => state.trips.trips);
+  const tripInfo = tripsInfo.filter(({ id }) => id === tripId)[0];
 
   const currentTripMembers = tripInfo.users;
   const pendingUsers = tripInfo.pendingUsers;
@@ -33,7 +35,7 @@ const InviteTripMember = ({ route }) => {
 
   useEffect(() => {
     dispatch(fetchTripMembers(currentTripMembers, pendingUsers, declinedUsers));
-  }, []);
+  }, [tripInfo]);
 
   const currentNames = tripNames.cUsers;
   const pendingNames = tripNames.pUsers;
@@ -79,7 +81,13 @@ const InviteTripMember = ({ route }) => {
             Trouvaille HomeScreen
           </Text>
           <Box mt="2" mb="6" alignItems="center">
-            <Button onPress={handleSubmit}>Send Invite</Button>
+            <Button
+              style={styles.button}
+              _text={styles.buttonText}
+              onPress={handleSubmit}
+            >
+              Send Invite
+            </Button>
           </Box>
           <Divider thickness="2" />
           <Text underline fontSize="md" mt="4" mb="4">
@@ -112,7 +120,13 @@ const InviteTripMember = ({ route }) => {
               </Text>
             ))}
           <Box mt="10" alignItems="center">
-            <Button onPress={handleHomeOnClick}>View Trip Dashboard</Button>
+            <Button
+              style={styles.button}
+              _text={styles.buttonText}
+              onPress={handleHomeOnClick}
+            >
+              View Trip Dashboard
+            </Button>
           </Box>
         </Center>
       </VStack>
