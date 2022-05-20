@@ -14,7 +14,7 @@ export default StyleSheet.create({
     alignItems: "center",
     height: 210,
     paddingTop: "5%",
-    backgroundColor:"blue"
+    backgroundColor:"pink"
   },
 
   header: {
