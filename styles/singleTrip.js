@@ -14,6 +14,7 @@ export default StyleSheet.create({
     alignItems: "center",
     height: 210,
     paddingTop: "5%",
+    backgroundColor:"blue"
   },
 
   header: {
@@ -25,6 +26,7 @@ export default StyleSheet.create({
     fontFamily: "Jaldi_400Regular",
     fontSize: 20,
     paddingTop: "1%",
+    backgroundColor:"pink",
   },
   tripButton: {
     color: "#999DC3",

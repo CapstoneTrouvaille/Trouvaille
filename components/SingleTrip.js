@@ -132,8 +132,8 @@ const SingleTrip = ({ route }) => {
   return (
     <>
       <Stack safeArea style={styles.container}>
-        <Box>
-          <Center>
+        <Box >
+          <Center >
             <Text style={styles.header}>{tripInfo.tripName}</Text>
             <Text style={styles.tripInfo}>Location: {tripInfo.location}</Text>
             <Text style={styles.tripInfo}>
