@@ -20,14 +20,13 @@ const InviteAcceptDecline = ({ route }) => {
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state) => state.user);
+  const tripState = useSelector((state) => state.trip);
   const pendingTripNames = useSelector((state) => state.trips.pendingTrips);
   const userPendingTrips = userInfo.pendingTrips;
 
-  console.log(`These are pending tripNames:`, pendingTripNames);
-
   useEffect(() => {
     dispatch(fetchUserPendingTrips(userPendingTrips));
-  }, []);
+  }, [tripState]);
 
   const handleSubmitAccept = (trip, index) => {
     const tripToDispatch = userPendingTrips[index];

@@ -30,10 +30,10 @@ const GET_CURRENT_TRIP_MEMBERS = "GET_CURRENT_TRIP_MEMBERS";
 const GET_DECLINED_TRIP_MEMBERS = "GET_DECLINED_TRIP_MEMBERS";
 
 //ACTION CREATOR
-export const _getTrips = (trips) => ({
-  type: GET_TRIPS,
-  trips,
-});
+// export const _getTrips = (trips) => ({
+//   type: GET_TRIPS,
+//   trips,
+// });
 
 export const _addTripRequest = () => ({
   type: ADD_TRIP_REQUEST,
@@ -119,19 +119,6 @@ export const fetchSingleTrip = (tripId) => {
     }
   };
 };
-
-// export const fetchTrips = () => {
-//   return async (dispatch) => {
-//     try {
-//       const userTrips = await db
-//         .collection("trips")
-//         .where("users", "array-contains", auth.currentUser.uid)
-//         .get();
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// };
 
 export const addTrip = (newTripInfo) => {
   return async (dispatch) => {
@@ -285,8 +272,8 @@ export const fetchTripMembers = (current, pending, declined) => {
 //REDUCER
 export default function trip(state = {}, action) {
   switch (action.type) {
-    case GET_TRIPS:
-      return { ...state, trips: action.trips };
+    // case GET_TRIPS:
+    //   return { ...state, trips: action.trips };
     case ADD_TRIP_REQUEST:
       return { ...state, loadingAdd: true };
     case ADD_TRIP_SUCCESS:
