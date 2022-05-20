@@ -18,5 +18,9 @@ export default StyleSheet.create({
   },
   saveButton:{
     backgroundColor: "#999DC3",
+  },
+
+  form :{
+
   }
 })

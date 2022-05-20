@@ -16,6 +16,8 @@ import {
 } from "native-base";
 import { addItineraryDay } from "./store/itinerary";
 
+import styles from "../styles/itinerary";
+
 const ItineraryForm = (props) => {
   const dispatch = useDispatch();
 
@@ -46,6 +48,8 @@ const ItineraryForm = (props) => {
         <Button
           size="sm"
           mb="4"
+          style={styles.saveButton}
+          _text={styles.buttonText}
           onPress={() => {
             addDays();
           }}
@@ -58,5 +62,3 @@ const ItineraryForm = (props) => {
 };
 
 export default ItineraryForm;
-
-const styles = StyleSheet.create({});
