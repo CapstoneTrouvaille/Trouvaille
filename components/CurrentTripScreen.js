@@ -7,7 +7,7 @@ import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
 import { fetchTrips } from "./store/trip";
 import { fetchUserTrips } from "./store/trips";
-import styles from "../styles/currentTrip";
+import styles from "../styles/currentAndPastTrip";
 
 const CurrentTripScreen = () => {
   const navigation = useNavigation();
@@ -46,7 +46,9 @@ const CurrentTripScreen = () => {
                 })
               }
             >
+
               {trip && trip.tripName}
+
             </Button>
           ))}
       </Center>

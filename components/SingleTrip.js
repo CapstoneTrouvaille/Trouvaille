@@ -26,20 +26,21 @@ import Itinerary from "./Itinerary";
 import Memories from "./Memories";
 import firebase from "firebase/compat";
 import styles from "../styles/singleTrip";
+import { fetchTripMember } from "./store/trip";
 
 const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = route.params.tripId;
   const tripInfo = route.params.trip;
-  console.log("tripINfo in SingleTrip route.params", route.params);
-  console.log("tripINfo in SingleTrip from useSelector", tripInfo);
-
-  // useEffect(() => {
-  //   dispatch(fetchSingleTrip(tripId));
-  // }, []);
-
   const travelers = tripInfo.users || [];
+
+  useEffect(() => {
+    dispatch(fetchTripMember(travelers));
+  }, []);
+
+  const tripMembers = useSelector((state) => state.trip.tripMembers);
+
   //may need to delete?
   const startDate = tripInfo.startDate || "";
   const fireBaseTime = new Date(
@@ -132,7 +133,7 @@ const SingleTrip = ({ route }) => {
   return (
     <>
       <Stack safeArea style={styles.container}>
-        <Box >
+        <Box>
           <Center>
             <Text style={styles.header}>{tripInfo.tripName}</Text>
             <Text style={styles.tripInfo}>Location: {tripInfo.location}</Text>
@@ -147,9 +148,10 @@ const SingleTrip = ({ route }) => {
                   /['"]+/g,
                   ""
                 )} */}
-
             </Text>
-            <Text style={styles.tripInfo}>Travelers: {travelers}</Text>
+            <Text style={styles.tripInfo}>
+              Travelers: {tripMembers && tripMembers.toString()}
+            </Text>
             <Button
               style={styles.button}
               _text={styles.buttonText}
@@ -157,7 +159,7 @@ const SingleTrip = ({ route }) => {
               onPress={() =>
                 navigation.navigate("InviteTripMember", {
                   tripId,
-                  trip:tripInfo
+                  trip: tripInfo,
                 })
               }
             >
