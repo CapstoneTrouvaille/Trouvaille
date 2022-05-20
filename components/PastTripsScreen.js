@@ -3,6 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/core";
 import { useSelector } from "react-redux";
+import { Button, Center } from "native-base";
+import styles from "../styles/currentAndPastTrip";
 
 const PastTripsScreen = () => {
   const navigation = useNavigation();
@@ -11,26 +13,30 @@ const PastTripsScreen = () => {
   const userCurrentTrips = userInfo.trip;
 
   return (
-    <View>
-      <Text>PastTripsScreen</Text>
-      {tripInfo &&
-        tripInfo.map((trip, index) => (
-          <Text
-            key={index}
-            onPress={() =>
-              navigation.navigate("SingleTrip", {
-                trip,
-                tripId: userCurrentTrips[index],
-              })
-            }
-          >
-            {trip.tripName}
-          </Text>
-        ))}
+    <View style={styles.container}>
+      <Center>
+        {tripInfo &&
+          tripInfo.map((trip, index) => (
+            <Button
+              key={index}
+              variant="outline"
+              style={styles.tripList}
+              _text={styles.tripButton}
+              onPress={() =>
+                navigation.navigate("SingleTrip", {
+                  trip,
+                  tripId: userCurrentTrips[index],
+                })
+              }
+            >
+              {trip.tripName}
+            </Button>
+          ))}
+      </Center>
     </View>
   );
 };
 
 export default PastTripsScreen;
 
-const styles = StyleSheet.create({});
+// const styles = StyleSheet.create({});
