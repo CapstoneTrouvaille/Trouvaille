@@ -2,7 +2,7 @@ import { StyleSheet, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserToInvite } from "./store/user";
-import { fetchTrips } from "./store/trip";
+import { fetchTrips, fetchTripMembers } from "./store/trip";
 import { useNavigation } from "@react-navigation/core";
 import {
   Input,
@@ -22,12 +22,22 @@ const InviteTripMember = ({ route }) => {
   const dispatch = useDispatch();
   const tripInfo = route.params.trip;
   const tripId = route.params.tripId;
-  // const tripInfo = useSelector((state) => state.trip);
 
   const currentTripMembers = tripInfo.users;
-  console.log();
-  const tripPendingUsers = tripInfo.pendingUsers;
+  const pendingUsers = tripInfo.pendingUsers;
   const declinedUsers = tripInfo.declinedUsers;
+
+  console.log(`ID ID ID ID ID:`, currentTripMembers, pendingUsers);
+  const tripNames = useSelector((state) => state.trip);
+
+  useEffect(() => {
+    dispatch(fetchTripMembers(currentTripMembers, pendingUsers, declinedUsers));
+  }, []);
+
+  const currentNames = tripNames.cUsers;
+  const pendingNames = tripNames.pUsers;
+  const declinedNames = tripNames.dUsers;
+  console.log(`NAMES NAMES NAMES:`, currentNames, pendingNames);
 
   const [friendEmail, setFriendEmail] = useState("");
 
@@ -74,9 +84,9 @@ const InviteTripMember = ({ route }) => {
           <Text underline fontSize="md" mt="4" mb="4">
             Current Trip Members
           </Text>
-          {currentTripMembers &&
-            currentTripMembers.map((userId, index) => (
-              <Text key={index} mb="6">
+          {currentNames &&
+            currentNames.map((userId, index) => (
+              <Text key={index} mb="2">
                 {userId}
               </Text>
             ))}
@@ -84,9 +94,9 @@ const InviteTripMember = ({ route }) => {
           <Text underline fontSize="md" mt="4" mb="4">
             Pending Trip Member Invitations
           </Text>
-          {tripPendingUsers &&
-            tripPendingUsers.map((userId, index) => (
-              <Text key={index} mb="6">
+          {pendingNames &&
+            pendingNames.map((userId, index) => (
+              <Text key={index} mb="2">
                 {userId}
               </Text>
             ))}
@@ -94,8 +104,8 @@ const InviteTripMember = ({ route }) => {
           <Text underline fontSize="md" mt="4" mb="4">
             Declined Trip Member Invitations
           </Text>
-          {declinedUsers &&
-            declinedUsers.map((userId, index) => (
+          {declinedNames &&
+            declinedNames.map((userId, index) => (
               <Text key={index} mb="6">
                 {userId}
               </Text>
@@ -110,5 +120,3 @@ const InviteTripMember = ({ route }) => {
 };
 
 export default InviteTripMember;
-
-const styles = StyleSheet.create({});

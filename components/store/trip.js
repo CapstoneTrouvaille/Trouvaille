@@ -23,6 +23,9 @@ const ADD_USER_TO_TRIP_REQUEST = "ADD_USER_TO_TRIP_REQUEST";
 const ADD_USER_TO_TRIP_SUCCESS = "ADD_USER_TO_TRIP_SUCCESS";
 const ADD_USER_TO_TRIP_FAIL = "ADD_USER_TO_TRIP_FAIL";
 const GET_TRIPMEMBER = "GET_TRIPMEMBER";
+const GET_PENDING_TRIP_MEMBERS = "GET_PENDING_TRIP_MEMBERS";
+const GET_CURRENT_TRIP_MEMBERS = "GET_CURRENT_TRIP_MEMBERS";
+const GET_DECLINED_TRIP_MEMBERS = "GET_DECLINED_TRIP_MEMBERS";
 
 //ACTION CREATOR
 export const _getTrips = (trips) => ({
@@ -68,6 +71,19 @@ export const _addUserToTripFail = (error) => ({
 export const getTripMember = (tripMembers) => ({
   type: GET_TRIPMEMBER,
   tripMembers,
+});
+
+export const getCurrentTripMembers = (cUsers) => ({
+  type: GET_CURRENT_TRIP_MEMBERS,
+  cUsers,
+});
+export const getPendingTripMembers = (pUsers) => ({
+  type: GET_PENDING_TRIP_MEMBERS,
+  pUsers,
+});
+export const getDeclinedTripMembers = (dUsers) => ({
+  type: GET_DECLINED_TRIP_MEMBERS,
+  dUsers,
 });
 
 //THUNK
@@ -182,6 +198,50 @@ export const fetchTripMember = (tripMemberArr) => {
   };
 };
 
+export const fetchTripMembers = (current, pending, declined) => {
+  console.log(`This is from FETCHTRIPMEMBERS:`);
+  return async (dispatch) => {
+    try {
+      const currentUsernames = [];
+      const pendingUsernames = [];
+      const declinedUsernames = [];
+      for (let i = 0; i < current.length; i++) {
+        const userId = current[i];
+        const allUserRef = db.collection("user");
+        const userRec = await allUserRef.where("UID", "==", userId).get();
+        const data = userRec.docs[0].data();
+        const memberName = data.name;
+        currentUsernames.push(memberName);
+      }
+      for (let i = 0; i < pending.length; i++) {
+        const userId = pending[i];
+        const allUserRef = db.collection("user");
+        const userRec = await allUserRef.where("UID", "==", userId).get();
+        const data = userRec.docs[0].data();
+        const memberName = data.name;
+        pendingUsernames.push(memberName);
+      }
+      for (let i = 0; i < declined.length; i++) {
+        const userId = declined[i];
+        const allUserRef = db.collection("user");
+        const userRec = await allUserRef.where("UID", "==", userId).get();
+        const data = userRec.docs[0].data();
+        const memberName = data.name;
+        declinedUsernames.push(memberName);
+      }
+      dispatch(getCurrentTripMembers(currentUsernames));
+      dispatch(getPendingTripMembers(pendingUsernames));
+      dispatch(getDeclinedTripMembers(declinedUsernames));
+      console.log(
+        `PENDING TRIP MEMBERS RETRIEVED!!!!!!!!!!!!:`,
+        pendingUsernames
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 //REDUCER
 export default function trip(state = {}, action) {
   switch (action.type) {
@@ -207,6 +267,13 @@ export default function trip(state = {}, action) {
       };
     case GET_TRIPMEMBER:
       return { ...state, tripMembers: action.tripMembers };
+    case GET_PENDING_TRIP_MEMBERS:
+      return { ...state, pUsers: action.pUsers };
+    case GET_CURRENT_TRIP_MEMBERS:
+      return { ...state, cUsers: action.cUsers };
+    case GET_DECLINED_TRIP_MEMBERS:
+      return { ...state, dUsers: action.dUsers };
+
     default:
       return state;
   }
