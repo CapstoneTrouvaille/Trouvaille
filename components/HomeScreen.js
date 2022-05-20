@@ -34,15 +34,13 @@ import PastTripsScreen from "./PastTripsScreen";
 import NewTripInviteMsg from "./NewTripInviteMsg";
 import { getSavedItems } from "./store/saved";
 import { fetchUserTrips } from "./store/trips";
-
 import styles from "../styles/homeScreen";
-
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state) => state.user);
-  const tripInfo = useSelector((state) => state.trip);
+  const tripsInfo = useSelector((state) => state.trips);
   const userCurrentTrips = userInfo.trip;
   const showPendingTrips = userInfo.pendingTrips
     ? userInfo.pendingTrips.length
@@ -51,12 +49,12 @@ const HomeScreen = () => {
   useEffect(() => {
     dispatch(fetchTrips());
     dispatch(getSavedItems());
-    dispatch(fetchUserTrips(userInfo.trip))
+    dispatch(fetchUserTrips(userInfo.trip));
   }, []);
 
   useEffect(() => {
     dispatch(fetchUser(auth.currentUser.uid));
-  }, [tripInfo.successAdd]);
+  }, [tripsInfo.successAdd]);
 
   useEffect(() => {
     dispatch(fetchUserTrips(userCurrentTrips));
@@ -126,13 +124,10 @@ const HomeScreen = () => {
               ? "#999DC3"
               : useColorModeValue("coolGray.200", "gray.400");
           return (
-            <Box
-              key={i}
-              borderColor={borderColor}
-              style={styles.tabBar}
-            >
+            <Box key={i} borderColor={borderColor} style={styles.tabBar}>
               <Pressable
                 onPress={() => {
+                  //console.log(i);
                   setIndex(i);
                 }}
               >
@@ -163,9 +158,11 @@ const HomeScreen = () => {
               uri: "https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80",
             }}
           >
-
+            RB
           </Avatar>
-          <Text style= {styles.header} size="xl">{userInfo.name}'s Trip Dashboard</Text>
+          <Text style={styles.header} size="xl">
+            {userInfo.name}'s Trip Dashboard
+          </Text>
           {showPendingTrips !== 0 && <NewTripInviteMsg />}
         </Box>
       </Stack>
