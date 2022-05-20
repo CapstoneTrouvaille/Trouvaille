@@ -34,9 +34,10 @@ const SingleTrip = ({ route }) => {
   const tripInfo = useSelector((state) => state.trip);
   console.log("tripINfo in SingleTrip", route.params);
 
-  useEffect(() => {
-    dispatch(fetchSingleTrip(tripId));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchSingleTrip(tripId));
+  // }, []);
+
   const travelers = tripInfo.users || [];
   //may need to delete?
   const startDate = tripInfo.startDate || "";
@@ -130,7 +131,7 @@ const SingleTrip = ({ route }) => {
   return (
     <>
       <Stack safeArea style={styles.container}>
-        <Box >
+        <Box>
           <Center>
             <Text style={styles.header}>{tripInfo.tripName}</Text>
             <Text style={styles.tripInfo}>Location: {tripInfo.location}</Text>
@@ -154,6 +155,7 @@ const SingleTrip = ({ route }) => {
               onPress={() =>
                 navigation.navigate("InviteTripMember", {
                   tripId,
+                  trip: tripInfo,
                 })
               }
             >
