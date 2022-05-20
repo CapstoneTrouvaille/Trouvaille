@@ -23,6 +23,8 @@ const InviteAcceptDecline = ({ route }) => {
   const pendingTripNames = useSelector((state) => state.trips.pendingTrips);
   const userPendingTrips = userInfo.pendingTrips;
 
+  console.log(`These are pending tripNames:`, pendingTripNames);
+
   useEffect(() => {
     dispatch(fetchUserPendingTrips(userPendingTrips));
   }, []);
@@ -62,8 +64,8 @@ const InviteAcceptDecline = ({ route }) => {
             pendingTripNames.map((trip, index) => (
               <View key={index}>
                 <Text>
-                  You have a pending trip invitation for {trip.tripName}. Click
-                  below to Accept or Decline.
+                  You have a pending trip invitation for {trip}. Click below to
+                  Accept or Decline.
                 </Text>
                 <Button
                   style={styles.button}
