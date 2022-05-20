@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useId } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button ,Center} from "native-base";
+import { Button, Center } from "native-base";
 import { fetchUser } from "./store/user";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
@@ -25,33 +25,31 @@ const CurrentTripScreen = () => {
   //   dispatch(fetchTrips());
   // }, []);
 
-
   // useEffect(() => {
   //   dispatch(fetchUserTrips(userCurrentTrips));
   // },[userInfo])
 
-
   return (
     <View style={styles.container}>
       <Center>
-      {tripInfo &&
-        tripInfo.map((trip, index) => (
-          <Button
-            key={index}
-            variant="outline"
-            style={styles.tripList}
-            _text={styles.tripButton}
-            onPress={() =>
-              navigation.navigate("SingleTrip", {
-                trip,
-                tripId: userCurrentTrips[index],
-              })
-            }
-          >
-            {trip.tripName}
-          </Button>
-        ))}
-        </Center>
+        {tripInfo &&
+          tripInfo.map((trip, index) => (
+            <Button
+              key={index}
+              variant="outline"
+              style={styles.tripList}
+              _text={styles.tripButton}
+              onPress={() =>
+                navigation.navigate("SingleTrip", {
+                  trip,
+                  tripId: userCurrentTrips[index],
+                })
+              }
+            >
+              {trip && trip.tripName}
+            </Button>
+          ))}
+      </Center>
     </View>
   );
 };
