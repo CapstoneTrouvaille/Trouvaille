@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserToInvite } from "./store/user";
 import { fetchTrips, fetchTripMembers } from "./store/trip";
 import { useNavigation } from "@react-navigation/core";
+import styles from "../styles/inviteScreens";
 import {
   Input,
   Box,
