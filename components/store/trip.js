@@ -232,10 +232,7 @@ export const fetchTripMembers = (current, pending, declined) => {
       dispatch(getCurrentTripMembers(currentUsernames));
       dispatch(getPendingTripMembers(pendingUsernames));
       dispatch(getDeclinedTripMembers(declinedUsernames));
-      console.log(
-        `PENDING TRIP MEMBERS RETRIEVED!!!!!!!!!!!!:`,
-        pendingUsernames
-      );
+
     } catch (error) {
       console.log(error);
     }

@@ -67,16 +67,18 @@ const InviteAcceptDecline = ({ route }) => {
                 >
                   Accept Trip Invite
                 </Button>
-                <Button size="sm" mb="6" onPress={handleSubmitDecline}>
+                <Button
+                  size="sm"
+                  mb="6"
+                  onPress={() => handleSubmitDecline(invite)}
+                >
                   Decline Trip Invite
                 </Button>
-                <Box mt="10" alignItems="center">
-                  <Button onPress={handleHomeOnClick}>
-                    View Trip Dashboard
-                  </Button>
-                </Box>
               </View>
             ))}
+          <Box mt="20" alignItems="center">
+            <Button onPress={handleHomeOnClick}>View Trip Dashboard</Button>
+          </Box>
         </Center>
       </Stack>
     </ScrollView>
