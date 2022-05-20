@@ -85,9 +85,9 @@ const InviteTripMember = ({ route }) => {
             Current Trip Members
           </Text>
           {currentNames &&
-            currentNames.map((userId, index) => (
+            currentNames.map((user, index) => (
               <Text key={index} mb="2">
-                {userId}
+                {user}
               </Text>
             ))}
           <Divider />
@@ -95,9 +95,9 @@ const InviteTripMember = ({ route }) => {
             Pending Trip Member Invitations
           </Text>
           {pendingNames &&
-            pendingNames.map((userId, index) => (
+            pendingNames.map((user, index) => (
               <Text key={index} mb="2">
-                {userId}
+                {user}
               </Text>
             ))}
           <Divider />
@@ -105,9 +105,9 @@ const InviteTripMember = ({ route }) => {
             Declined Trip Member Invitations
           </Text>
           {declinedNames &&
-            declinedNames.map((userId, index) => (
+            declinedNames.map((user, index) => (
               <Text key={index} mb="6">
-                {userId}
+                {user}
               </Text>
             ))}
           <Box mt="10" alignItems="center">
