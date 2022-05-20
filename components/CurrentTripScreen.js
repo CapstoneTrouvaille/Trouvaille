@@ -46,7 +46,9 @@ const CurrentTripScreen = () => {
                 })
               }
             >
-              {trip.tripName}
+
+              {trip && trip.tripName}
+
             </Button>
           ))}
       </Center>
