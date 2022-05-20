@@ -22,24 +22,27 @@ const CurrentTripScreen = () => {
     <View style={styles.container}>
       <Center>
         {tripInfo &&
-          tripInfo.map((trip, index) => (
-            <Button
-              key={index}
-              variant="outline"
-              style={styles.tripList}
-              _text={styles.tripButton}
-              onPress={() =>
-                navigation.navigate("Trip", {
-                  trip,
-                  tripId: userCurrentTrips[index],
-                })
-              }
-            >
-
-              {trip && trip.tripName}
-
-            </Button>
-          ))}
+          tripInfo
+            .filter(
+              (trip) =>
+                Math.floor(Date.now() / 1000) - trip.endDate.seconds <= 0
+            )
+            .map((trip, index) => (
+              <Button
+                key={index}
+                variant="outline"
+                style={styles.tripList}
+                _text={styles.tripButton}
+                onPress={() =>
+                  navigation.navigate("Trip", {
+                    trip,
+                    tripId: userCurrentTrips[index],
+                  })
+                }
+              >
+                {trip && trip.tripName}
+              </Button>
+            ))}
       </Center>
     </View>
   );
