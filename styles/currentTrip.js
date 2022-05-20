@@ -7,7 +7,7 @@ export default StyleSheet.create({
   },
   tripList: {
     margin: "1%",
-    color:"#999DC3",
+    color: "#999DC3",
     width: "80%",
     textAlign: "center",
     borderColor: "#999DC3",

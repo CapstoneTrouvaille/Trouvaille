@@ -182,8 +182,8 @@ const HomeScreen = () => {
           <Center>
             <Button
               style={styles.button}
+              _text={styles.buttonText}
               size="lg"
-              mb="6"
               onPress={() => navigation.navigate("AddTrip")}
             >
               Add a Trip

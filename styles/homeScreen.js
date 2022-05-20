@@ -3,7 +3,13 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   button: {
     backgroundColor: "#999DC3",
+    marginBottom:20
   },
+  buttonText: {
+    fontFamily: "Jaldi_400Regular",
+    fontSize:20
+  },
+
   container: {
     width: "100%",
     alignItems: "center",
@@ -27,5 +33,4 @@ export default StyleSheet.create({
     flex: 1,
     borderBottomWidth: 3,
   },
-
 });

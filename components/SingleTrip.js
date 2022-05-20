@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSingleTrip } from "./store/trip";
+import trip, { fetchSingleTrip } from "./store/trip";
 import { useNavigation } from "@react-navigation/core";
 import {
   ScrollView,
@@ -25,6 +25,7 @@ import { TabView, SceneMap } from "react-native-tab-view";
 import Itinerary from "./Itinerary";
 import Memories from "./Memories";
 import firebase from "firebase/compat";
+import styles from "../styles/singleTrip";
 
 const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
@@ -101,17 +102,10 @@ const SingleTrip = ({ route }) => {
               : useColorModeValue("#1f2937", "#a1a1aa");
           const borderColor =
             index === i
-              ? "cyan.500"
+              ? "#999DC3"
               : useColorModeValue("coolGray.200", "gray.400");
           return (
-            <Box
-              key={i}
-              borderBottomWidth="3"
-              borderColor={borderColor}
-              flex={1}
-              alignItems="center"
-              p="3"
-            >
+            <Box key={i} style={styles.tabBar} borderColor={borderColor}>
               <Pressable
                 onPress={() => {
                   //console.log(i);
@@ -135,29 +129,14 @@ const SingleTrip = ({ route }) => {
 
   return (
     <>
-      <View>
-        <Stack
-          space={2.5}
-          alignSelf="center"
-          px="4"
-          safeArea
-          mt="0"
-          w={{
-            base: "100%",
-            md: "25%",
-          }}
-        >
-          <Box>
-            <Center>
-              <Stack space={2}>
-                <Heading fontSize="xl" p="4" pb="3">
-                  {tripInfo.tripName}
-                </Heading>
-              </Stack>
-              <Text fontWeight="400">Location: {tripInfo.location}</Text>
-              <Text fontWeight="400">
-                {newStartDate} - {newEndDate}
-                {/* {JSON.stringify(tripInfo.startDate.toDate()).replace(
+      <Stack safeArea style={styles.container}>
+        <Box >
+          <Center>
+            <Text style={styles.header}>{tripInfo.tripName}</Text>
+            <Text style={styles.tripInfo}>Location: {tripInfo.location}</Text>
+            <Text style={styles.tripInfo}>
+              {newStartDate} - {newEndDate}
+              {/* {JSON.stringify(tripInfo.startDate.toDate()).replace(
                   /['"]+/g,
                   ""
                 )}{" "}
@@ -166,24 +145,24 @@ const SingleTrip = ({ route }) => {
                   /['"]+/g,
                   ""
                 )} */}
-              </Text>
-              <Text fontWeight="400">Travelers: {travelers}</Text>
-              <Button
-                size="md"
-                mt="4"
-                mb="2"
-                onPress={() =>
-                  navigation.navigate("InviteTripMember", {
-                    tripId,
-                  })
-                }
-              >
-                Invite Trip Members
-              </Button>
-            </Center>
-          </Box>
-        </Stack>
-      </View>
+            </Text>
+            <Text style={styles.tripInfo}>Travelers: {travelers}</Text>
+            <Button
+              style={styles.button}
+              _text={styles.buttonText}
+              size="md"
+              onPress={() =>
+                navigation.navigate("InviteTripMember", {
+                  tripId,
+                })
+              }
+            >
+              Invite Trip Members
+            </Button>
+          </Center>
+        </Box>
+      </Stack>
+
       <TabView
         navigationState={{
           index,
@@ -202,5 +181,3 @@ const SingleTrip = ({ route }) => {
 };
 
 export default SingleTrip;
-
-const styles = StyleSheet.create({});
