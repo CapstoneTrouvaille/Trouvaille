@@ -38,7 +38,7 @@ const CurrentTripScreen = () => {
             key={index}
             variant="outline"
             style={styles.tripList}
-            _text={{color:"#999DC3", fontFamily:"Jaldi_400Regular", fontSize:15}}
+            _text={styles.tripButton}
             onPress={() =>
               navigation.navigate("SingleTrip", {
                 trip,

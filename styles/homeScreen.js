@@ -13,18 +13,19 @@ export default StyleSheet.create({
 
   header: {
     fontFamily: "Jaldi_700Bold",
-    fontSize:30,
+    fontSize: 30,
     marginTop: "2%",
-    paddingTop:"5%",
-    height:30,
+    paddingTop: "5%",
+    height: 30,
     textAlign: "center",
   },
-  tabBar:{
-    fontFamily:"Jaldi_700Bold",
-    fontSize:20,
-    alignItems:"center",
+  tabBar: {
+    fontFamily: "Jaldi_700Bold",
+    fontSize: 20,
+    alignItems: "center",
     padding: 10,
-    flex:1,
+    flex: 1,
     borderBottomWidth: 3,
-  }
+  },
+
 });
