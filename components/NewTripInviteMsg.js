@@ -13,7 +13,7 @@ const NewTripInviteMsg = () => {
 
   return (
     <View>
-      <Box alignItems="center">
+      <Box alignItems="center" >
         <Button
           size="lg"
           variant="link"

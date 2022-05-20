@@ -30,7 +30,7 @@ const HomeStackNavigator = () => {
           <Ionicons
             name="exit-outline"
             size={30}
-            color="#BABFE0"
+            color="#999DC3"
             onPress={() => firebase.auth().signOut()}
           />
         ),
@@ -61,7 +61,7 @@ const ChatStackNavigator = () => {
           <Ionicons
             name="exit-outline"
             size={30}
-            color="#BABFE0"
+            color="#999DC3"
             onPress={() => firebase.auth().signOut()}
           />
         ),
@@ -81,7 +81,7 @@ const ExploreStackNavigator = () => {
           <Ionicons
             name="exit-outline"
             size={30}
-            color="#BABFE0"
+            color="#999DC3"
             onPress={() => firebase.auth().signOut()}
           />
         ),

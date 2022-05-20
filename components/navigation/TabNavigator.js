@@ -20,8 +20,8 @@ const TabNavigator = () => {
         // unmountOnBlur:true,
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarActiveTintColor: "#BABFE0",
-        tabBarInactiveTintColor: "#BABFE0",
+        tabBarActiveTintColor: "#999DC3",
+        tabBarInactiveTintColor: "#999DC3",
         tabBarStyle: {
           padding: 10,
           height: 70,

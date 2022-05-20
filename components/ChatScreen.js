@@ -139,9 +139,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    backgroundColor: "#6867AC",
+    backgroundColor: "#999DC3",
   },
   input: {
-    borderColor: "#6867AC",
+    borderColor: "#999DC3",
   },
 });
