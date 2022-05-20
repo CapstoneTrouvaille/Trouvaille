@@ -2,6 +2,7 @@
   "expo": {
     "name": "Trouvaille",
     "slug": "trouvaille",
+    "owner": "trouvaille",
     "description": "",
     "version": "1.0.0",
     "orientation": "portrait",

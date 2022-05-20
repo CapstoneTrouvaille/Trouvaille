@@ -1,11 +1,12 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSingleTrip, addUserToTrip } from "./store/trip";
+import { addUserToTrip, declineInviteToTrip } from "./store/trip";
+import { fetchUserPendingTrips } from "./store/trips";
 import { useNavigation } from "@react-navigation/core";
+import styles from "../styles/inviteScreens";
 import {
   ScrollView,
-  Text,
   Stack,
   Center,
   Button,
@@ -19,17 +20,22 @@ const InviteAcceptDecline = ({ route }) => {
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state) => state.user);
-  //const userIdToAdd = "uE6SHKTSy3dvW0jGFwe1QhOozq32";
+  const tripState = useSelector((state) => state.trip);
+  const pendingTripNames = useSelector((state) => state.trips.pendingTrips);
+  const userPendingTrips = userInfo.pendingTrips;
 
-  const pendingTripInvites = userInfo.pendingTrips;
-  console.log(`Pending Trips:`, pendingTripInvites);
+  useEffect(() => {
+    dispatch(fetchUserPendingTrips(userPendingTrips));
+  }, [tripState]);
 
-  const handleSubmitAccept = (tripId) => {
-    dispatch(addUserToTrip(tripId, userInfo.UID));
+  const handleSubmitAccept = (trip, index) => {
+    const tripToDispatch = userPendingTrips[index];
+    dispatch(addUserToTrip(tripToDispatch, userInfo.UID));
   };
 
-  const handleSubmitDecline = (tripId) => {
-    dispatch(addUserToTrip(tripId, userInfo.UID));
+  const handleSubmitDecline = (trip, index) => {
+    const tripToDispatch = userPendingTrips[index];
+    dispatch(declineInviteToTrip(tripToDispatch, userInfo.UID));
   };
 
   const handleHomeOnClick = () => {
@@ -45,7 +51,7 @@ const InviteAcceptDecline = ({ route }) => {
         safeArea
         mt="0"
         w={{
-          base: "100%",
+          base: "80%",
           md: "25%",
         }}
       >
@@ -53,29 +59,41 @@ const InviteAcceptDecline = ({ route }) => {
           <Heading size="md" mb="6">
             Pending Trip Invitations
           </Heading>
-          {pendingTripInvites &&
-            pendingTripInvites.map((invite, index) => (
+          {pendingTripNames &&
+            pendingTripNames.map((trip, index) => (
               <View key={index}>
-                <Text>You have a pending trip invitation for {invite}</Text>
+                <Text>
+                  You have a pending trip invitation for {trip}. Click below to
+                  Accept or Decline.
+                </Text>
                 <Button
+                  style={styles.button}
+                  _text={styles.buttonText}
                   size="sm"
-                  mb="4"
+                  mb="2"
                   mt="4"
-                  onPress={() => handleSubmitAccept(invite)}
+                  onPress={() => handleSubmitAccept(trip, index)}
                 >
                   Accept Trip Invite
                 </Button>
                 <Button
+                  style={styles.button}
+                  _text={styles.buttonText}
                   size="sm"
-                  mb="6"
-                  onPress={() => handleSubmitDecline(invite)}
+                  onPress={() => handleSubmitDecline(trip, index)}
                 >
                   Decline Trip Invite
                 </Button>
               </View>
             ))}
           <Box mt="20" alignItems="center">
-            <Button onPress={handleHomeOnClick}>View Trip Dashboard</Button>
+            <Button
+              style={styles.button}
+              _text={styles.buttonText}
+              onPress={handleHomeOnClick}
+            >
+              View Trip Dashboard
+            </Button>
           </Box>
         </Center>
       </Stack>
@@ -84,5 +102,3 @@ const InviteAcceptDecline = ({ route }) => {
 };
 
 export default InviteAcceptDecline;
-
-const styles = StyleSheet.create({});

@@ -12,7 +12,6 @@ import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser, fetchUserToInvite } from "./store/user";
-import { fetchTrips } from "./store/trip";
 import {
   Stack,
   Box,
@@ -40,14 +39,13 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state) => state.user);
-  const tripsInfo = useSelector((state) => state.trips);
+  const tripsInfo = useSelector((state) => state.trips.trips);
   const userCurrentTrips = userInfo.trip;
   const showPendingTrips = userInfo.pendingTrips
     ? userInfo.pendingTrips.length
     : 0;
 
   useEffect(() => {
-    dispatch(fetchTrips());
     dispatch(getSavedItems());
     dispatch(fetchUserTrips(userInfo.trip));
   }, []);
@@ -57,7 +55,9 @@ const HomeScreen = () => {
   }, [tripsInfo.successAdd]);
 
   useEffect(() => {
-    dispatch(fetchUserTrips(userCurrentTrips));
+    if (userInfo) {
+      dispatch(fetchUserTrips());
+    }
   }, [userInfo]);
 
   const handleSignOut = () => {
@@ -187,7 +187,7 @@ const HomeScreen = () => {
               style={styles.button}
               _text={styles.buttonText}
               size="lg"
-              onPress={() => navigation.navigate("AddTrip")}
+              onPress={() => navigation.navigate("New Trip")}
             >
               Add a Trip
             </Button>

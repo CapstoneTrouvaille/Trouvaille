@@ -5,53 +5,46 @@ import { Button, Center, Box } from "native-base";
 import { fetchUser } from "./store/user";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
-import { fetchTrips } from "./store/trip";
 import { fetchUserTrips } from "./store/trips";
 import styles from "../styles/currentAndPastTrip";
 
 const CurrentTripScreen = () => {
   const navigation = useNavigation();
-  //const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user);
-  const tripInfo = useSelector((state) => state.trips);
+  const tripInfo = useSelector((state) => state.trips.trips);
   const userCurrentTrips = userInfo.trip;
 
-  console.log(` Current Trip Screen:`, userInfo.trip);
-  console.log("TRIPINFO", tripInfo);
-
-  console.log("USE CURRENT TRIPS", userCurrentTrips);
-  // useEffect(() => {
-  //   dispatch(fetchUser(auth.currentUser.uid));
-  //   dispatch(fetchTrips());
-  // }, []);
-
-  // useEffect(() => {
-  //   dispatch(fetchUserTrips(userCurrentTrips));
-  // },[userInfo])
+  // console.log(` Current Trip Screen:`, userInfo.trip);
+  // console.log("TRIPINFO", tripInfo);
+  // console.log("USE CURRENT TRIPS", userCurrentTrips);
 
   return (
     <View style={styles.container}>
       <Center>
 
         {tripInfo &&
-          tripInfo.map((trip, index) => (
-            <Button
-              key={index}
-              colorScheme="indigo"
-              variant="outline"
-              style={styles.tripList}
-              _text={styles.tripButton}
-              onPress={() =>
-                navigation.navigate("SingleTrip", {
-                  trip,
-                  tripId: userCurrentTrips[index],
-                })
-              }
-            >
-              {trip.tripName}
-            </Button>
-          ))}
-
+          tripInfo
+            .filter(
+              (trip) =>
+                Math.floor(Date.now() / 1000) - trip.endDate.seconds <= 0
+            )
+            .map((trip, index) => (
+              <Button
+                key={index}
+                variant="outline"
+                colorScheme="indigo"
+                style={styles.tripList}
+                _text={styles.tripButton}
+                onPress={() =>
+                  navigation.navigate("Trip", {
+                    trip,
+                    tripId: userCurrentTrips[index],
+                  })
+                }
+              >
+                {trip && trip.tripName}
+              </Button>
+            ))}
       </Center>
     </View>
   );

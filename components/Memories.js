@@ -52,7 +52,7 @@ const Memories = (props) => {
             size="lg"
             mb="6"
             onPress={() =>
-              navigation.navigate("AddMemories", {
+              navigation.navigate("Add Memories", {
                 tripId: tripId,
               })
             }

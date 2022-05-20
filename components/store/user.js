@@ -10,6 +10,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { db, auth } from "../../firebase";
+import { fetchUserTrips } from "./trips";
 
 //ACTION TYPES
 const GET_USER = "GET_USER";
@@ -87,6 +88,7 @@ export const fetchUserToInvite = (userEmail, tripId) => {
         });
         console.log(`User added to trip array!`);
       }
+      dispatch(fetchUserTrips());
     } catch (error) {
       console.log(error);
     }

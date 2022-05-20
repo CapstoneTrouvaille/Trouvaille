@@ -32,6 +32,7 @@ const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = route.params.tripId;
+  const tripsInfo = useSelector((state) => state.trips);
   const tripInfo = route.params.trip;
   const travelers = tripInfo.users || [];
 
@@ -161,7 +162,7 @@ const SingleTrip = ({ route }) => {
               _text={styles.buttonText}
               size="md"
               onPress={() =>
-                navigation.navigate("InviteTripMember", {
+                navigation.navigate("Send Invitations", {
                   tripId,
                   trip: tripInfo,
                 })
