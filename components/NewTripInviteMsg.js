@@ -8,12 +8,12 @@ const NewTripInviteMsg = () => {
 
   const handleOnClick = () => {
     console.log("Accept/Decline button clicked");
-    navigation.navigate("InviteAcceptDecline");
+    navigation.navigate("Invitations");
   };
 
   return (
     <View>
-      <Box alignItems="center" >
+      <Box alignItems="center">
         <Button
           size="lg"
           variant="link"

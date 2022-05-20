@@ -157,7 +157,7 @@ const SingleTrip = ({ route }) => {
               _text={styles.buttonText}
               size="md"
               onPress={() =>
-                navigation.navigate("InviteTripMember", {
+                navigation.navigate("Send Invitations", {
                   tripId,
                   trip: tripInfo,
                 })

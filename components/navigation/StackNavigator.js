@@ -37,16 +37,13 @@ const HomeStackNavigator = () => {
       }}
     >
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="AddTrip" component={AddTrip} />
-      <Stack.Screen name="InviteTripMember" component={InviteTripMember} />
-      <Stack.Screen
-        name="InviteAcceptDecline"
-        component={InviteAcceptDecline}
-      />
+      <Stack.Screen name="New Trip" component={AddTrip} />
+      <Stack.Screen name="Send Invitations" component={InviteTripMember} />
+      <Stack.Screen name="Invitations" component={InviteAcceptDecline} />
       <Stack.Screen name="New Trip Invite" component={NewTripInviteMsg} />
-      <Stack.Screen name="SingleTrip" component={SingleTrip} />
+      <Stack.Screen name="Trip" component={SingleTrip} />
       <Stack.Screen name="Memories" component={Memories} />
-      <Stack.Screen name="AddMemories" component={AddMemories} />
+      <Stack.Screen name="Add Memories" component={AddMemories} />
       <Stack.Screen name="ImageUpload" component={ImageUpload} />
     </Stack.Navigator>
   );

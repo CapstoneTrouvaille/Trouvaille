@@ -187,7 +187,7 @@ const HomeScreen = () => {
               style={styles.button}
               _text={styles.buttonText}
               size="lg"
-              onPress={() => navigation.navigate("AddTrip")}
+              onPress={() => navigation.navigate("New Trip")}
             >
               Add a Trip
             </Button>
