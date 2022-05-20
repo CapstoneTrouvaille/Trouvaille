@@ -1,22 +1,23 @@
-import { StyleSheet, View, Image} from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, Box, Button  } from "native-base";
+import { Text, Box, Button, ScrollView } from "native-base";
 import { inMemoryPersistence } from "firebase/auth";
 
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { Audio } from "expo-av";
+import * as FileSystem from "expo-file-system";
+
+import { Ionicons } from "@expo/vector-icons";
 
 const SingleMemory = (props) => {
   const [isClicked, setIsClicked] = useState(false);
-  const memory = props.memory || ""
+  const memory = props.memory || "";
   const [url, setUrl] = useState();
   const [voice, setVoice] = useState();
+  const [playing, setPlaying] = useState();
 
-
-  useEffect(()=> {
-
-  })
+  useEffect(() => {});
   //PHOTO
   useEffect(() => {
     const func = async () => {
@@ -29,6 +30,7 @@ const SingleMemory = (props) => {
     func();
   }, []);
   //VOICE
+
   useEffect(() => {
     const func = async () => {
       const storage = getStorage();
@@ -42,31 +44,19 @@ const SingleMemory = (props) => {
 
   async function playSound() {
     try {
-      console.log("VOICE", voice);
-      const { sound } = await Audio.Sound.createAsync({ uri: voice });
-      await sound.playAsync();
-      await sound.unloadAsync();
+      await new Audio.Sound.createAsync({ uri: voice }, { shouldPlay: true });
     } catch (error) {
       console.log("voice replaying error", error);
     }
   }
-
-  // useEffect(() => {
-  //   return sound
-  //     ? () => {
-  //         console.log("Unloading Sound");
-  //         sound.unloadAsync();
-  //       }
-  //     : undefined;
-  // }, [sound]);
 
   const handleClick = () => {
     setIsClicked(!isClicked);
   };
 
   return (
-    <View mb="2%" >
-      <Button size ="sm" variant="outline" onPress={handleClick} bold>
+    <ScrollView mb="2%">
+      <Button size="sm" variant="outline" onPress={handleClick} bold>
         {memory.journalName}
       </Button>
 
@@ -78,10 +68,12 @@ const SingleMemory = (props) => {
             <Image source={{ uri: url }} style={{ width: 150, height: 150 }} />
           )}
 
-          {voice && <Button title="Play Sound" onPress={playSound} />}
+          {voice && (
+            <Button onPress={playSound} title="play recording"></Button>
+          )}
         </>
       ) : null}
-    </View>
+    </ScrollView>
   );
 };
 

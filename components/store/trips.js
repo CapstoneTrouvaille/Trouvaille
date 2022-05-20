@@ -10,8 +10,7 @@ import {
   getDocs,
   arrayRemove,
 } from "firebase/firestore";
-import { db, auth } from "../../firebase";
-import { fetchSingleTrip } from "./trip"; //may not work
+import { db } from "../../firebase";
 
 //ACTION TYPES
 const GET_TRIPS = "GET_TRIPS";
@@ -26,7 +25,6 @@ export const getTrips = (trips) => ({
 export const fetchUserTrips = (userTripsArr) => {
   return async (dispatch) => {
     try {
-      console.log("userTripsArr", userTripsArr);
       const tripArr = [];
       for (let i = 0; i < userTripsArr.length; i++) {
         const tripId = userTripsArr[i];
@@ -35,14 +33,8 @@ export const fetchUserTrips = (userTripsArr) => {
         const data = doc.data();
         tripArr.push(data);
       }
-      // console.log("for loop try with trips", tripArr);
+
       dispatch(getTrips(tripArr));
-      // console.log("for loop try with trips????", tripArr);
-      // console.log("userTripsArr after map", userTripsArr);
-      // for (let i =0; i < userTripsArr.length i++)
-      //   console.log("this is what we get from fetchUserTrips", data);
-      //   dispatch(getTrips(data));
-      //console.log("tripArr", tripArr);
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +43,7 @@ export const fetchUserTrips = (userTripsArr) => {
 
 //REDUCER
 export default function trips(state = [], action) {
-  console.log("redux", action);
+  // console.log("redux", action);
   switch (action.type) {
     case GET_TRIPS:
       return action.trips;
