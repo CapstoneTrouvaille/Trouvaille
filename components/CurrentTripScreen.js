@@ -37,6 +37,7 @@ const CurrentTripScreen = () => {
           <Button
             key={index}
             variant="outline"
+            colorScheme="indigo"
             style={styles.tripList}
             _text={styles.tripButton}
             onPress={() =>
