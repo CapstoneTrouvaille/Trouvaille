@@ -150,7 +150,7 @@ const SingleTrip = ({ route }) => {
                 )} */}
             </Text>
             <Text style={styles.tripInfo}>
-              Travelers: {tripMembers.toString()}
+              Travelers: {tripMembers && tripMembers.toString()}
             </Text>
             <Button
               style={styles.button}
