@@ -155,7 +155,7 @@ const SingleTrip = ({ route }) => {
               onPress={() =>
                 navigation.navigate("InviteTripMember", {
                   tripId,
-                  trip: tripInfo,
+                  trip:tripInfo
                 })
               }
             >
