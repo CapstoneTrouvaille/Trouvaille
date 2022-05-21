@@ -15,7 +15,7 @@ const ItineraryDay = (props) => {
 
   return (
     <View>
-    <Box >
+    <Box style={styles.plansList}>
       {plansList.map((plan, i) => (
         <Text key={i}>{plan}</Text>
       ))}

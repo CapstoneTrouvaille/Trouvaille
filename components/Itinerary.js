@@ -21,6 +21,8 @@ import { getDates } from "./helperFunctions/getDates";
 import ItineraryDay from "./ItineraryDay";
 import ItineraryForm from "./ItineraryForm";
 
+import styles from "../styles/itinerary"
+
 const Itinerary = (props) => {
   const dispatch = useDispatch();
 
@@ -40,7 +42,7 @@ const Itinerary = (props) => {
     )[0]
     populateDays.push(
       <View key={i}>
-        <Text bold fontSize="lg">
+        <Text style={styles.day} fontSize="lg">
           {
            dayString
           }
@@ -87,8 +89,3 @@ const Itinerary = (props) => {
 
 export default Itinerary;
 
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: "row",
-  },
-});

@@ -17,11 +17,10 @@ export default StyleSheet.create({
 
   },
   box:{
-    borderWidth:1,
-    borderColor:"gray",
     borderRadius:5,
     padding:"3%",
-    marginBottom:"1%"
+    marginBottom:"2%",
+    backgroundColor:"rgba(255, 255, 255, 0.77)"
   },
 
   header: {
@@ -33,6 +32,7 @@ export default StyleSheet.create({
     fontFamily: "Jaldi_400Regular",
     fontSize: 20,
     paddingTop: "1%",
+   color:"#6d6e6e"
   },
   tripButton: {
     color: "#999DC3",
@@ -47,4 +47,5 @@ export default StyleSheet.create({
     fontFamily: "Jaldi_400Regular",
     fontSize: 15,
   },
+
 });

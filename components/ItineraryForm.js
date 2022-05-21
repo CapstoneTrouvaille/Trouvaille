@@ -33,18 +33,17 @@ const ItineraryForm = (props) => {
   };
   return (
     <View width="80%">
-      <Stack flexDirection="row" space={5}>
+      <Stack style={styles.formContainer} flexDirection="row" space={5}>
         <FormControl mb="4">
           <Input
-            width="95%"
+          style={styles.form}
+            width="90%"
             value={plans}
             size="sm"
             placeholder="Add Plans to your itinerary"
             onChangeText={(text) => setPlans(text)}
           />
         </FormControl>
-
-        {/* <Stack direction="row" space={5} justifyContent="center"> */}
         <Button
           size="sm"
           mb="4"
