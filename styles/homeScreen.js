@@ -13,7 +13,7 @@ export default StyleSheet.create({
   container: {
     width: "100%",
     alignItems: "center",
-    height: "25%",
+    height: "27%",
     paddingTop: "5%",
   },
 
