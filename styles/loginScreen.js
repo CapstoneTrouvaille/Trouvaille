@@ -65,20 +65,19 @@ export default StyleSheet.create({
     width: 50,
     height: 50,
   },
-  googleButton: {
-    width: "100%",
-    padding: 15,
-    borderRadius: 10,
-  },
+
   googleText: {
-    color: "gray",
+    color: "white",
     fontWeight: "700",
     fontSize: 16,
   },
-  googleButtonContainer: {
+  googleButton: {
+    backgroundColor: "#A267AC",
     width: "100%",
-    justifyContent: "center",
+    padding: 15,
+    borderRadius: 10,
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 5,
+    marginBottom: 40,
   },
 });
