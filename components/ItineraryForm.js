@@ -33,8 +33,8 @@ const ItineraryForm = (props) => {
   };
   return (
     <View width="80%">
-      <Stack style={styles.formContainer} flexDirection="row" space={5}>
-        <FormControl mb="4">
+      <Stack style={styles.formContainer} flexDirection="row" >
+        <FormControl>
           <Input
           style={styles.form}
             width="90%"
@@ -46,7 +46,6 @@ const ItineraryForm = (props) => {
         </FormControl>
         <Button
           size="sm"
-          mb="4"
           style={styles.saveButton}
           _text={styles.buttonText}
           onPress={() => {

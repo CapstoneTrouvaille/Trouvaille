@@ -22,14 +22,17 @@ const ItineraryDay = (props) => {
       {placesFromExplore.map((value, i) => (
         <Text key={i}>{value}</Text>
       ))}
+
+      {placesFromExplore.length >0 || plansList.length > 0 ?
       <Button
             size="xs"
             style={styles.deleteButton}
             _text={styles.buttonText}
-            colorScheme="danger"
+            colorScheme="gray"
           >
             Clear
           </Button>
+          : null }
       </Box>
     </View>
   );

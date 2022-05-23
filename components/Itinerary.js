@@ -43,9 +43,7 @@ const Itinerary = (props) => {
     populateDays.push(
       <View key={i}>
         <Text style={styles.day} fontSize="lg">
-          {
-           dayString
-          }
+          {dayString}
         </Text>
         <Box>
           <SelectModal index={i} tripId={tripId} />

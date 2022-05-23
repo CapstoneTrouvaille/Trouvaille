@@ -137,13 +137,11 @@ const SingleTrip = ({ route }) => {
         <Box>
           <Center>
             <Text style={styles.header}>{tripInfo.tripName}</Text>
-            <Box style = {styles.box}>
-
-
-            <Text style={styles.tripInfo}>Location: {tripInfo.location}</Text>
-            <Text style={styles.tripInfo}>
-              {newStartDate} - {newEndDate}
-              {/* {JSON.stringify(tripInfo.startDate.toDate()).replace(
+            <Box style={styles.box}>
+              <Text style={styles.tripInfo}>Location: {tripInfo.location}</Text>
+              <Text style={styles.tripInfo}>
+                {newStartDate} - {newEndDate}
+                {/* {JSON.stringify(tripInfo.startDate.toDate()).replace(
                   /['"]+/g,
                   ""
                 )}{" "}
@@ -152,32 +150,34 @@ const SingleTrip = ({ route }) => {
                   /['"]+/g,
                   ""
                 )} */}
-            </Text>
-            <Text style={styles.tripInfo}>
-              Travelers: {tripMembers && tripMembers.toString()}
-            </Text>
+              </Text>
+              <Text style={styles.tripInfo}>
+                Travelers: {tripMembers && tripMembers.toString()}
+              </Text>
             </Box>
-            <Button
-              style={styles.button}
-              _text={styles.buttonText}
-              size="md"
-              onPress={() =>
-                navigation.navigate("Send Invitations", {
-                  tripId,
-                  trip: tripInfo,
-                })
-              }
-            >
-              Invite Trip Members
-            </Button>
-            <Button
-            size="xs"
-            mt="5"
-            _text={styles.buttonText}
-            colorScheme="danger"
-          >
-            Delete Trip
-          </Button>
+            <Box style={styles.buttons}>
+              <Button
+                style={styles.button}
+                _text={styles.buttonText}
+                size="sm"
+                onPress={() =>
+                  navigation.navigate("Send Invitations", {
+                    tripId,
+                    trip: tripInfo,
+                  })
+                }
+              >
+                Invite Trip Members
+              </Button>
+              <Button
+                size="sm"
+                style={styles.deleteButton}
+                _text={styles.buttonText}
+                colorScheme="gray"
+              >
+                Delete Trip
+              </Button>
+            </Box>
           </Center>
         </Box>
       </Stack>

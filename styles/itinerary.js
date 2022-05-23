@@ -34,7 +34,9 @@ export default StyleSheet.create({
   plansList: {
     backgroundColor: "rgba(255, 255, 255, 0.77)",
     borderRadius:5,
-    margin: "3%, 2%, 1%, 2%",
+    marginTop:6,
+    marginHorizontal: 10,
+    marginBottom:30,
     padding: "2%",
     shadowColor: '#171717',
     shadowOffset: {width: -2, height: 4},
@@ -42,6 +44,8 @@ export default StyleSheet.create({
     shadowRadius: 3,
   },
   deleteButton:{
+
+    backgroundColor:"#a1a1aa",
     width: "20%",
    marginTop:6,
 

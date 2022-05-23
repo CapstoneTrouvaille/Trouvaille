@@ -81,7 +81,7 @@ const SingleMemory = (props) => {
             size="xs"
             style={styles.deleteButton}
             _text={styles.buttonText}
-            colorScheme="danger"
+            colorScheme="gray"
           >
             Delete
           </Button>
