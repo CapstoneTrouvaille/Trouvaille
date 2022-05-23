@@ -158,7 +158,6 @@ const HomeScreen = () => {
               uri: userInfo.photoURL,
             }}
           >
-            RB
           </Avatar>
           <Text style={styles.header} size="xl">
             {userInfo.name}'s Trip Dashboard

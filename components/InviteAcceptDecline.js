@@ -31,11 +31,13 @@ const InviteAcceptDecline = ({ route }) => {
   const handleSubmitAccept = (trip, index) => {
     const tripToDispatch = userPendingTrips[index];
     dispatch(addUserToTrip(tripToDispatch, userInfo.UID));
+    navigation.navigate("Home");
   };
 
   const handleSubmitDecline = (trip, index) => {
     const tripToDispatch = userPendingTrips[index];
     dispatch(declineInviteToTrip(tripToDispatch, userInfo.UID));
+    navigation.navigate("Home");
   };
 
   const handleHomeOnClick = () => {
