@@ -15,8 +15,9 @@ import { useNavigation } from "@react-navigation/core";
 import * as Google from "expo-google-app-auth";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "./store/user";
-import Googleicon from "react-native-google-button/src";
+// import Googleicon from "react-native-google-button/src";
 import styles from "../styles/loginScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 const image = require("../assets/trouvaillehomeback.png");
 const logo = require("../assets/TrouvailleMain.png");
@@ -168,20 +169,23 @@ const LoginScreen = () => {
           </TouchableOpacity>
 
           <TouchableOpacity
+            onPress={signInWithGoogleAsync}
+            style={styles.googleButton}
+          >
+            <Text style={styles.googleText}>
+              <Ionicons name="logo-google" size={17} color="white" />
+              {"    "}
+              Google Sign In
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
             title="Register"
             onPress={() => navigation.navigate("SignUp")}
             style={[styles.button, styles.buttonOutline]}
           >
             <Text style={styles.buttonOutlineText}>Register</Text>
           </TouchableOpacity>
-        </View>
-        <View style={styles.googleButtonContainer}>
-          <Text style={styles.googleText}>
-            <Googleicon onPress={signInWithGoogleAsync}>
-              {"         "}
-              {"   "}Sign In with Google
-            </Googleicon>
-          </Text>
         </View>
       </ImageBackground>
     </KeyboardAvoidingView>
