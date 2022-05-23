@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Button } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { firebase, auth } from "../../firebase";
+import { useDispatch } from "react-redux";
 
 //screens
 import HomeScreen from "../HomeScreen";
@@ -18,10 +19,12 @@ import SingleTrip from "../SingleTrip";
 import Memories from "../Memories";
 import AddMemories from "../AddMemories";
 import ImageUpload from "../ImageUpload";
+import { logoutUser } from "../store";
 
 const Stack = createNativeStackNavigator();
 
 const HomeStackNavigator = () => {
+  const dispatch = useDispatch();
   return (
     <Stack.Navigator
       screenOptions={{
@@ -31,7 +34,10 @@ const HomeStackNavigator = () => {
             name="exit-outline"
             size={30}
             color="#999DC3"
-            onPress={() => firebase.auth().signOut()}
+            onPress={() => {
+              firebase.auth().signOut();
+              dispatch(logoutUser());
+            }}
           />
         ),
       }}

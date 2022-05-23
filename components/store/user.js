@@ -107,6 +107,7 @@ export const signupUser = (name, email, password) => {
         savedItems: [],
         pendingTrips: [],
         declinedTrips: [],
+        photoURL: "",
       };
       await db.collection("user").add(userData);
       dispatch(signup(userData));

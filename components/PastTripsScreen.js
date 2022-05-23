@@ -49,7 +49,7 @@ const PastTripsScreen = () => {
                   })
                 }
               >
-                {trip.tripName}
+                {trip && trip.tripName}
               </Button>
             ))}
       </Center>
