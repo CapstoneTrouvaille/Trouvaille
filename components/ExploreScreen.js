@@ -15,6 +15,7 @@ import { getPlaces } from "./store/places";
 import { getFood } from "./store/food";
 import PlacesResults from "./PlacesResults";
 import FoodResults from "./FoodResults";
+import styles from "../styles/explore";
 
 const ExploreScreen = () => {
   const placesList = useSelector((state) => state.places) || [];
@@ -46,28 +47,37 @@ const ExploreScreen = () => {
   return (
     <>
       <View>
-        <FormControl  mb="4">
-          <FormControl.Label>
-            EXPLORE
-          </FormControl.Label>
-          <Input
-            value={location}
-            size="md"
-            placeholder="Enter a city, state, country, etc"
-            onChangeText={(text) => setLocation(text)}
-          />
-        </FormControl>
-        <Stack direction="row" space={5} justifyContent="center">
+        <Center>
+        <Text style={styles.exploreText}>Explore</Text>
+          <FormControl style={styles.formBox}>
+            <Input
+              value={location}
+              size="sm"
+              style={styles.form}
+              _text={styles.text}
+              placeholder="Enter a city, state, country, etc"
+              onChangeText={(text) => setLocation(text)}
+            />
+          </FormControl>
+        </Center>
+        <Stack style={styles.buttonContainer}>
           <Button
             size="sm"
-            mb="4"
+            style={styles.button}
+            _text={styles.buttonText}
             onPress={() => {
               handleSubmit();
             }}
           >
             Get Attractions
           </Button>
-          <Button size="sm" mb="4" onPress={() => eatHandleSubmit()}>
+          <Button
+            size="sm"
+            style={styles.button}
+
+            _text={styles.buttonText}
+            onPress={() => eatHandleSubmit()}
+          >
             Get Restaurants
           </Button>
         </Stack>
@@ -81,5 +91,3 @@ const ExploreScreen = () => {
 };
 
 export default ExploreScreen;
-
-const styles = StyleSheet.create({});

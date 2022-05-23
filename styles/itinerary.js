@@ -25,7 +25,6 @@ export default StyleSheet.create({
   },
   form: {
     backgroundColor: "rgba(255, 255, 255, 0.77)",
-    borderColor: "pink",
   },
   day: {
     fontSize: 25,

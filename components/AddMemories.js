@@ -226,16 +226,16 @@ const AddMemories = (props) => {
         alignSelf="center"
         px="4"
         safeArea
-        mt="4"
+
         w={{
           base: "100%",
           md: "25%",
         }}
       >
         <Box alignItems="center">
-          <Heading size="2xl" mb="4">
+          <Text style = {styles.heading}>
             Post Your Memories
-          </Heading>
+          </Text>
           <Text style={styles.subtitle}>
             Add special, funny, memorable moments from your trip!
           </Text>
@@ -343,7 +343,7 @@ const AddMemories = (props) => {
         </Center>
         <Box alignItems="center" mb="6">
           <Button size="sm" style={styles.buttons} onPress={handleSubmit}>
-            Post your memories!
+            Post!
           </Button>
         </Box>
       </Stack>

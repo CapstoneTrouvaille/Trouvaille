@@ -8,6 +8,11 @@ export default StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(255, 255, 255, 0.77)",
   },
+  heading: {
+    fontFamily: "GiveYouGlory_400Regular",
+    fontSize: 40,
+    paddingTop: "10%",
+  },
   title: {
     textAlign: "left",
     fontSize: 20,
@@ -23,26 +28,25 @@ export default StyleSheet.create({
     fontFamily: "Jaldi_400Regular",
     color: "#000",
   },
-  subtitle:{
-    alignItems:"center",
-    fontSize:16,
+  subtitle: {
+    alignItems: "center",
+    fontSize: 16,
     fontFamily: "Jaldi_400Regular",
   },
-  recordUploadContainer:{
-    flexDirection:"row",
-  justifyContent:"center",
-    marginBottom:"3%"
+  recordUploadContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: "3%",
   },
-  buttons:{
-    marginRight:"2%",
+  buttons: {
+    marginRight: "2%",
     backgroundColor: "#999DC3",
     borderColor: "white",
     borderWidth: 1,
     borderRadius: 5,
   },
-  playButton:{
-    width:200,
-    marginBottom:"3%"
-  }
-
-})
+  playButton: {
+    width: 200,
+    marginBottom: "3%",
+  },
+});
