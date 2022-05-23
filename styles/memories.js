@@ -7,18 +7,18 @@ export default StyleSheet.create({
   headerBox: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
+    justifyContent:"space-between",
+    marginVertical:10,
+    alignItems:"baseline"
   },
   header: {
     fontSize: 25,
-    padding: "2%, 2%, 0, 2%",
-    marginTop: "3%",
     fontFamily: "Jaldi_700Bold",
+    paddingTop:"2%"
   },
 
   button: {
     backgroundColor: "#999DC3",
-    margin: 16,
     borderColor: "white",
     borderWidth: 1,
     borderRadius: 5,

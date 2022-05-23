@@ -4,9 +4,12 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    width:"50%",
     justifyContent: "center",
-    alignItems: "center",
+    alignSelf: "center",
+    borderRadius:5,
     backgroundColor: "rgba(255, 255, 255, 0.77)",
+    marginBottom:10,
   },
   heading: {
     fontFamily: "GiveYouGlory_400Regular",
