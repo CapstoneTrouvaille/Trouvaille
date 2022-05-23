@@ -23,7 +23,7 @@ export default StyleSheet.create({
   },
 
   header: {
-    fontFamily: "Jaldi_700Bold",
+    fontFamily: "GiveYouGlory_400Regular",
     fontSize: 40,
     paddingTop: "10%",
   },

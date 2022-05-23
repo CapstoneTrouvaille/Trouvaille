@@ -1,7 +1,7 @@
 import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, Box, Button, ScrollView } from "native-base";
+import { Text, Box, Button, ScrollView,Center, Divider } from "native-base";
 import { inMemoryPersistence } from "firebase/auth";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { Audio } from "expo-av";
@@ -67,16 +67,36 @@ const SingleMemory = (props) => {
       </Button>
 
       {isClicked ? (
-        <Box>
-          <Text>{memory.journal}</Text>
-
+        <Center>
           {url && (
-            <Image source={{ uri: url }} style={{ width: 150, height: 150 }} />
+            <Image source={{ uri: url }} style={{ width: "100%", height: 300 }} />
           )}
 
           {voice && (
-            <Button onPress={playSound} title="play recording"></Button>
+            <Box style={styles.headerBox}>
+              <Button
+                size="xs"
+                variant="outline"
+                colorScheme="indigo"
+                style={styles.voiceButton}
+                _text={styles.buttonText}
+                onPress={playSound}
+              >
+                <Ionicons name="play" size={15} color="#999DC3"/>
+              </Button>
+              <Button
+                size="xs"
+                variant="outline"
+                colorScheme="indigo"
+                style={styles.voiceButton}
+                _text={styles.buttonText}
+              >
+                 <Ionicons name="pause" size={15} color="#999DC3"/>
+              </Button>
+            </Box>
           )}
+          <Text>{memory.journal}</Text>
+          <Divider mb="2" />
           <Button
             size="xs"
             style={styles.deleteButton}
@@ -85,7 +105,7 @@ const SingleMemory = (props) => {
           >
             Delete
           </Button>
-        </Box>
+        </Center>
       ) : null}
     </View>
   );

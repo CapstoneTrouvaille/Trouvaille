@@ -22,6 +22,7 @@ import NewTripInviteMsg from "./NewTripInviteMsg";
 import DatePicker from "react-native-datepicker";
 import { getDates } from "./helperFunctions/getDates";
 //native base doesn't have a date picker so you have to use the react native one
+import styles from "../styles/addTrip";
 
 const AddTrip = () => {
   const dispatch = useDispatch();
@@ -97,22 +98,10 @@ const AddTrip = () => {
 
   return (
     <ScrollView w="100%">
-      <Stack
-        space={2.5}
-        alignSelf="center"
-        px="4"
-        safeArea
-        mt="4"
-        w={{
-          base: "100%",
-          md: "25%",
-        }}
-      >
+      <Stack style={styles.stack} safeArea>
         <Box alignItems="center">
-          <Heading size="2xl" mb="4">
-            Where to Next?
-          </Heading>
-          <Text alignItems="center" fontSize="xs">
+          <Text style={styles.heading}>Where to next?</Text>
+          <Text alignItems="center" style={styles.subtitle}>
             Name your trip, choose a destination, select the dates and Get
             Planning! After you create a trip you can invite your friends and
             get to coordinating!
@@ -221,7 +210,12 @@ const AddTrip = () => {
         </View>
 
         <Box alignItems="center" mb="6">
-          <Button size="lg" onPress={handleSubmit}>
+          <Button
+            style={styles.button}
+            _text={styles.buttonText}
+            size="md"
+            onPress={handleSubmit}
+          >
             Get Planning!
           </Button>
         </Box>
@@ -231,27 +225,3 @@ const AddTrip = () => {
 };
 
 export default AddTrip;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#A8E9CA",
-  },
-  title: {
-    textAlign: "left",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  datePickerStyle: {
-    width: 230,
-  },
-  text: {
-    textAlign: "left",
-    width: 230,
-    fontSize: 16,
-    color: "#000",
-  },
-});

@@ -19,11 +19,12 @@ export default StyleSheet.create({
   },
   formContainer:{
     paddingLeft: 10,
-    paddingRight:10
+    paddingRight:10,
+
+    alignItems:"center"
   },
   form: {
     backgroundColor: "rgba(255, 255, 255, 0.77)",
-    borderColor: "pink",
   },
   day: {
     fontSize: 25,
