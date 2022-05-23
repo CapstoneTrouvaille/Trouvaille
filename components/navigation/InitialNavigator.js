@@ -12,8 +12,10 @@ const Stack = createNativeStackNavigator();
 const SwitchNavigator = () => {
   return (
     <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen options={{ headerShown: false }}
-      name="Login" component={Login}
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Login"
+        component={Login}
       />
       <Stack.Screen
         options={{ headerShown: false }}
