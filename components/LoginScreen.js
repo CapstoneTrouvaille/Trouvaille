@@ -178,8 +178,7 @@ const LoginScreen = () => {
         <View style={styles.googleButtonContainer}>
           <Text style={styles.googleText}>
             <Googleicon onPress={signInWithGoogleAsync}>
-              {"         "}
-              {"   "}Sign In with Google
+              {"          "}Sign In with Google
             </Googleicon>
           </Text>
         </View>
