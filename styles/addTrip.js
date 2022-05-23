@@ -1,17 +1,25 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+  stack: {
+    alignSelf: "center",
+    paddingHorizontal: 10,
+    width: "100%",
+  },
   container: {
     flex: 1,
     padding: 10,
+    width:"50%",
     justifyContent: "center",
-    alignItems: "center",
+    alignSelf: "center",
+    borderRadius:5,
     backgroundColor: "rgba(255, 255, 255, 0.77)",
+    marginBottom:10,
   },
   heading: {
     fontFamily: "GiveYouGlory_400Regular",
     fontSize: 40,
-    paddingTop: "10%",
+    paddingTop: "9%",
   },
   title: {
     textAlign: "left",
@@ -21,34 +29,28 @@ export default StyleSheet.create({
   datePickerStyle: {
     width: 230,
   },
+  subtitle: {
+    fontFamily: "Jaldi_400Regular",
+    fontSize: 16,
+    alignItems: "center",
+  },
   text: {
+    fontFamily: "Jaldi_400Regular",
     textAlign: "left",
     width: 230,
     fontSize: 16,
-    fontFamily: "Jaldi_400Regular",
     color: "#000",
-    backgroundColor: "rgba(255, 255, 255, 0.77)",
-
   },
-  subtitle: {
-    alignItems: "center",
-    fontSize: 16,
-    fontFamily: "Jaldi_400Regular",
-  },
-  recordUploadContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginBottom: "3%",
-  },
-  buttons: {
-    marginRight: "2%",
+  button: {
+    marginBottom: 10,
+    marginHorizontal: 5,
     backgroundColor: "#999DC3",
     borderColor: "white",
     borderWidth: 1,
     borderRadius: 5,
   },
-  playButton: {
-    width: 200,
-    marginBottom: "3%",
+  buttonText: {
+    fontFamily: "Jaldi_400Regular",
+    fontSize: 15,
   },
 });
