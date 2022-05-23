@@ -29,6 +29,8 @@ import { v4 as uuidv4 } from "uuid";
 //audio
 import { Audio, RecordingOptions } from "expo-av";
 import { RECORDING_OPTION_IOS_OUTPUT_FORMAT_LINEARPCM } from "expo-av/build/Audio";
+import { Ionicons } from "@expo/vector-icons";
+import styles from "../styles/addMemories";
 
 const AddMemories = (props) => {
   const dispatch = useDispatch();
@@ -174,10 +176,13 @@ const AddMemories = (props) => {
             Recording {index + 1} - {recordingLine.duration}
           </Text>
           <Button
-            style={styles.button}
+            size="xs"
+            variant="outline"
+            colorScheme="indigo"
+            style={styles.playButton}
             onPress={() => recordingLine.sound.replayAsync()}
           >
-            Play
+            <Ionicons name="play" size={15} color="#999DC3" />
           </Button>
           {/* <Button
             style={styles.button}
@@ -231,7 +236,7 @@ const AddMemories = (props) => {
           <Heading size="2xl" mb="4">
             Post Your Memories
           </Heading>
-          <Text alignItems="center" fontSize="xs">
+          <Text style={styles.subtitle}>
             Add special, funny, memorable moments from your trip!
           </Text>
         </Box>
@@ -267,6 +272,8 @@ const AddMemories = (props) => {
               },
               dateText: {
                 fontSize: 17,
+
+                fontFamily: "Jaldi_400Regular",
               },
             }}
             onDateChange={(date) => {
@@ -278,10 +285,13 @@ const AddMemories = (props) => {
         <Box>
           <Divider mb="8" />
           <FormControl mb="4">
-            <FormControl.Label>Journal Name</FormControl.Label>
+            <FormControl.Label _text={styles.text}>
+              Journal Name
+            </FormControl.Label>
             <Input
               value={journalName}
               size="md"
+              style={styles.text}
               placeholder="Make it fun!"
               onChangeText={(text) => setJournalName(text)}
             />
@@ -291,6 +301,7 @@ const AddMemories = (props) => {
             <Input
               value={location}
               size="md"
+              style={styles.text}
               placeholder="Enter the destination"
               onChangeText={(text) => setLocation(text)}
             />
@@ -300,29 +311,38 @@ const AddMemories = (props) => {
             <FormControl.Label>Journal Entry</FormControl.Label>
             <Input
               value={journal}
-              size="lg"
+              size="md"
+              style={styles.text}
               placeholder="Describe your memorable moment from this trip!"
               onChangeText={(text) => setJournal(text)}
             />
           </FormControl>
         </Box>
-        <Box alignItems="flex-start" mb="6">
-          <Center>
-            <Text>{message}</Text>
-            <Button onPress={recording ? stopRecording : startRecording}>
-              {recording ? "Stop Recording" : "Start Recording"}
-            </Button>
-            {getRecordingLines()}
-          </Center>
+        <Box style={styles.recordUploadContainer}>
+          <Text>{message}</Text>
+          <Button
+            size="sm"
+            style={styles.buttons}
+            onPress={recording ? stopRecording : startRecording}
+          >
+            {recording ? "Stop Recording" : "Start Recording"}
+          </Button>
+
+          <Button size="sm" style={styles.buttons} onPress={pickImage}>
+            Upload Image
+          </Button>
         </Box>
-        <Button alignItems="flex-end" size="md" m="2.5" onPress={pickImage}>
-          Upload Image
-        </Button>
-        {image && (
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-        )}
+        <Center>
+          {getRecordingLines()}
+          {image && (
+            <Image
+              source={{ uri: image }}
+              style={{ width: 200, height: 200 }}
+            />
+          )}
+        </Center>
         <Box alignItems="center" mb="6">
-          <Button size="lg" onPress={handleSubmit}>
+          <Button size="sm" style={styles.buttons} onPress={handleSubmit}>
             Post your memories!
           </Button>
         </Box>
@@ -332,27 +352,3 @@ const AddMemories = (props) => {
 };
 
 export default AddMemories;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#A8E9CA",
-  },
-  title: {
-    textAlign: "left",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  datePickerStyle: {
-    width: 230,
-  },
-  text: {
-    textAlign: "left",
-    width: 230,
-    fontSize: 16,
-    color: "#000",
-  },
-});
