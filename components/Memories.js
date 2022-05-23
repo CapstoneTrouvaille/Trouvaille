@@ -38,35 +38,30 @@ const Memories = (props) => {
 
   return (
     <View style={styles.container}>
-    <ScrollView w="100%">
-
+      <ScrollView w="100%">
         <Box>
-          <Text style={styles.header}>
-            Memories
-          </Text>
+          <Box style={styles.headerBox}>
+            <Text style={styles.header}>Memories</Text>
+            <Button
+              size="xs"
+              style={styles.button}
+              _text={styles.buttonText}
+              onPress={() =>
+                navigation.navigate("Add Memories", {
+                  tripId: tripId,
+                })
+              }
+            >
+              Add a memory
+            </Button>
+          </Box>
 
           {memories.map((memory, index) => (
             <SingleMemory key={index} memory={memory} />
           ))}
         </Box>
-
-
-    </ScrollView>
-    <Center>
-        <Button
-          size="lg"
-          style={styles.button}
-          _text={styles.buttonText}
-          onPress={() =>
-            navigation.navigate("Add Memories", {
-              tripId: tripId,
-            })
-          }
-        >
-          Add a memory
-        </Button>
-      </Center>
-      </View>
+      </ScrollView>
+    </View>
   );
 };
 

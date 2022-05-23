@@ -4,12 +4,18 @@ export default StyleSheet.create({
   container: {
     width: "90%",
   },
+  headerBox: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
   header: {
     fontSize: 25,
     padding: "2%, 2%, 0, 2%",
     marginTop: "3%",
     fontFamily: "Jaldi_700Bold",
   },
+
   button: {
     backgroundColor: "#999DC3",
     margin: 16,
@@ -35,6 +41,9 @@ export default StyleSheet.create({
   deleteButton: {
     backgroundColor: "#a1a1aa",
     width: "20%",
-    marginTop: 6,
+  },
+  voiceButton: {
+    marginVertical: "2%",
+    marginHorizontal:"1%"
   },
 });
