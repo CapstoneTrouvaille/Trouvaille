@@ -12,8 +12,14 @@ export default StyleSheet.create({
   container: {
     width: "100%",
     alignItems: "center",
-    height: 210,
-    paddingTop: "5%",
+    height: 215,
+    paddingTop: "3%",
+  },
+  box: {
+    borderRadius: 5,
+    padding: "3%",
+    marginBottom: "2%",
+    backgroundColor: "rgba(255, 255, 255, 0.77)",
   },
 
   header: {
@@ -21,22 +27,22 @@ export default StyleSheet.create({
     fontSize: 40,
     paddingTop: "10%",
   },
-  tripInfo: {
-    fontFamily: "Jaldi_400Regular",
-    fontSize: 20,
-    paddingTop: "1%",
-  },
-  tripButton: {
-    color: "#999DC3",
-    fontFamily: "Jaldi_400Regular",
-    fontSize: 15,
+  buttons: {
+    display: "flex",
+    flexDirection: "row",
+    marginTop: 5,
   },
   button: {
     backgroundColor: "#999DC3",
-    marginTop: "1%",
+    marginRight: 2,
   },
   buttonText: {
     fontFamily: "Jaldi_400Regular",
     fontSize: 15,
+  },
+
+  deleteButton: {
+    backgroundColor: "#a1a1aa",
+    marginLeft: 2,
   },
 });

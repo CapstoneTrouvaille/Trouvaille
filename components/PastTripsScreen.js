@@ -18,7 +18,7 @@ const PastTripsScreen = () => {
   //   Math.floor(Date.now() / 1000) - tripInfo[0].endDate.seconds
   // );
   console.log("date now in seconds", Math.floor(Date.now() / 1000));
-  console.log("lastdate in trip", tripInfo[0].endDate.seconds);
+  // console.log("lastdate in trip", tripInfo[0].endDate.seconds);
 
   // seconds = new Date().getTime() / 1000;
   // {console.log(

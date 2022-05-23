@@ -16,6 +16,8 @@ import {
 } from "native-base";
 import { addItineraryDay } from "./store/itinerary";
 
+import styles from "../styles/itinerary";
+
 const ItineraryForm = (props) => {
   const dispatch = useDispatch();
 
@@ -31,21 +33,21 @@ const ItineraryForm = (props) => {
   };
   return (
     <View width="80%">
-      <Stack flexDirection="row" space={5}>
-        <FormControl mb="4">
+      <Stack style={styles.formContainer} flexDirection="row" >
+        <FormControl>
           <Input
-            width="95%"
+          style={styles.form}
+            width="90%"
             value={plans}
             size="sm"
             placeholder="Add Plans to your itinerary"
             onChangeText={(text) => setPlans(text)}
           />
         </FormControl>
-
-        {/* <Stack direction="row" space={5} justifyContent="center"> */}
         <Button
           size="sm"
-          mb="4"
+          style={styles.saveButton}
+          _text={styles.buttonText}
           onPress={() => {
             addDays();
           }}
@@ -58,5 +60,3 @@ const ItineraryForm = (props) => {
 };
 
 export default ItineraryForm;
-
-const styles = StyleSheet.create({});

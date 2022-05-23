@@ -12,6 +12,8 @@ import {
 } from "native-base";
 import { addFromExplore } from "./store/itinerary";
 
+import styles from "../styles/itinerary";
+
 const SelectModal = (props) => {
   const dispatch = useDispatch();
   const savedItems = useSelector((state) => state.savedItems);
@@ -28,9 +30,16 @@ const SelectModal = (props) => {
   };
 
   return (
-    <View>
+    <View >
       <Center>
-        <Button mb = "2%" width = "100%" size="sm" onPress={() => setShowModal(true)}>Select from saved items</Button>
+        <Button
+          size="sm"
+          style={styles.button}
+          _text={styles.buttonText}
+          onPress={() => setShowModal(true)}
+        >
+          Select from saved items
+        </Button>
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
           <Modal.Content maxWidth="400px">
             <Modal.CloseButton />
@@ -64,6 +73,8 @@ const SelectModal = (props) => {
                   Cancel
                 </Button>
                 <Button
+                style={styles.saveButton}
+                _text={styles.buttonText}
                   onPress={() => {
                     console.log("button pressed");
                     handleSubmit();
@@ -88,5 +99,3 @@ const SelectModal = (props) => {
 };
 
 export default SelectModal;
-
-const styles = StyleSheet.create({});
