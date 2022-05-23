@@ -40,7 +40,7 @@ const AddTrip = () => {
     //need to change date to yyyy-mm-dd format to put into date function
     const newStartDate = firebase.firestore.Timestamp.fromDate(
       new Date(
-        `${startDate.slice(6)}-${startDate.slice(0, 2)}-${startDate.slice(
+        `${startDate.slice(6)}/${startDate.slice(0, 2)}/${startDate.slice(
           3,
           5
         )}`
@@ -49,7 +49,7 @@ const AddTrip = () => {
 
     const newEndDate = firebase.firestore.Timestamp.fromDate(
       new Date(
-        `${endDate.slice(6)}-${endDate.slice(0, 2)}-${endDate.slice(3, 5)}`
+        `${endDate.slice(6)}/${endDate.slice(0, 2)}/${endDate.slice(3, 5)}`
       )
     );
 
