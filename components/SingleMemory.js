@@ -1,7 +1,7 @@
 import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, Box, Button, ScrollView, Divider } from "native-base";
+import { Text, Box, Button, ScrollView,Center, Divider } from "native-base";
 import { inMemoryPersistence } from "firebase/auth";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { Audio } from "expo-av";
@@ -67,9 +67,9 @@ const SingleMemory = (props) => {
       </Button>
 
       {isClicked ? (
-        <Box>
+        <Center>
           {url && (
-            <Image source={{ uri: url }} style={{ width: 150, height: 150 }} />
+            <Image source={{ uri: url }} style={{ width: "100%", height: 300 }} />
           )}
 
           {voice && (
@@ -105,7 +105,7 @@ const SingleMemory = (props) => {
           >
             Delete
           </Button>
-        </Box>
+        </Center>
       ) : null}
     </View>
   );
