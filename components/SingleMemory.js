@@ -3,12 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Text, Box, Button, ScrollView } from "native-base";
 import { inMemoryPersistence } from "firebase/auth";
-
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { Audio } from "expo-av";
 import * as FileSystem from "expo-file-system";
-
 import { Ionicons } from "@expo/vector-icons";
+import styles from "../styles/memories";
 
 const SingleMemory = (props) => {
   const [isClicked, setIsClicked] = useState(false);
@@ -55,13 +54,20 @@ const SingleMemory = (props) => {
   };
 
   return (
-    <ScrollView mb="2%">
-      <Button size="sm" variant="outline" onPress={handleClick} bold>
+    <View>
+      <Button
+        size="sm"
+        variant="outline"
+        style={styles.memoryButton}
+        _text={styles.buttonText}
+        colorScheme="indigo"
+        onPress={handleClick}
+      >
         {memory.journalName}
       </Button>
 
       {isClicked ? (
-        <>
+        <Box>
           <Text>{memory.journal}</Text>
 
           {url && (
@@ -71,12 +77,18 @@ const SingleMemory = (props) => {
           {voice && (
             <Button onPress={playSound} title="play recording"></Button>
           )}
-        </>
+          <Button
+            size="xs"
+            style={styles.deleteButton}
+            _text={styles.buttonText}
+            colorScheme="danger"
+          >
+            Delete
+          </Button>
+        </Box>
       ) : null}
-    </ScrollView>
+    </View>
   );
 };
 
 export default SingleMemory;
-
-const styles = StyleSheet.create({});

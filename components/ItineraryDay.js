@@ -1,5 +1,5 @@
 import { StyleSheet,Text, View } from "react-native";
-import { Box } from "native-base";
+import { Box, Button } from "native-base";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "../styles/itinerary"
@@ -22,6 +22,14 @@ const ItineraryDay = (props) => {
       {placesFromExplore.map((value, i) => (
         <Text key={i}>{value}</Text>
       ))}
+      <Button
+            size="xs"
+            style={styles.deleteButton}
+            _text={styles.buttonText}
+            colorScheme="danger"
+          >
+            Clear
+          </Button>
       </Box>
     </View>
   );

@@ -170,6 +170,14 @@ const SingleTrip = ({ route }) => {
             >
               Invite Trip Members
             </Button>
+            <Button
+            size="xs"
+            mt="5"
+            _text={styles.buttonText}
+            colorScheme="danger"
+          >
+            Delete Trip
+          </Button>
           </Center>
         </Box>
       </Stack>

@@ -24,6 +24,8 @@ import { useNavigation } from "@react-navigation/core";
 import { db } from "../firebase";
 import SingleMemory from "./SingleMemory";
 
+import styles from "../styles/memories";
+
 const Memories = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -35,59 +37,37 @@ const Memories = (props) => {
   }, []);
 
   return (
+    <View style={styles.container}>
     <ScrollView w="100%">
-      <Stack
-        space={2.5}
-        alignSelf="center"
-        px="4"
-        safeArea
-        mt="0"
-        w={{
-          base: "100%",
-          md: "25%",
-        }}
-      >
-        <Center>
-          <Button
-            size="lg"
-            mb="6"
-            onPress={() =>
-              navigation.navigate("Add Memories", {
-                tripId: tripId,
-              })
-            }
-          >
-            Add a memory
-          </Button>
-        </Center>
 
-        <Center>
-          <Heading fontSize="xl" p="4" pb="3">
+        <Box>
+          <Text style={styles.header}>
             Memories
-          </Heading>
+          </Text>
 
           {memories.map((memory, index) => (
             <SingleMemory key={index} memory={memory} />
           ))}
-        </Center>
-      </Stack>
+        </Box>
+
+
     </ScrollView>
+    <Center>
+        <Button
+          size="lg"
+          style={styles.button}
+          _text={styles.buttonText}
+          onPress={() =>
+            navigation.navigate("Add Memories", {
+              tripId: tripId,
+            })
+          }
+        >
+          Add a memory
+        </Button>
+      </Center>
+      </View>
   );
 };
 
 export default Memories;
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  fill: {
-    flex: 1,
-    margin: 16,
-  },
-  button: {
-    margin: 16,
-  },
-});

@@ -1,9 +1,6 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  view: {
-    backgroundColor: "red",
-  },
   button: {
     backgroundColor: "#999DC3",
     marginBottom: "2%",
@@ -38,6 +35,15 @@ export default StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.77)",
     borderRadius:5,
     margin: "3%, 2%, 1%, 2%",
-    padding: "2%"
+    padding: "2%",
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
+  deleteButton:{
+    width: "20%",
+   marginTop:6,
+
+  }
 });
