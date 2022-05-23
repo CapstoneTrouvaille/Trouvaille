@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/core";
 import { Box, Text, Button } from "native-base";
@@ -7,15 +7,16 @@ const NewTripInviteMsg = () => {
   const navigation = useNavigation();
 
   const handleOnClick = () => {
-    console.log("Accept/Decline button clicked");
     navigation.navigate("Invitations");
   };
 
   return (
     <View>
-      <Box alignItems="center">
+      <Box mt="2" pb="3" mb="6" alignItems="center">
         <Button
           size="lg"
+          pb="3"
+          mb="6"
           variant="link"
           colorScheme="secondary"
           onPress={handleOnClick}
@@ -28,5 +29,3 @@ const NewTripInviteMsg = () => {
 };
 
 export default NewTripInviteMsg;
-
-const styles = StyleSheet.create({});
