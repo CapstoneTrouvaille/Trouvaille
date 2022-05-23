@@ -1,7 +1,6 @@
-import { View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/core";
-import { Box, Text, Button } from "native-base";
+import { Box, Text, Button, View } from "native-base";
 
 const NewTripInviteMsg = () => {
   const navigation = useNavigation();

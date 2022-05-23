@@ -1,11 +1,11 @@
-import { StyleSheet, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserToInvite } from "./store/user";
-import { fetchTrips, fetchTripMembers } from "./store/trip";
+import { fetchTripMembers } from "./store/trip";
 import { useNavigation } from "@react-navigation/core";
 import styles from "../styles/inviteScreens";
 import {
+  View,
   Input,
   Box,
   Heading,
@@ -21,7 +21,6 @@ import {
 const InviteTripMember = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  //const tripInfo = route.params.trip;
   const tripId = route.params.tripId;
   const tripsInfo = useSelector((state) => state.trips.trips);
   const tripInfo = tripsInfo.filter(({ id }) => id === tripId)[0];
@@ -30,7 +29,6 @@ const InviteTripMember = ({ route }) => {
   const pendingUsers = tripInfo.pendingUsers;
   const declinedUsers = tripInfo.declinedUsers;
 
-  console.log(`ID ID ID ID ID:`, currentTripMembers, pendingUsers);
   const tripNames = useSelector((state) => state.trip);
 
   useEffect(() => {
@@ -40,7 +38,6 @@ const InviteTripMember = ({ route }) => {
   const currentNames = tripNames.cUsers;
   const pendingNames = tripNames.pUsers;
   const declinedNames = tripNames.dUsers;
-  console.log(`NAMES NAMES NAMES:`, currentNames, pendingNames);
 
   const [friendEmail, setFriendEmail] = useState("");
 
@@ -51,11 +48,6 @@ const InviteTripMember = ({ route }) => {
   };
 
   const handleSubmit = () => {
-    console.log(
-      `Send Invite Clicked (friendEmail, TripId):`,
-      friendEmail,
-      tripId
-    );
     dispatch(fetchUserToInvite(friendEmail, tripId));
     setFriendEmail("");
   };
@@ -77,8 +69,8 @@ const InviteTripMember = ({ route }) => {
             placeholder="Enter email address"
           />
           <Text fontSize="xs" mt="4" italic>
-            ** User will be prompted to accept/decline your invite via their
-            Trouvaille HomeScreen
+            ** User will be prompted to accept/decline your invitation via their
+            Trouvaille dashboard
           </Text>
           <Box mt="2" mb="6" alignItems="center">
             <Button
