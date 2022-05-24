@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useId } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Center, Box ,ScrollView} from "native-base";
+import { Button, Center, Box, ScrollView } from "native-base";
 import { fetchUser } from "./store/user";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
@@ -23,10 +23,10 @@ const CurrentTripScreen = () => {
       <Center>
         {tripInfo &&
           tripInfo
-            .filter((trip) => {
-              if (trip.endDate)
-                Math.floor(Date.now() / 1000) - trip.endDate.seconds <= 0;
-            })
+            .filter(
+              (trip) =>
+                Math.floor(Date.now() / 1000) - trip.endDate.seconds <= 0
+            )
             .map((trip, index) => (
               <Button
                 key={index}
