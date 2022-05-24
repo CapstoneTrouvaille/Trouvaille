@@ -21,7 +21,7 @@ import { getDates } from "./helperFunctions/getDates";
 import ItineraryDay from "./ItineraryDay";
 import ItineraryForm from "./ItineraryForm";
 
-import styles from "../styles/itinerary"
+import styles from "../styles/itinerary";
 
 const Itinerary = (props) => {
   const dispatch = useDispatch();
@@ -37,9 +37,9 @@ const Itinerary = (props) => {
   const populateDays = [];
 
   for (let i = 0; i < itinerary.length; i++) {
-    const dayString =  Object.keys(itinerary[i]).filter(
+    const dayString = Object.keys(itinerary[i]).filter(
       (key) => key !== "placesFromExplore"
-    )[0]
+    )[0];
     populateDays.push(
       <View key={i}>
         <Text style={styles.day} fontSize="lg">
@@ -49,7 +49,7 @@ const Itinerary = (props) => {
           <SelectModal index={i} tripId={tripId} />
           <ItineraryForm key={i} tripId={tripId} day={dayString} />
         </Box>
-        <ItineraryDay index={i} tripId={tripId} />
+        <ItineraryDay index={i} tripId={tripId} day={dayString} />
       </View>
     );
   }
@@ -86,4 +86,3 @@ const Itinerary = (props) => {
 };
 
 export default Itinerary;
-

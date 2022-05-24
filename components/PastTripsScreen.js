@@ -12,22 +12,6 @@ const PastTripsScreen = () => {
   const tripInfo = useSelector((state) => state.trips.trips);
   const userCurrentTrips = userInfo.trip;
 
-  // console.log("pastTrips - tripInfo", tripInfo);
-  // console.log(
-  //   "past time figureout ",
-  //   Math.floor(Date.now() / 1000) - tripInfo[0].endDate.seconds
-  // );
-  // console.log("date now in seconds", Math.floor(Date.now() / 1000));
-  // console.log("lastdate in trip", tripInfo[0].endDate.seconds);
-
-  // seconds = new Date().getTime() / 1000;
-  // {console.log(
-  //   "after filter -tripInfo",
-  //   tripInfo.filter((trip) => {
-  //     Math.floor(Date.now()) - trip.endDate.seconds > 0;
-  //   })
-  // )}
-
   return (
     <View style={styles.container}>
       <Center>
@@ -58,5 +42,3 @@ const PastTripsScreen = () => {
 };
 
 export default PastTripsScreen;
-
-// const styles = StyleSheet.create({});

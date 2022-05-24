@@ -62,7 +62,7 @@ const HomeScreen = () => {
 
   const handleSignOut = () => {
     dispatch(logoutUser());
-    // console.log("userinfo should be empty", userInfo);
+
     signOut(auth)
       //*** OMIT BC TAB NAV */
       .then(() => {
@@ -104,7 +104,6 @@ const HomeScreen = () => {
   ]);
 
   const renderTabBar = (props) => {
-    // console.log(`Line 97 Home screen: `, props.navigationState.routes);
     const inputRange = props.navigationState.routes.map((x, i) => i);
     return (
       <Box flexDirection="row">
@@ -127,7 +126,6 @@ const HomeScreen = () => {
             <Box key={i} borderColor={borderColor} style={styles.tabBar}>
               <Pressable
                 onPress={() => {
-                  //console.log(i);
                   setIndex(i);
                 }}
               >
@@ -157,8 +155,7 @@ const HomeScreen = () => {
             source={{
               uri: userInfo.photoURL,
             }}
-          >
-          </Avatar>
+          ></Avatar>
           <Text style={styles.header} size="xl">
             {userInfo.name}'s Trip Dashboard
           </Text>

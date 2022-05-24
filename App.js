@@ -10,22 +10,26 @@ import { auth } from "./firebase";
 import InviteTripMember from "./components/InviteTripMember";
 
 //fonts
-import {useFonts, Jaldi_400Regular, Jaldi_700Bold, GiveYouGlory_400Regular } from "@expo-google-fonts/dev"
+import {
+  useFonts,
+  Jaldi_400Regular,
+  Jaldi_700Bold,
+  GiveYouGlory_400Regular,
+} from "@expo-google-fonts/dev";
 
 const App = () => {
   //fonts
   let [fontsLoaded] = useFonts({
     Jaldi_400Regular,
     Jaldi_700Bold,
-    GiveYouGlory_400Regular
-  })
+    GiveYouGlory_400Regular,
+  });
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(
     () => {
       const unsubscribe = auth.onAuthStateChanged((user) => {
-        // console.log("USER", user);
         if (user) {
           setIsLoggedIn(true);
         } else {

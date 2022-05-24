@@ -88,8 +88,6 @@ const SingleTrip = ({ route }) => {
     },
   ]);
 
-  //console.log("DDDAAATTEEEEEEEEEE", tripInfo.startDate);
-
   const renderTabBar = (props) => {
     const inputRange = props.navigationState.routes.map((x, i) => i);
     return (
@@ -113,7 +111,6 @@ const SingleTrip = ({ route }) => {
             <Box key={i} style={styles.tabBar} borderColor={borderColor}>
               <Pressable
                 onPress={() => {
-                  //console.log(i);
                   setIndex(i);
                 }}
               >
@@ -176,7 +173,7 @@ const SingleTrip = ({ route }) => {
                 _text={styles.buttonText}
                 colorScheme="gray"
               >
-               <Ionicons name="trash-outline" size={17} color="white"/>
+                <Ionicons name="trash-outline" size={17} color="white" />
               </Button>
             </Box>
           </Center>

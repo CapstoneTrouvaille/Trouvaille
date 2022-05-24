@@ -45,14 +45,11 @@ export const fetchUser = (userId) => {
     try {
       const userRef = db.collection("user");
       const doc = await userRef.where("UID", "==", userId).get();
-      //console.log(`Line 30 - Fetch user userID:`, userId);
-      // console.log("doc.empty", doc.docs[0].data());
       if (doc.empty) {
         console.log("Could not fetch user!");
       } else {
         doc.forEach((item) => {
           if (item.data().trip.length >= 0) {
-            // console.log("user thunks", item.data());
             dispatch(getUser(item.data()));
           }
         });
@@ -75,8 +72,6 @@ export const fetchUserToInvite = (userEmail, tripId) => {
       const userRef = userRec.docs[0].data();
       const userReference = doc(db, "user", userRec.docs[0].id);
 
-      console.log(`!!!userDoc: `, userRef.UID);
-
       if (userRef.empty) {
         dispatch(searchToInviteFail(error));
       } else {
@@ -86,7 +81,6 @@ export const fetchUserToInvite = (userEmail, tripId) => {
         await updateDoc(userReference, {
           pendingTrips: arrayUnion(tripId),
         });
-        console.log(`User added to trip array!`);
       }
       dispatch(fetchUserTrips());
     } catch (error) {

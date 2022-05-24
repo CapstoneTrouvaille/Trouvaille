@@ -33,7 +33,6 @@ export const getLocationId = async (locationInput) => {
         },
       }
     );
-    // console.log("IN THUNK",data[0].result_object.photo.images.medium.url)
     return data[0].result_object.location_id;
   } catch (error) {
     console.log(error);

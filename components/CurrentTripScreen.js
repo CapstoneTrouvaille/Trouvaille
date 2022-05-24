@@ -14,10 +14,6 @@ const CurrentTripScreen = () => {
   const tripInfo = useSelector((state) => state.trips.trips);
   const userCurrentTrips = userInfo.trip;
 
-  // console.log(` Current Trip Screen:`, userInfo.trip);
-  // console.log("TRIPINFO", tripInfo);
-  // console.log("USE CURRENT TRIPS", userCurrentTrips);
-
   return (
     <ScrollView style={styles.container}>
       <Center>

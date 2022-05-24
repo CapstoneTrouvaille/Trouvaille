@@ -30,7 +30,7 @@ const SelectModal = (props) => {
   };
 
   return (
-    <View >
+    <View>
       <Center>
         <Button
           size="sm"
@@ -73,10 +73,9 @@ const SelectModal = (props) => {
                   Cancel
                 </Button>
                 <Button
-                style={styles.saveButton}
-                _text={styles.buttonText}
+                  style={styles.saveButton}
+                  _text={styles.buttonText}
                   onPress={() => {
-                    console.log("button pressed");
                     handleSubmit();
                     setShowModal(false);
                   }}

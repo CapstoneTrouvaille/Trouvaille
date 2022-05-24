@@ -81,20 +81,17 @@ const AddTrip = () => {
       Itinerary: itineraryDays,
     };
     if (tripName != "" && location != "" && startDate != "" && endDate != "") {
-      console.log(`Get Planning! clicked:`, newTripInfo);
       dispatch(addTrip(newTripInfo));
       setTripName("");
       setLocation("");
       setStartDate("");
       setEndDate("");
-      // navigation.navigate("InviteTripMember", { tripId });
+
       navigation.navigate("Home");
     } else {
       alert("Please fill out ALL the fields to proceed!");
     }
   };
-
-  console.log(Date.now());
 
   return (
     <ScrollView w="100%">
