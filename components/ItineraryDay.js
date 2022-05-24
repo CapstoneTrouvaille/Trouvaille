@@ -2,6 +2,8 @@ import { StyleSheet,Text, View } from "react-native";
 import { Box, Button } from "native-base";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
+import { Ionicons } from "@expo/vector-icons";
 import styles from "../styles/itinerary"
 
 const ItineraryDay = (props) => {
@@ -26,11 +28,11 @@ const ItineraryDay = (props) => {
       {placesFromExplore.length >0 || plansList.length > 0 ?
       <Button
             size="xs"
-            style={styles.deleteButton}
+            style={styles.editButton}
             _text={styles.buttonText}
             colorScheme="gray"
           >
-            Clear
+            <Ionicons name="pencil" size={15} color="white"/>
           </Button>
           : null }
       </Box>

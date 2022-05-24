@@ -42,7 +42,7 @@ export default StyleSheet.create({
   },
 
   deleteButton: {
-    backgroundColor: "#a1a1aa",
+    backgroundColor: "rgb(182, 182, 182)",
     marginLeft: 2,
   },
 });

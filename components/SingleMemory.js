@@ -103,7 +103,7 @@ const SingleMemory = (props) => {
             _text={styles.buttonText}
             colorScheme="gray"
           >
-            Delete
+            <Ionicons name="pencil" size={15} color="white"/>
           </Button>
         </Center>
       ) : null}

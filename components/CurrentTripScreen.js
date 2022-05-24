@@ -16,7 +16,7 @@ const CurrentTripScreen = () => {
 
   // console.log(` Current Trip Screen:`, userInfo.trip);
   // console.log("TRIPINFO", tripInfo);
-  console.log("USE CURRENT TRIPS", userCurrentTrips);
+  // console.log("USE CURRENT TRIPS", userCurrentTrips);
 
   return (
     <ScrollView style={styles.container}>
