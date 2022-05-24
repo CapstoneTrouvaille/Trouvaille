@@ -27,6 +27,7 @@ import Memories from "./Memories";
 import firebase from "firebase/compat";
 import styles from "../styles/singleTrip";
 import { fetchTripMember } from "./store/trip";
+import { Ionicons } from "@expo/vector-icons";
 
 const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
@@ -175,7 +176,7 @@ const SingleTrip = ({ route }) => {
                 _text={styles.buttonText}
                 colorScheme="gray"
               >
-                Delete Trip
+               <Ionicons name="trash-outline" size={17} color="white"/>
               </Button>
             </Box>
           </Center>

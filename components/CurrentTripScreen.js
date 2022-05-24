@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useId } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Center, Box } from "native-base";
+import { Button, Center, Box ,ScrollView} from "native-base";
 import { fetchUser } from "./store/user";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
@@ -19,7 +19,7 @@ const CurrentTripScreen = () => {
   // console.log("USE CURRENT TRIPS", userCurrentTrips);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Center>
         {tripInfo &&
           tripInfo
@@ -45,7 +45,7 @@ const CurrentTripScreen = () => {
               </Button>
             ))}
       </Center>
-    </View>
+    </ScrollView>
   );
 };
 

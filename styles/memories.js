@@ -7,14 +7,14 @@ export default StyleSheet.create({
   headerBox: {
     display: "flex",
     flexDirection: "row",
-    justifyContent:"space-between",
-    marginVertical:10,
-    alignItems:"baseline"
+    justifyContent: "space-between",
+    marginVertical: 10,
+    alignItems: "baseline",
   },
   header: {
     fontSize: 25,
     fontFamily: "Jaldi_700Bold",
-    paddingTop:"2%"
+    paddingTop: "2%",
   },
 
   button: {
@@ -39,11 +39,11 @@ export default StyleSheet.create({
     shadowRadius: 3,
   },
   deleteButton: {
-    backgroundColor: "#a1a1aa",
+    backgroundColor: "rgb(182, 182, 182)",
     width: "20%",
   },
   voiceButton: {
     marginVertical: "2%",
-    marginHorizontal:"1%"
+    marginHorizontal: "1%",
   },
 });
