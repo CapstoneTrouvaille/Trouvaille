@@ -2,11 +2,9 @@ import {
   arrayUnion,
   arrayRemove,
   doc,
-  getDoc,
   query,
   updateDoc,
   where,
-  onSnapshot,
   collection,
   getDocs,
 } from "firebase/firestore";
@@ -30,11 +28,6 @@ const GET_CURRENT_TRIP_MEMBERS = "GET_CURRENT_TRIP_MEMBERS";
 const GET_DECLINED_TRIP_MEMBERS = "GET_DECLINED_TRIP_MEMBERS";
 
 //ACTION CREATOR
-// export const _getTrips = (trips) => ({
-//   type: GET_TRIPS,
-//   trips,
-// });
-
 export const _addTripRequest = () => ({
   type: ADD_TRIP_REQUEST,
 });

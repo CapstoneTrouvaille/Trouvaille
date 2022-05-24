@@ -1,18 +1,6 @@
 import { async } from "@firebase/util";
-import {
-  arrayUnion,
-  doc,
-  getDoc,
-  query,
-  updateDoc,
-  where,
-  onSnapshot,
-  collection,
-  getDocs,
-  arrayRemove,
-  FieldValue,
-} from "firebase/firestore";
-import { db, auth, firebase } from "../../firebase";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 //ACTION TYPES
 const GET_ITINERARY = "GET_ITINERARY";

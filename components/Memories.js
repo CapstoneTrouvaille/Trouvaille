@@ -1,29 +1,10 @@
-import { StyleSheet, View, Platform, Image } from "react-native";
-import React, { useEffect, useState } from "react";
+import { View } from "react-native";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMemories } from "./store/memories";
-import {
-  ScrollView,
-  Stack,
-  FormControl,
-  Input,
-  Box,
-  Divider,
-  Spacer,
-  Heading,
-  Text,
-  Button,
-  Avatar,
-  FlatList,
-  VStack,
-  HStack,
-  Center,
-} from "native-base";
-
+import { ScrollView, Stack, Box, Text, Button } from "native-base";
 import { useNavigation } from "@react-navigation/core";
-import { db } from "../firebase";
 import SingleMemory from "./SingleMemory";
-
 import styles from "../styles/memories";
 
 const Memories = (props) => {

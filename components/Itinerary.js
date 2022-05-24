@@ -1,26 +1,12 @@
-import { StyleSheet, View } from "react-native";
-import React, { useState, useEffect } from "react";
+import { View } from "react-native";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  Text,
-  Button,
-  ScrollView,
-  Modal,
-  FormControl,
-  Input,
-  Center,
-  Checkbox,
-  Box,
-  Item,
-  Stack,
-} from "native-base";
+import { Text, Button, ScrollView, Modal, Box } from "native-base";
 import SelectModal from "./SelectModal";
-import { addItineraryDay, getItinerary } from "./store/itinerary";
-import { auth, firebase } from "../firebase";
+import { getItinerary } from "./store/itinerary";
 import { getDates } from "./helperFunctions/getDates";
 import ItineraryDay from "./ItineraryDay";
 import ItineraryForm from "./ItineraryForm";
-
 import styles from "../styles/itinerary";
 
 const Itinerary = (props) => {

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import * as ImagePicker from "expo-image-picker";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 export const pickImage = async () => {
   let result = await ImagePicker.launchImageLibraryAsync({

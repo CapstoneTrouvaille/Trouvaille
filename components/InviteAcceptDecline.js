@@ -5,15 +5,7 @@ import { addUserToTrip, declineInviteToTrip } from "./store/trip";
 import { fetchUserPendingTrips } from "./store/trips";
 import { useNavigation } from "@react-navigation/core";
 import styles from "../styles/inviteScreens";
-import {
-  ScrollView,
-  Stack,
-  Center,
-  Button,
-  Heading,
-  Divider,
-  Box,
-} from "native-base";
+import { ScrollView, Stack, Center, Button, Heading, Box } from "native-base";
 
 const InviteAcceptDecline = ({ route }) => {
   const navigation = useNavigation();

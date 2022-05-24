@@ -1,13 +1,9 @@
 import {
   arrayUnion,
   doc,
-  getDoc,
-  query,
   updateDoc,
   where,
-  onSnapshot,
   collection,
-  getDocs,
 } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 import { fetchUserTrips } from "./trips";

@@ -1,11 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useId } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Button, Center, Box, ScrollView } from "native-base";
-import { fetchUser } from "./store/user";
-import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
-import { fetchUserTrips } from "./store/trips";
 import styles from "../styles/currentAndPastTrip";
 
 const CurrentTripScreen = () => {

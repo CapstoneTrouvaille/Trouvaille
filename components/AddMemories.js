@@ -1,5 +1,5 @@
-import { StyleSheet, View, Image } from "react-native";
-import React, { useState, useEffect } from "react";
+import { View, Image } from "react-native";
+import React, { useState } from "react";
 import {
   ScrollView,
   Stack,
@@ -7,18 +7,16 @@ import {
   Input,
   Box,
   Divider,
-  WarningOutlineIcon,
   Heading,
   Text,
   Button,
   Center,
 } from "native-base";
-import { auth } from "../firebase";
+
 import { useDispatch, useSelector } from "react-redux";
-import { addTrip, fetchTrips } from "./store/trip";
-import { setStatusBarBackgroundColor } from "expo-status-bar";
+
 import { useNavigation } from "@react-navigation/core";
-import InviteTripMember from "./InviteTripMember";
+
 import { addMemories } from "./store/memories";
 import DatePicker from "react-native-datepicker";
 //photos
@@ -180,16 +178,6 @@ const AddMemories = (props) => {
           >
             <Ionicons name="play" size={15} color="#999DC3" />
           </Button>
-          {/* <Button
-            style={styles.button}
-            onPress={() => {
-              recordingLine.sound.unloadAsync();
-              recordings.splice(index, 1);
-              setRecordings(recordings);
-            }}
-          >
-            Delete
-          </Button> */}
         </View>
       );
     });

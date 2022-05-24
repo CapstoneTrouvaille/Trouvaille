@@ -2,9 +2,7 @@ import { StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { Center, Text, Button } from "native-base";
 import { Audio } from "expo-av";
-import { auth, firebase, db } from "../firebase";
-import "firebase/firestore";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const Voice = (props) => {

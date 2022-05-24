@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
@@ -48,7 +48,7 @@ const ExploreScreen = () => {
     <>
       <View>
         <Center>
-        <Text style={styles.exploreText}>Explore</Text>
+          <Text style={styles.exploreText}>Explore</Text>
           <FormControl style={styles.formBox}>
             <Input
               value={location}
@@ -74,7 +74,6 @@ const ExploreScreen = () => {
           <Button
             size="sm"
             style={styles.button}
-
             _text={styles.buttonText}
             onPress={() => eatHandleSubmit()}
           >

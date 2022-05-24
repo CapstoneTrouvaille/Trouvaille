@@ -1,13 +1,9 @@
 import {
   arrayUnion,
   doc,
-  getDoc,
-  query,
   updateDoc,
   where,
-  onSnapshot,
   collection,
-  getDocs,
   arrayRemove,
 } from "firebase/firestore";
 import { db, auth } from "../../firebase";
