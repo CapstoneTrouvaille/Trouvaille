@@ -33,6 +33,7 @@ export const fetchUserTrips = () => {
     try {
       const state = getState();
       const tripArr = [];
+      console.log("state.user", state.user);
       const userTripsArr = state.user.trip;
       for (let i = 0; i < userTripsArr.length; i++) {
         const tripId = userTripsArr[i];
