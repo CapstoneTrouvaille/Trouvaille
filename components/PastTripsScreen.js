@@ -33,9 +33,10 @@ const PastTripsScreen = () => {
       <Center>
         {tripInfo &&
           tripInfo
-            .filter(
-              (trip) => Math.floor(Date.now() / 1000) - trip.endDate.seconds > 0
-            )
+            .filter((trip) => {
+              if (trip.endDate)
+                Math.floor(Date.now() / 1000) - trip.endDate.seconds > 0;
+            })
             .map((trip, index) => (
               <Button
                 key={index}
