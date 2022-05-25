@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addUserToTrip, declineInviteToTrip } from "./store/trip";
-import { fetchUserPendingTrips } from "./store/trips";
+import { addUserToTrip, declineInviteToTrip } from "../../store/trip";
+import { fetchUserPendingTrips } from "../../store/trips";
 import { useNavigation } from "@react-navigation/core";
-import styles from "../styles/inviteScreens";
+import styles from "../../../styles/inviteScreens";
 import { ScrollView, Stack, Center, Button, Heading, Box } from "native-base";
 
 const InviteAcceptDecline = ({ route }) => {

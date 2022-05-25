@@ -2,8 +2,8 @@ import { View } from "react-native";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Text, Button, FormControl, Input, Stack } from "native-base";
-import { addItineraryDay } from "./store/itinerary";
-import styles from "../styles/itinerary";
+import { addItineraryDay } from "../../store/itinerary";
+import styles from "../../../styles/itinerary";
 
 const ItineraryForm = (props) => {
   const dispatch = useDispatch();

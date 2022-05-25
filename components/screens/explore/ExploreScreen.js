@@ -10,11 +10,11 @@ import {
   Stack,
   Center,
 } from "native-base";
-import { getPlaces } from "./store/places";
-import { getFood } from "./store/food";
+import { getPlaces } from "../../store/places";
+import { getFood } from "../../store/food";
 import PlacesResults from "./PlacesResults";
 import FoodResults from "./FoodResults";
-import styles from "../styles/explore";
+import styles from "../../../styles/explore";
 
 const ExploreScreen = () => {
   const dispatch = useDispatch();

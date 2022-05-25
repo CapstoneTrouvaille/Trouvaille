@@ -9,16 +9,16 @@ import {
   Button,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import { auth, firebase, db } from "../firebase";
+import { auth, firebase, db } from "../../../firebase";
 import { useNavigation } from "@react-navigation/core";
 import * as Google from "expo-google-app-auth";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "./store/user";
-import styles from "../styles/loginScreen";
+import { fetchUser } from "../../store/user";
+import styles from "../../../styles/loginScreen";
 import { Ionicons } from "@expo/vector-icons";
 
-const image = require("../assets/trouvaillehomeback.png");
-const logo = require("../assets/TrouvailleMain.png");
+const image = require("../../../assets/trouvaillehomeback.png");
+const logo = require("../../../assets/TrouvailleMain.png");
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");

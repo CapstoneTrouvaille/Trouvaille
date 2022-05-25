@@ -1,10 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 //Screens
-import Login from "../LoginScreen";
-import SignUp from "../SignUpScreen";
+import Login from "../screens/login/LoginScreen";
+import SignUp from "../screens/login/SignUpScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,5 +25,3 @@ const SwitchNavigator = () => {
 };
 
 export default SwitchNavigator;
-
-const styles = StyleSheet.create({});

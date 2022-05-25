@@ -1,11 +1,11 @@
 import { View } from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMemories } from "./store/memories";
+import { fetchMemories } from "../../store/memories";
 import { ScrollView, Stack, Box, Text, Button } from "native-base";
 import { useNavigation } from "@react-navigation/core";
 import SingleMemory from "./SingleMemory";
-import styles from "../styles/memories";
+import styles from "../../../styles/memories";
 
 const Memories = (props) => {
   const navigation = useNavigation();

@@ -1,28 +1,29 @@
-import { View } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/core";
 import { useSelector } from "react-redux";
-import { Button, Center } from "native-base";
-import styles from "../styles/currentAndPastTrip";
+import { Button, Center, Box, ScrollView } from "native-base";
+import { useNavigation } from "@react-navigation/core";
+import styles from "../../../styles/currentAndPastTrip";
 
-const PastTripsScreen = () => {
+const CurrentTripScreen = () => {
   const navigation = useNavigation();
   const userInfo = useSelector((state) => state.user);
   const tripInfo = useSelector((state) => state.trips.trips);
   const userCurrentTrips = userInfo.trip;
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Center>
         {tripInfo &&
           tripInfo
             .filter(
-              (trip) => Math.floor(Date.now() / 1000) - trip.endDate.seconds > 0
+              (trip) =>
+                Math.floor(Date.now() / 1000) - trip.endDate.seconds <= 0
             )
             .map((trip, index) => (
               <Button
                 key={index}
                 variant="outline"
+                colorScheme="indigo"
                 style={styles.tripList}
                 _text={styles.tripButton}
                 onPress={() =>
@@ -36,8 +37,8 @@ const PastTripsScreen = () => {
               </Button>
             ))}
       </Center>
-    </View>
+    </ScrollView>
   );
 };
 
-export default PastTripsScreen;
+export default CurrentTripScreen;

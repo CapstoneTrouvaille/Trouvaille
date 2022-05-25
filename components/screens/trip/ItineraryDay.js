@@ -3,7 +3,7 @@ import { Box, Button } from "native-base";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
-import styles from "../styles/itinerary";
+import styles from "../../../styles/itinerary";
 
 const ItineraryDay = (props) => {
   const itinerary = useSelector((state) => state.itinerary);

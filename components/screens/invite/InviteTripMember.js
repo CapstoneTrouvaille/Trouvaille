@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserToInvite } from "./store/user";
-import { fetchTripMembers } from "./store/trip";
+import { fetchUserToInvite } from "../../store/user";
+import { fetchTripMembers } from "../../store/trip";
 import { useNavigation } from "@react-navigation/core";
-import styles from "../styles/inviteScreens";
+import styles from "../../../styles/inviteScreens";
 import {
   View,
   Input,

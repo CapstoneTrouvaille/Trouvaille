@@ -3,11 +3,11 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Text, Button, ScrollView, Box } from "native-base";
 import SelectModal from "./SelectModal";
-import { getItinerary } from "./store/itinerary";
-import { getDates } from "./helperFunctions/getDates";
+import { getItinerary } from "../../store/itinerary";
+import { getDates } from "../../helperFunctions/getDates";
 import ItineraryDay from "./ItineraryDay";
 import ItineraryForm from "./ItineraryForm";
-import styles from "../styles/itinerary";
+import styles from "../../../styles/itinerary";
 
 const Itinerary = (props) => {
   const dispatch = useDispatch();

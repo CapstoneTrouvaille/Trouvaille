@@ -3,22 +3,19 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 import { firebase, auth } from "../../firebase";
 import { useDispatch } from "react-redux";
+import { logoutUser } from "../store";
 
 //screens
-import HomeScreen from "../HomeScreen";
-import AddTrip from "../AddTrip";
-
-import ChatScreen from "../ChatScreen";
-import ExploreScreen from "../ExploreScreen";
-import InviteTripMember from "../InviteTripMember";
-import NewTripInviteMsg from "../NewTripInviteMsg";
-import InviteAcceptDecline from "../InviteAcceptDecline";
-import PlacesResults from "../PlacesResults";
-import SingleTrip from "../SingleTrip";
-import Memories from "../Memories";
-import AddMemories from "../AddMemories";
-import ImageUpload from "../ImageUpload";
-import { logoutUser } from "../store";
+import HomeScreen from "../screens/trip/HomeScreen";
+import AddTrip from "../screens/trip/AddTrip";
+import ChatScreen from "../screens/chat/ChatScreen";
+import ExploreScreen from "../screens/explore/ExploreScreen";
+import InviteTripMember from "../screens/invite/InviteTripMember";
+import NewTripInviteMsg from "../screens/invite/NewTripInviteMsg";
+import InviteAcceptDecline from "../screens/invite/InviteAcceptDecline";
+import SingleTrip from "../screens/trip/SingleTrip";
+import Memories from "../screens/memories/Memories";
+import AddMemories from "../screens/memories/AddMemories";
 
 const Stack = createNativeStackNavigator();
 
@@ -49,7 +46,6 @@ const HomeStackNavigator = () => {
       <Stack.Screen name="Trip" component={SingleTrip} />
       <Stack.Screen name="Memories" component={Memories} />
       <Stack.Screen name="Add Memories" component={AddMemories} />
-      <Stack.Screen name="ImageUpload" component={ImageUpload} />
     </Stack.Navigator>
   );
 };

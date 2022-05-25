@@ -6,7 +6,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { Audio } from "expo-av";
 import * as FileSystem from "expo-file-system";
 import { Ionicons } from "@expo/vector-icons";
-import styles from "../styles/memories";
+import styles from "../../../styles/memories";
 
 const SingleMemory = (props) => {
   const [isClicked, setIsClicked] = useState(false);

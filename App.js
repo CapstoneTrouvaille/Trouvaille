@@ -7,7 +7,7 @@ import { Provider, useSelector } from "react-redux";
 import TabNavigator from "./components/navigation/TabNavigator";
 import InitialNavigator from "./components/navigation/InitialNavigator";
 import { auth } from "./firebase";
-import InviteTripMember from "./components/InviteTripMember";
+import InviteTripMember from "./components/screens/invite/InviteTripMember";
 
 //fonts
 import {
