@@ -1,7 +1,6 @@
-import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import { View, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Text, Box, Button, ScrollView,Center, Divider } from "native-base";
+import { Text, Box, Button, Center, Divider } from "native-base";
 import { inMemoryPersistence } from "firebase/auth";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { Audio } from "expo-av";
@@ -69,7 +68,10 @@ const SingleMemory = (props) => {
       {isClicked ? (
         <Center>
           {url && (
-            <Image source={{ uri: url }} style={{ width: "100%", height: 300 }} />
+            <Image
+              source={{ uri: url }}
+              style={{ width: "100%", height: 300 }}
+            />
           )}
 
           {voice && (
@@ -82,7 +84,7 @@ const SingleMemory = (props) => {
                 _text={styles.buttonText}
                 onPress={playSound}
               >
-                <Ionicons name="play" size={15} color="#999DC3"/>
+                <Ionicons name="play" size={15} color="#999DC3" />
               </Button>
               <Button
                 size="xs"
@@ -91,7 +93,7 @@ const SingleMemory = (props) => {
                 style={styles.voiceButton}
                 _text={styles.buttonText}
               >
-                 <Ionicons name="pause" size={15} color="#999DC3"/>
+                <Ionicons name="pause" size={15} color="#999DC3" />
               </Button>
             </Box>
           )}
@@ -103,7 +105,7 @@ const SingleMemory = (props) => {
             _text={styles.buttonText}
             colorScheme="gray"
           >
-            <Ionicons name="pencil" size={15} color="white"/>
+            <Ionicons name="pencil" size={15} color="white" />
           </Button>
         </Center>
       ) : null}

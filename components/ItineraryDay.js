@@ -1,10 +1,9 @@
-import { StyleSheet,Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { Box, Button } from "native-base";
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
+import React from "react";
+import { useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
-import styles from "../styles/itinerary"
+import styles from "../styles/itinerary";
 
 const ItineraryDay = (props) => {
   const itinerary = useSelector((state) => state.itinerary);
@@ -17,28 +16,27 @@ const ItineraryDay = (props) => {
 
   return (
     <View>
-    <Box style={styles.plansList}>
-      {plansList.map((plan, i) => (
-        <Text key={i}>{plan}</Text>
-      ))}
-      {placesFromExplore.map((value, i) => (
-        <Text key={i}>{value}</Text>
-      ))}
+      <Box style={styles.plansList}>
+        {plansList.map((plan, i) => (
+          <Text key={i}>{plan}</Text>
+        ))}
+        {placesFromExplore.map((value, i) => (
+          <Text key={i}>{value}</Text>
+        ))}
 
-      {placesFromExplore.length >0 || plansList.length > 0 ?
-      <Button
+        {placesFromExplore.length > 0 || plansList.length > 0 ? (
+          <Button
             size="xs"
             style={styles.editButton}
             _text={styles.buttonText}
             colorScheme="gray"
           >
-            <Ionicons name="pencil" size={15} color="white"/>
+            <Ionicons name="pencil" size={15} color="white" />
           </Button>
-          : null }
+        ) : null}
       </Box>
     </View>
   );
 };
 
 export default ItineraryDay;
-

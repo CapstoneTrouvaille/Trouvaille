@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import * as ImagePicker from "expo-image-picker";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 export const pickImage = async () => {
   let result = await ImagePicker.launchImageLibraryAsync({
@@ -15,7 +15,7 @@ export const pickImage = async () => {
     const ref_con = ref(storage, `${imageName}.jpg`); //how image will be addressed inside storage
     //convert images to bytes
     const img = await fetch(result.uri);
-    console.log("IMG", img);
+
     const bytes = await img.blob();
 
     await uploadBytes(ref_con, bytes); //upload image

@@ -13,9 +13,7 @@ import {
   Button,
   VStack,
   Center,
-  Icon,
   Divider,
-  Spacer,
 } from "native-base";
 
 const InviteTripMember = ({ route }) => {

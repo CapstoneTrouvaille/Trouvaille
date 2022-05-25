@@ -6,14 +6,13 @@ import {
   Icon,
   Box,
   Divider,
-  WarningOutlineIcon,
   Heading,
   Text,
   Button,
   Center,
   VStack,
 } from "native-base";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/core";
 import { useDispatch } from "react-redux";
 import { signupUser } from "./store/user";

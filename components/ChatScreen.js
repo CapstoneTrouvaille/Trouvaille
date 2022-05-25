@@ -1,24 +1,19 @@
 import React, { useRef, useState } from "react";
-
-import { db, auth, firestore, firebase } from "../firebase";
-
+import { auth, firestore, firebase } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useSelector } from "react-redux";
-
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import {
   FormControl,
   Input,
   Button,
   Stack,
   ScrollView,
-  Image,
   Avatar,
   Text,
   Box,
 } from "native-base";
-import { SafeAreaView } from "react-native-safe-area-context";
 import user from "./store/user";
 import styles from "../styles/chatScreen";
 

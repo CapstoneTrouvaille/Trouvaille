@@ -1,5 +1,5 @@
-import { StyleSheet, View, Image } from "react-native";
-import React, { useState, useEffect } from "react";
+import { View, Image } from "react-native";
+import React, { useState } from "react";
 import {
   ScrollView,
   Stack,
@@ -7,18 +7,16 @@ import {
   Input,
   Box,
   Divider,
-  WarningOutlineIcon,
   Heading,
   Text,
   Button,
   Center,
 } from "native-base";
-import { auth } from "../firebase";
+
 import { useDispatch, useSelector } from "react-redux";
-import { addTrip, fetchTrips } from "./store/trip";
-import { setStatusBarBackgroundColor } from "expo-status-bar";
+
 import { useNavigation } from "@react-navigation/core";
-import InviteTripMember from "./InviteTripMember";
+
 import { addMemories } from "./store/memories";
 import DatePicker from "react-native-datepicker";
 //photos
@@ -62,7 +60,6 @@ const AddMemories = (props) => {
       quality: 1,
     });
 
-    console.log("Photo", result.uri);
     if (!result.cancelled) {
       setImage(result.uri);
     }
@@ -74,9 +71,8 @@ const AddMemories = (props) => {
       const ref_con = ref(storage, path); //how image will be addressed inside storage
       //convert images to bytes
       const photo = await fetch(result.uri);
-      console.log("Photo", result.uri);
+
       const bytes = await photo.blob();
-      console.log("BYTES", bytes);
 
       await uploadBytes(ref_con, bytes); //upload image
     }
@@ -139,8 +135,6 @@ const AddMemories = (props) => {
       file: recording.getURI(),
     });
     audioUpload();
-    // console.log("updatedRecordings", updatedRecordings);
-    setRecordings(updatedRecordings);
   }
 
   const audioUpload = async () => {
@@ -148,12 +142,12 @@ const AddMemories = (props) => {
     const storage = getStorage(); //the storage itself
     if (recording) {
       const voiceName = uuidv4();
-      console.log("recording", recording);
+
       const path = `audio/${tripId}/${voiceName}`;
       const ref_con = ref(storage, path);
       setVoiceInfo(path);
       const voiceFile = await fetch(recording._uri);
-      console.log("Voice", voiceFile);
+
       const bytes = await voiceFile.blob();
 
       await uploadBytes(ref_con, bytes);
@@ -184,16 +178,6 @@ const AddMemories = (props) => {
           >
             <Ionicons name="play" size={15} color="#999DC3" />
           </Button>
-          {/* <Button
-            style={styles.button}
-            onPress={() => {
-              recordingLine.sound.unloadAsync();
-              recordings.splice(index, 1);
-              setRecordings(recordings);
-            }}
-          >
-            Delete
-          </Button> */}
         </View>
       );
     });
@@ -208,8 +192,6 @@ const AddMemories = (props) => {
       photo: imageInfo || null,
       voice: voiceInfo || null,
     };
-    console.log(`post memories! clicked:`, newJournalEntry);
-    console.log(`post memories! clicked: tripId passed in `, tripId);
 
     dispatch(addMemories(newJournalEntry, tripId));
     setJournalName("");
@@ -226,16 +208,13 @@ const AddMemories = (props) => {
         alignSelf="center"
         px="4"
         safeArea
-
         w={{
           base: "100%",
           md: "25%",
         }}
       >
         <Box alignItems="center">
-          <Text style = {styles.heading}>
-            Post Your Memories
-          </Text>
+          <Text style={styles.heading}>Post Your Memories</Text>
           <Text style={styles.subtitle}>
             Add special, funny, memorable moments from your trip!
           </Text>

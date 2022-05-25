@@ -1,17 +1,5 @@
-import {
-  arrayUnion,
-  doc,
-  getDoc,
-  query,
-  updateDoc,
-  where,
-  onSnapshot,
-  collection,
-  getDocs,
-} from "firebase/firestore";
-import { db, auth } from "../../firebase";
-import { useNavigation } from "@react-navigation/core";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 //ACTION TYPES
 const GET_MEMORIES = "GET_MEMORIES";
@@ -33,11 +21,10 @@ export const _addMemories = (newMemories) => ({
 export const fetchMemories = (tripId) => {
   return async (dispatch) => {
     try {
-      console.log("TRIPID", tripId)
-      const docRef = doc(db, "trips", tripId)
-      const tripInfo = await getDoc(docRef)
-      const tripMemories = tripInfo.data().tripMemories
-      dispatch(_getMemories(tripMemories))
+      const docRef = doc(db, "trips", tripId);
+      const tripInfo = await getDoc(docRef);
+      const tripMemories = tripInfo.data().tripMemories;
+      dispatch(_getMemories(tripMemories));
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +34,6 @@ export const fetchMemories = (tripId) => {
 export const addMemories = (newMemories, tripId) => {
   return async (dispatch) => {
     try {
-      console.log(tripId)
       const docRef = doc(db, "trips", tripId);
       await updateDoc(docRef, {
         tripMemories: arrayUnion(newMemories),

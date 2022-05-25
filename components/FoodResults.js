@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
 import {
@@ -73,7 +73,7 @@ const FoodResults = () => {
               <Heading size="md" ml="-1">
                 {food.name}
               </Heading>
-              <Heart name={food.name}/>
+              <Heart name={food.name} />
             </Stack>
             <Text fontWeight="400">
               <Ionicons name="star" size={17} color="orange" />
@@ -117,5 +117,3 @@ const FoodResults = () => {
 };
 
 export default FoodResults;
-
-const styles = StyleSheet.create({});

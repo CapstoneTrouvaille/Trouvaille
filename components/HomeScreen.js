@@ -1,17 +1,9 @@
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  StatusBar,
-  TouchableOpacity,
-  Animated,
-  Pressable,
-} from "react-native"; //rnfes
+import { View, Dimensions, StatusBar, Animated, Pressable } from "react-native"; //rnfes
 import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser, fetchUserToInvite } from "./store/user";
+import { fetchUser } from "./store/user";
 import {
   Stack,
   Box,
@@ -23,10 +15,8 @@ import {
   useColorModeValue,
   Center,
 } from "native-base";
-
 import { signOut } from "firebase/auth";
 import { logoutUser } from "./store";
-
 import { TabView, SceneMap } from "react-native-tab-view";
 import CurrentTripScreen from "./CurrentTripScreen";
 import PastTripsScreen from "./PastTripsScreen";
@@ -34,6 +24,7 @@ import NewTripInviteMsg from "./NewTripInviteMsg";
 import { getSavedItems } from "./store/saved";
 import { fetchUserTrips } from "./store/trips";
 import styles from "../styles/homeScreen";
+
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -62,7 +53,7 @@ const HomeScreen = () => {
 
   const handleSignOut = () => {
     dispatch(logoutUser());
-    // console.log("userinfo should be empty", userInfo);
+
     signOut(auth)
       //*** OMIT BC TAB NAV */
       .then(() => {
@@ -104,7 +95,6 @@ const HomeScreen = () => {
   ]);
 
   const renderTabBar = (props) => {
-    // console.log(`Line 97 Home screen: `, props.navigationState.routes);
     const inputRange = props.navigationState.routes.map((x, i) => i);
     return (
       <Box flexDirection="row">
@@ -127,7 +117,6 @@ const HomeScreen = () => {
             <Box key={i} borderColor={borderColor} style={styles.tabBar}>
               <Pressable
                 onPress={() => {
-                  //console.log(i);
                   setIndex(i);
                 }}
               >
@@ -157,8 +146,7 @@ const HomeScreen = () => {
             source={{
               uri: userInfo.photoURL,
             }}
-          >
-          </Avatar>
+          ></Avatar>
           <Text style={styles.header} size="xl">
             {userInfo.name}'s Trip Dashboard
           </Text>

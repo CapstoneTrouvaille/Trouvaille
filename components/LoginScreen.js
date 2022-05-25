@@ -1,6 +1,5 @@
 import {
   KeyboardAvoidingView,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -15,7 +14,6 @@ import { useNavigation } from "@react-navigation/core";
 import * as Google from "expo-google-app-auth";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "./store/user";
-// import Googleicon from "react-native-google-button/src";
 import styles from "../styles/loginScreen";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -52,7 +50,6 @@ const LoginScreen = () => {
       .signInWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        // console.log(`Logged in with: `, user);
       })
       .catch((error) => alert(error.message));
   };

@@ -1,11 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useId } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Button, Center, Box, ScrollView } from "native-base";
-import { fetchUser } from "./store/user";
-import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
-import { fetchUserTrips } from "./store/trips";
 import styles from "../styles/currentAndPastTrip";
 
 const CurrentTripScreen = () => {
@@ -13,10 +9,6 @@ const CurrentTripScreen = () => {
   const userInfo = useSelector((state) => state.user);
   const tripInfo = useSelector((state) => state.trips.trips);
   const userCurrentTrips = userInfo.trip;
-
-  // console.log(` Current Trip Screen:`, userInfo.trip);
-  // console.log("TRIPINFO", tripInfo);
-  // console.log("USE CURRENT TRIPS", userCurrentTrips);
 
   return (
     <ScrollView style={styles.container}>

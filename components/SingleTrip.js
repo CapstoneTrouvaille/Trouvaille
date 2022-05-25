@@ -1,21 +1,11 @@
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  StatusBar,
-  TouchableOpacity,
-  Animated,
-  Pressable,
-} from "react-native";
+import { Dimensions, StatusBar, Animated, Pressable } from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import trip, { fetchSingleTrip } from "./store/trip";
+import trip from "./store/trip";
 import { useNavigation } from "@react-navigation/core";
 import {
-  ScrollView,
   Stack,
   Box,
-  Heading,
   Text,
   Button,
   Center,
@@ -88,8 +78,6 @@ const SingleTrip = ({ route }) => {
     },
   ]);
 
-  //console.log("DDDAAATTEEEEEEEEEE", tripInfo.startDate);
-
   const renderTabBar = (props) => {
     const inputRange = props.navigationState.routes.map((x, i) => i);
     return (
@@ -113,7 +101,6 @@ const SingleTrip = ({ route }) => {
             <Box key={i} style={styles.tabBar} borderColor={borderColor}>
               <Pressable
                 onPress={() => {
-                  //console.log(i);
                   setIndex(i);
                 }}
               >
@@ -142,15 +129,6 @@ const SingleTrip = ({ route }) => {
               <Text style={styles.tripInfo}>Location: {tripInfo.location}</Text>
               <Text style={styles.tripInfo}>
                 {newStartDate} - {newEndDate}
-                {/* {JSON.stringify(tripInfo.startDate.toDate()).replace(
-                  /['"]+/g,
-                  ""
-                )}{" "}
-                -{" "}
-                {JSON.stringify(tripInfo.endDate.toDate()).replace(
-                  /['"]+/g,
-                  ""
-                )} */}
               </Text>
               <Text style={styles.tripInfo}>
                 Travelers: {tripMembers && tripMembers.toString()}
@@ -176,7 +154,7 @@ const SingleTrip = ({ route }) => {
                 _text={styles.buttonText}
                 colorScheme="gray"
               >
-               <Ionicons name="trash-outline" size={17} color="white"/>
+                <Ionicons name="trash-outline" size={17} color="white" />
               </Button>
             </Box>
           </Center>

@@ -1,27 +1,13 @@
-import { StyleSheet, View } from "react-native";
-import React, { useState, useEffect } from "react";
+import { View } from "react-native";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  Text,
-  Button,
-  ScrollView,
-  Modal,
-  FormControl,
-  Input,
-  Center,
-  Checkbox,
-  Box,
-  Item,
-  Stack,
-} from "native-base";
+import { Text, Button, ScrollView, Modal, Box } from "native-base";
 import SelectModal from "./SelectModal";
-import { addItineraryDay, getItinerary } from "./store/itinerary";
-import { auth, firebase } from "../firebase";
+import { getItinerary } from "./store/itinerary";
 import { getDates } from "./helperFunctions/getDates";
 import ItineraryDay from "./ItineraryDay";
 import ItineraryForm from "./ItineraryForm";
-
-import styles from "../styles/itinerary"
+import styles from "../styles/itinerary";
 
 const Itinerary = (props) => {
   const dispatch = useDispatch();
@@ -37,9 +23,9 @@ const Itinerary = (props) => {
   const populateDays = [];
 
   for (let i = 0; i < itinerary.length; i++) {
-    const dayString =  Object.keys(itinerary[i]).filter(
+    const dayString = Object.keys(itinerary[i]).filter(
       (key) => key !== "placesFromExplore"
-    )[0]
+    )[0];
     populateDays.push(
       <View key={i}>
         <Text style={styles.day} fontSize="lg">
@@ -49,7 +35,7 @@ const Itinerary = (props) => {
           <SelectModal index={i} tripId={tripId} />
           <ItineraryForm key={i} tripId={tripId} day={dayString} />
         </Box>
-        <ItineraryDay index={i} tripId={tripId} />
+        <ItineraryDay index={i} tripId={tripId} day={dayString} />
       </View>
     );
   }
@@ -86,4 +72,3 @@ const Itinerary = (props) => {
 };
 
 export default Itinerary;
-

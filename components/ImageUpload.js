@@ -1,19 +1,7 @@
-import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageSourcePropType,
-  TouchableHighlight,
-  Platform,
-  Button,
-  Image,
-} from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, View, Platform, Button, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { pickImage } from "./helperFunctions/upload";
-//NEED FIREBASE AUTH STILL??****
-import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const ImageUpload = () => {
   useEffect(() => {
@@ -37,9 +25,6 @@ const ImageUpload = () => {
         justifyContent: "center",
       }}
     >
-      {/* <TouchableHighlight onPress={pickImage}>
-        <Text>Select Image</Text>
-      </TouchableHighlight> */}
       <View styles={styles.button}>
         <Button title="Pick Image" onPress={pickImage} />
       </View>

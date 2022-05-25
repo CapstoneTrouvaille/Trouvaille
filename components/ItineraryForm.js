@@ -1,19 +1,7 @@
-import { StyleSheet, View } from "react-native";
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  Text,
-  Button,
-  ScrollView,
-  Modal,
-  FormControl,
-  Input,
-  Center,
-  Checkbox,
-  Box,
-  Item,
-  Stack,
-} from "native-base";
+import { View } from "react-native";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Text, Button, FormControl, Input, Stack } from "native-base";
 import { addItineraryDay } from "./store/itinerary";
 
 import styles from "../styles/itinerary";
@@ -33,10 +21,10 @@ const ItineraryForm = (props) => {
   };
   return (
     <View width="80%">
-      <Stack style={styles.formContainer} flexDirection="row" >
+      <Stack style={styles.formContainer} flexDirection="row">
         <FormControl>
           <Input
-          style={styles.form}
+            style={styles.form}
             width="90%"
             value={plans}
             size="sm"

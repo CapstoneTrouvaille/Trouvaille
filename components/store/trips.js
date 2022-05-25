@@ -1,15 +1,4 @@
-import {
-  arrayUnion,
-  doc,
-  getDoc,
-  query,
-  updateDoc,
-  where,
-  onSnapshot,
-  collection,
-  getDocs,
-  arrayRemove,
-} from "firebase/firestore";
+import { doc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 
 //ACTION TYPES
@@ -33,7 +22,7 @@ export const fetchUserTrips = () => {
     try {
       const state = getState();
       const tripArr = [];
-      console.log("state.user", state.user);
+
       const userTripsArr = state.user.trip;
       for (let i = 0; i < userTripsArr.length; i++) {
         const tripId = userTripsArr[i];
@@ -60,7 +49,7 @@ export const fetchUserPendingTrips = (userPendingTripsArr) => {
         const doc = await answer.get();
 
         const data = doc.data();
-        console.log(`Data from fethUserPending thunk:`, data);
+
         pendingTripArr.push(data.tripName);
       }
 
@@ -73,7 +62,6 @@ export const fetchUserPendingTrips = (userPendingTripsArr) => {
 
 //REDUCER
 export default function trips(state = { trips: [], pendingTrips: [] }, action) {
-  // console.log("redux", action);
   switch (action.type) {
     case GET_TRIPS:
       return { ...state, trips: action.trips };

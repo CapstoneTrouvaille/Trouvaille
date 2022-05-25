@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Text } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
 import {
@@ -107,5 +107,3 @@ const PlacesResults = () => {
 };
 
 export default PlacesResults;
-
-const styles = StyleSheet.create({});

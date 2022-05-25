@@ -2,11 +2,9 @@ import {
   arrayUnion,
   arrayRemove,
   doc,
-  getDoc,
   query,
   updateDoc,
   where,
-  onSnapshot,
   collection,
   getDocs,
 } from "firebase/firestore";
@@ -30,11 +28,6 @@ const GET_CURRENT_TRIP_MEMBERS = "GET_CURRENT_TRIP_MEMBERS";
 const GET_DECLINED_TRIP_MEMBERS = "GET_DECLINED_TRIP_MEMBERS";
 
 //ACTION CREATOR
-// export const _getTrips = (trips) => ({
-//   type: GET_TRIPS,
-//   trips,
-// });
-
 export const _addTripRequest = () => ({
   type: ADD_TRIP_REQUEST,
 });
@@ -171,7 +164,6 @@ export const addUserToTrip = (tripId, userUID) => {
       });
 
       dispatch(_addUserToTripSuccess());
-      console.log("Successfully added user to trip!");
     } catch (error) {
       dispatch(_addUserToTripFail(error));
       console.error("Error adding user to trip: ", error);
@@ -200,7 +192,6 @@ export const declineInviteToTrip = (tripId, userUID) => {
         declinedTrips: arrayUnion(tripId),
       });
       dispatch(_declineTripSuccess());
-      console.log("User declined invitation to trip!");
     } catch (error) {
       dispatch(_declineTripFail(error));
       console.error("Error adding user to trip: ", error);
@@ -218,10 +209,10 @@ export const fetchTripMember = (tripMemberArr) => {
         const userRec = await allUserRef.where("UID", "==", UID).get();
         const data = userRec.docs[0].data();
         const memberName = data.name;
-        // console.log("name of the member", memberName);
+
         member.push(memberName);
       }
-      // console.log("for loop try with trips", tripArr);
+
       dispatch(getTripMember(member));
     } catch (error) {
       console.log(error);
@@ -230,7 +221,6 @@ export const fetchTripMember = (tripMemberArr) => {
 };
 
 export const fetchTripMembers = (current, pending, declined) => {
-  console.log(`This is from FETCHTRIPMEMBERS:`);
   return async (dispatch) => {
     try {
       const currentUsernames = [];

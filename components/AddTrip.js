@@ -1,5 +1,5 @@
-import { StyleSheet, View, Text as ReactNativeText } from "react-native";
-import React, { useState, useEffect } from "react";
+import { View, Text as ReactNativeText } from "react-native";
+import React, { useState } from "react";
 import {
   ScrollView,
   Stack,
@@ -13,12 +13,8 @@ import {
 } from "native-base";
 import { auth, firebase } from "../firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { addTrip, fetchTrips } from "./store/trip";
-import { setStatusBarBackgroundColor } from "expo-status-bar";
+import { addTrip } from "./store/trip";
 import { useNavigation } from "@react-navigation/core";
-import InviteTripMember from "./InviteTripMember";
-import InviteAcceptDecline from "./InviteAcceptDecline";
-import NewTripInviteMsg from "./NewTripInviteMsg";
 import DatePicker from "react-native-datepicker";
 import { getDates } from "./helperFunctions/getDates";
 //native base doesn't have a date picker so you have to use the react native one
@@ -81,20 +77,17 @@ const AddTrip = () => {
       Itinerary: itineraryDays,
     };
     if (tripName != "" && location != "" && startDate != "" && endDate != "") {
-      console.log(`Get Planning! clicked:`, newTripInfo);
       dispatch(addTrip(newTripInfo));
       setTripName("");
       setLocation("");
       setStartDate("");
       setEndDate("");
-      // navigation.navigate("InviteTripMember", { tripId });
+
       navigation.navigate("Home");
     } else {
       alert("Please fill out ALL the fields to proceed!");
     }
   };
-
-  console.log(Date.now());
 
   return (
     <ScrollView w="100%">

@@ -1,15 +1,7 @@
-import { StyleSheet, View } from "react-native";
-import React, { useState, useEffect } from "react";
+import { View } from "react-native";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  Button,
-  Modal,
-  FormControl,
-  Input,
-  Center,
-  Checkbox,
-  Text,
-} from "native-base";
+import { Button, Modal, Center, Checkbox, Text } from "native-base";
 import { addFromExplore } from "./store/itinerary";
 
 import styles from "../styles/itinerary";
@@ -30,7 +22,7 @@ const SelectModal = (props) => {
   };
 
   return (
-    <View >
+    <View>
       <Center>
         <Button
           size="sm"
@@ -73,10 +65,9 @@ const SelectModal = (props) => {
                   Cancel
                 </Button>
                 <Button
-                style={styles.saveButton}
-                _text={styles.buttonText}
+                  style={styles.saveButton}
+                  _text={styles.buttonText}
                   onPress={() => {
-                    console.log("button pressed");
                     handleSubmit();
                     setShowModal(false);
                   }}
@@ -88,12 +79,6 @@ const SelectModal = (props) => {
           </Modal.Content>
         </Modal>
       </Center>
-      {/* {plansList.map((plan, i)=> (
-        <Text key={i}>{plan}</Text>
-      ))}
-       {placesFromExplore.map((value, i) => (
-        <Text key={i}>{value}</Text>
-      ))} */}
     </View>
   );
 };

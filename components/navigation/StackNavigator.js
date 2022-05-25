@@ -1,6 +1,5 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Button } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { firebase, auth } from "../../firebase";
 import { useDispatch } from "react-redux";
