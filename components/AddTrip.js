@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/core";
 import DatePicker from "react-native-datepicker";
 import { getDates } from "./helperFunctions/getDates";
 import styles from "../styles/addTrip";
+import { getNewDate } from "./helperFunctions/dates";
 
 const AddTrip = () => {
   const dispatch = useDispatch();
@@ -28,20 +29,8 @@ const AddTrip = () => {
   const [endDate, setEndDate] = useState("");
 
   const handleSubmit = () => {
-    const newStartDate = firebase.firestore.Timestamp.fromDate(
-      new Date(
-        `${startDate.slice(6)}/${startDate.slice(0, 2)}/${startDate.slice(
-          3,
-          5
-        )}`
-      )
-    );
-
-    const newEndDate = firebase.firestore.Timestamp.fromDate(
-      new Date(
-        `${endDate.slice(6)}/${endDate.slice(0, 2)}/${endDate.slice(3, 5)}`
-      )
-    );
+    const newStartDate = getNewDate(startDate);
+    const newEndDate = getNewDate(endDate);
 
     const itineraryDays = getDates(new Date(startDate), new Date(endDate)).map(
       (date) => {
@@ -76,7 +65,6 @@ const AddTrip = () => {
       setLocation("");
       setStartDate("");
       setEndDate("");
-
       navigation.navigate("Home");
     } else {
       alert("Please fill out ALL the fields to proceed!");

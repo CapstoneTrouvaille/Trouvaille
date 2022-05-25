@@ -18,6 +18,7 @@ import firebase from "firebase/compat";
 import styles from "../styles/singleTrip";
 import { fetchTripMember } from "./store/trip";
 import { Ionicons } from "@expo/vector-icons";
+import { convertFiretimeToString } from "./helperFunctions/dates";
 
 const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
@@ -33,16 +34,10 @@ const SingleTrip = ({ route }) => {
   const tripMembers = useSelector((state) => state.trip.tripMembers);
 
   const startDate = tripInfo.startDate || "";
-  const fireBaseTime = new Date(
-    startDate.seconds * 1000 + startDate.nanoseconds / 1000000
-  );
-  const newStartDate = fireBaseTime.toDateString();
+  const newStartDate = convertFiretimeToString(startDate);
 
   const endDate = tripInfo.endDate || "";
-  const eFireBaseTime = new Date(
-    endDate.seconds * 1000 + endDate.nanoseconds / 1000000
-  );
-  const newEndDate = eFireBaseTime.toDateString();
+  const newEndDate = convertFiretimeToString(endDate);
 
   const FirstRoute = () => (
     <Center>
