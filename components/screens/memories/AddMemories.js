@@ -14,10 +14,9 @@ import {
 } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
-import { addMemories } from "./store/memories";
-import DatePicker from "react-native-datepicker";
+import { addMemories } from "../../store/memories";
 import { Ionicons } from "@expo/vector-icons";
-import styles from "../styles/addMemories";
+import styles from "../../../styles/addMemories";
 //photos
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
@@ -237,7 +236,6 @@ const AddMemories = (props) => {
               },
               dateText: {
                 fontSize: 17,
-
                 fontFamily: "Jaldi_400Regular",
               },
             }}

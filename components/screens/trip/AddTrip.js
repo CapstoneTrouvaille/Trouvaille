@@ -11,14 +11,14 @@ import {
   Text,
   Button,
 } from "native-base";
-import { auth, firebase } from "../firebase";
+import { auth, firebase } from "../../../firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { addTrip } from "./store/trip";
+import { addTrip } from "../../store/trip";
 import { useNavigation } from "@react-navigation/core";
 import DatePicker from "react-native-datepicker";
-import { getDates } from "./helperFunctions/getDates";
-import styles from "../styles/addTrip";
-import { getNewDate } from "./helperFunctions/dates";
+import { getDates } from "../../helperFunctions/getDates";
+import styles from "../../../styles/addTrip";
+import { getNewDate } from "../../helperFunctions/dates";
 
 const AddTrip = () => {
   const dispatch = useDispatch();

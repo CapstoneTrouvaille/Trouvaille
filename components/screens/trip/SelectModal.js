@@ -2,8 +2,8 @@ import { View } from "react-native";
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Modal, Center, Checkbox, Text } from "native-base";
-import { addFromExplore } from "./store/itinerary";
-import styles from "../styles/itinerary";
+import { addFromExplore } from "../../store/itinerary";
+import styles from "../../../styles/itinerary";
 
 const SelectModal = (props) => {
   const dispatch = useDispatch();

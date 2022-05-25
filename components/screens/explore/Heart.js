@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { saveItem } from "./store/saved";
+import { saveItem } from "../../store/saved";
 
 const Heart = (props) => {
   const dispatch = useDispatch();

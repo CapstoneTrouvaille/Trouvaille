@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { auth, firestore, firebase } from "../firebase";
+import { auth, firestore, firebase } from "../../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useSelector } from "react-redux";
@@ -14,7 +14,7 @@ import {
   Text,
   Box,
 } from "native-base";
-import styles from "../styles/chatScreen";
+import styles from "../../../styles/chatScreen";
 
 function ChatScreen() {
   return <ChatRoom />;

@@ -1,7 +1,7 @@
 import { Dimensions, StatusBar, Animated, Pressable } from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import trip from "./store/trip";
+import trip from "../../store/trip";
 import { useNavigation } from "@react-navigation/core";
 import {
   Stack,
@@ -13,12 +13,12 @@ import {
 } from "native-base";
 import { TabView, SceneMap } from "react-native-tab-view";
 import Itinerary from "./Itinerary";
-import Memories from "./Memories";
+import Memories from "../memories/Memories";
 import firebase from "firebase/compat";
-import styles from "../styles/singleTrip";
-import { fetchTripMember } from "./store/trip";
+import styles from "../../../styles/singleTrip";
+import { fetchTripMember } from "../../store/trip";
 import { Ionicons } from "@expo/vector-icons";
-import { convertFiretimeToString } from "./helperFunctions/dates";
+import { convertFiretimeToString } from "../../helperFunctions/dates";
 
 const SingleTrip = ({ route }) => {
   const navigation = useNavigation();

@@ -15,11 +15,11 @@ import {
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/core";
 import { useDispatch } from "react-redux";
-import { signupUser } from "./store/user";
+import { signupUser } from "../../store/user";
 import { MaterialIcons } from "@expo/vector-icons";
-import styles from "../styles/signup";
+import styles from "../../../styles/signup";
 
-const image = require("../assets/trouvaillehomeback.png");
+const image = require("../../../assets/trouvaillehomeback.png");
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState("");
