@@ -28,7 +28,6 @@ import styles from "../styles/homeScreen";
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
   const userInfo = useSelector((state) => state.user);
   const tripsInfo = useSelector((state) => state.trips.trips);
   const userCurrentTrips = userInfo.trip;
@@ -53,9 +52,7 @@ const HomeScreen = () => {
 
   const handleSignOut = () => {
     dispatch(logoutUser());
-
     signOut(auth)
-      //*** OMIT BC TAB NAV */
       .then(() => {
         console.log("user signed out");
       })

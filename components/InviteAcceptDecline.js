@@ -10,7 +10,6 @@ import { ScrollView, Stack, Center, Button, Heading, Box } from "native-base";
 const InviteAcceptDecline = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
   const userInfo = useSelector((state) => state.user);
   const tripState = useSelector((state) => state.trip);
   const pendingTripNames = useSelector((state) => state.trips.pendingTrips);
