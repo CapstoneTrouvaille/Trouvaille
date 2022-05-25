@@ -13,10 +13,7 @@ const SingleMemory = (props) => {
   const memory = props.memory || "";
   const [url, setUrl] = useState();
   const [voice, setVoice] = useState();
-  const [playing, setPlaying] = useState();
 
-  useEffect(() => {});
-  //PHOTO
   useEffect(() => {
     const func = async () => {
       const storage = getStorage();
@@ -27,7 +24,6 @@ const SingleMemory = (props) => {
     };
     func();
   }, []);
-  //VOICE
 
   useEffect(() => {
     const func = async () => {

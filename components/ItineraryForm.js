@@ -3,12 +3,10 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Text, Button, FormControl, Input, Stack } from "native-base";
 import { addItineraryDay } from "./store/itinerary";
-
 import styles from "../styles/itinerary";
 
 const ItineraryForm = (props) => {
   const dispatch = useDispatch();
-
   const [plans, setPlans] = useState("");
 
   const addDays = () => {
@@ -19,6 +17,7 @@ const ItineraryForm = (props) => {
       alert("Please write something to submit!");
     }
   };
+
   return (
     <View width="80%">
       <Stack style={styles.formContainer} flexDirection="row">

@@ -17,23 +17,17 @@ import { addTrip } from "./store/trip";
 import { useNavigation } from "@react-navigation/core";
 import DatePicker from "react-native-datepicker";
 import { getDates } from "./helperFunctions/getDates";
-//native base doesn't have a date picker so you have to use the react native one
 import styles from "../styles/addTrip";
 
 const AddTrip = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
   const [tripName, setTripName] = useState("");
   const [location, setLocation] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const trip = useSelector((state) => state.trip);
-  const tripId = trip.id;
-
   const handleSubmit = () => {
-    //need to change date to yyyy-mm-dd format to put into date function
     const newStartDate = firebase.firestore.Timestamp.fromDate(
       new Date(
         `${startDate.slice(6)}/${startDate.slice(0, 2)}/${startDate.slice(

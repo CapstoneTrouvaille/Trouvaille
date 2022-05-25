@@ -23,7 +23,6 @@ const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = route.params.tripId;
-  const tripsInfo = useSelector((state) => state.trips);
   const tripInfo = route.params.trip;
   const travelers = tripInfo.users || [];
 
@@ -33,7 +32,6 @@ const SingleTrip = ({ route }) => {
 
   const tripMembers = useSelector((state) => state.trip.tripMembers);
 
-  //may need to delete?
   const startDate = tripInfo.startDate || "";
   const fireBaseTime = new Date(
     startDate.seconds * 1000 + startDate.nanoseconds / 1000000

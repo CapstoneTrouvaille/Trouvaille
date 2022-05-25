@@ -29,11 +29,6 @@ const LoginScreen = () => {
   const userInfo = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  //listens to firebase to see if the user is logged in, then do something if the user is logged in
-  //this runs when the component mounts, pass in empty array so this only runs onece
-  //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
-
-  //***OMIT BC TAB NAV */
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -42,7 +37,6 @@ const LoginScreen = () => {
       }
     });
     return unsubscribe;
-    //when you leave the screen it unsubscribes from this listener, doesnt keep pinging it when it shouldn't
   }, []);
 
   const handleLogin = () => {
@@ -78,7 +72,6 @@ const LoginScreen = () => {
           googleUser.idToken,
           googleUser.accessToken
         );
-        //sign in with credential from the Google user.
         auth
           .signInAndRetrieveDataWithCredential(credential)
           .then(async () => {
@@ -91,7 +84,6 @@ const LoginScreen = () => {
             const userInformation = user.docs[0];
             if (userInformation !== undefined) {
               dispatch(fetchUser(auth.currentUser.uid));
-              console.log("user exists in firestore");
             } else {
               db.collection("user").add({
                 name: currentUser.displayName,
@@ -101,7 +93,6 @@ const LoginScreen = () => {
                 photo: currentUser.photoURL,
               });
               dispatch(fetchUser(auth.currentUser.uid));
-              console.log("new google user added to firestore");
             }
           })
           .catch((error) => {
@@ -124,8 +115,6 @@ const LoginScreen = () => {
       });
       if (result.type === "success") {
         onSignIn(result);
-      } else {
-        console.log("Permission denied");
       }
     } catch (error) {
       console.log(error);

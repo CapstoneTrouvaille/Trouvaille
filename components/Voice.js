@@ -4,15 +4,12 @@ import { Center, Text, Button } from "native-base";
 import { Audio } from "expo-av";
 import { useSelector } from "react-redux";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
+import styles from "../styles/voice";
 
 const Voice = (props) => {
-  // Voice Memo
   const [recording, setRecording] = useState();
   const [recordings, setRecordings] = useState([]);
   const [message, setMessage] = useState("");
-
-  const tripInfo = useSelector((state) => state.trip);
-
   const tripId = props.tripId;
 
   async function startRecording() {
@@ -54,16 +51,13 @@ const Voice = (props) => {
 
   const audioUpload = async () => {
     const recNum = recordings.length;
-    const storage = getStorage(); //the storage itself
+    const storage = getStorage();
     if (recording) {
       const path = `audio/${tripId}/${recNum + 1}.mp3`;
-      const ref_con = ref(storage, path); //how image will be addressed inside storage
-      //convert images to bytes
+      const ref_con = ref(storage, path);
       const voiceFile = await fetch(recording.file);
-
       const bytes = await voiceFile.blob();
-
-      await uploadBytes(ref_con, bytes); //upload image
+      await uploadBytes(ref_con, bytes);
     }
   };
 
@@ -115,18 +109,3 @@ const Voice = (props) => {
 };
 
 export default Voice;
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  fill: {
-    flex: 1,
-    margin: 16,
-  },
-  button: {
-    margin: 16,
-  },
-});

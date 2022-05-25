@@ -262,11 +262,10 @@ export const fetchTripMembers = (current, pending, declined) => {
 //REDUCER
 export default function trip(state = {}, action) {
   switch (action.type) {
-    // case GET_TRIPS:
-    //   return { ...state, trips: action.trips };
     case ADD_TRIP_REQUEST:
       return { ...state, loadingAdd: true };
     case ADD_TRIP_SUCCESS:
+      console.log(state);
       return { ...state, loadingAdd: false, successAdd: true };
     case ADD_TRIP_FAIL:
       return { ...state, loadingAdd: false, errorAdd: action.errorAdd };

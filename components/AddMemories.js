@@ -12,29 +12,24 @@ import {
   Button,
   Center,
 } from "native-base";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import { useNavigation } from "@react-navigation/core";
-
 import { addMemories } from "./store/memories";
 import DatePicker from "react-native-datepicker";
+import { Ionicons } from "@expo/vector-icons";
+import styles from "../styles/addMemories";
 //photos
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 //audio
-import { Audio, RecordingOptions } from "expo-av";
-import { RECORDING_OPTION_IOS_OUTPUT_FORMAT_LINEARPCM } from "expo-av/build/Audio";
-import { Ionicons } from "@expo/vector-icons";
-import styles from "../styles/addMemories";
+import { Audio } from "expo-av";
 
 const AddMemories = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const tripId = props.route.params.tripId;
-
   const [journalName, setJournalName] = useState("");
   const [location, setLocation] = useState("");
   const [journalDate, setJournalDate] = useState("");
@@ -43,16 +38,14 @@ const AddMemories = (props) => {
   //photo
   const [image, setImage] = useState(null);
   const [imageInfo, setimageInfo] = useState(null);
+
   //voice
   const [recording, setRecording] = useState();
   const [recordings, setRecordings] = useState([]);
   const [message, setMessage] = useState("");
   const [voiceInfo, setVoiceInfo] = useState(null);
 
-  const journalEntry = useSelector((state) => state.journalEntry);
-
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -68,13 +61,10 @@ const AddMemories = (props) => {
       const imageName = uuidv4();
       const path = `photo/${tripId}/${imageName}`;
       setimageInfo(path);
-      const ref_con = ref(storage, path); //how image will be addressed inside storage
-      //convert images to bytes
+      const ref_con = ref(storage, path);
       const photo = await fetch(result.uri);
-
       const bytes = await photo.blob();
-
-      await uploadBytes(ref_con, bytes); //upload image
+      await uploadBytes(ref_con, bytes);
     }
   };
 
@@ -138,18 +128,14 @@ const AddMemories = (props) => {
   }
 
   const audioUpload = async () => {
-    const recNum = recordings.length;
-    const storage = getStorage(); //the storage itself
+    const storage = getStorage();
     if (recording) {
       const voiceName = uuidv4();
-
       const path = `audio/${tripId}/${voiceName}`;
       const ref_con = ref(storage, path);
       setVoiceInfo(path);
       const voiceFile = await fetch(recording._uri);
-
       const bytes = await voiceFile.blob();
-
       await uploadBytes(ref_con, bytes);
     }
   };
@@ -306,7 +292,6 @@ const AddMemories = (props) => {
           >
             {recording ? "Stop Recording" : "Start Recording"}
           </Button>
-
           <Button size="sm" style={styles.buttons} onPress={pickImage}>
             Upload Image
           </Button>
