@@ -17,37 +17,20 @@ import { addTrip } from "./store/trip";
 import { useNavigation } from "@react-navigation/core";
 import DatePicker from "react-native-datepicker";
 import { getDates } from "./helperFunctions/getDates";
-//native base doesn't have a date picker so you have to use the react native one
 import styles from "../styles/addTrip";
+import { getNewDate } from "./helperFunctions/dates";
 
 const AddTrip = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
   const [tripName, setTripName] = useState("");
   const [location, setLocation] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const trip = useSelector((state) => state.trip);
-  const tripId = trip.id;
-
   const handleSubmit = () => {
-    //need to change date to yyyy-mm-dd format to put into date function
-    const newStartDate = firebase.firestore.Timestamp.fromDate(
-      new Date(
-        `${startDate.slice(6)}/${startDate.slice(0, 2)}/${startDate.slice(
-          3,
-          5
-        )}`
-      )
-    );
-
-    const newEndDate = firebase.firestore.Timestamp.fromDate(
-      new Date(
-        `${endDate.slice(6)}/${endDate.slice(0, 2)}/${endDate.slice(3, 5)}`
-      )
-    );
+    const newStartDate = getNewDate(startDate);
+    const newEndDate = getNewDate(endDate);
 
     const itineraryDays = getDates(new Date(startDate), new Date(endDate)).map(
       (date) => {
@@ -82,7 +65,6 @@ const AddTrip = () => {
       setLocation("");
       setStartDate("");
       setEndDate("");
-
       navigation.navigate("Home");
     } else {
       alert("Please fill out ALL the fields to proceed!");

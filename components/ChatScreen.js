@@ -14,12 +14,9 @@ import {
   Text,
   Box,
 } from "native-base";
-import user from "./store/user";
 import styles from "../styles/chatScreen";
 
 function ChatScreen() {
-  const [user] = useAuthState(auth);
-
   return <ChatRoom />;
 }
 
@@ -27,16 +24,13 @@ function ChatRoom() {
   const dummy = useRef();
   const messagesRef = firestore.collection("messages");
   const query = messagesRef.orderBy("createdAt").limit(25);
-
   const [messages] = useCollectionData(query, { idField: "id" });
-
   const [formValue, setFormValue] = useState("");
   const userName = useSelector((state) => state.user);
   const name = userName.name;
 
   const sendMessage = async (e) => {
     const { uid, photoURL } = auth.currentUser;
-
     await messagesRef.add({
       text: formValue,
       createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -44,7 +38,6 @@ function ChatRoom() {
       photoURL: userName.photoURL,
       name,
     });
-
     setFormValue("");
   };
 
@@ -54,7 +47,6 @@ function ChatRoom() {
         <ScrollView>
           {messages &&
             messages.map((msg, i) => <ChatMessage key={i} message={msg} />)}
-
           <Text ref={dummy}></Text>
         </ScrollView>
       </Stack>
@@ -83,8 +75,6 @@ function ChatRoom() {
 
 function ChatMessage(props) {
   const { text, uid, photoURL, name } = props.message;
-  const userName = useSelector((state) => state.user);
-
   const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
 
   return (

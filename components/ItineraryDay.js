@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 import { Box, Button } from "native-base";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "../styles/itinerary";
 
@@ -10,7 +10,6 @@ const ItineraryDay = (props) => {
   const dayName = Object.keys(itinerary[props.index]).filter(
     (obj) => obj !== "placesFromExplore"
   )[0];
-
   const plansList = itinerary[props.index][dayName];
   const placesFromExplore = itinerary[props.index].placesFromExplore || [];
 

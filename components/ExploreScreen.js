@@ -1,7 +1,6 @@
 import { Text, View } from "react-native";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/core";
 import {
   FormControl,
   Input,
@@ -18,9 +17,6 @@ import FoodResults from "./FoodResults";
 import styles from "../styles/explore";
 
 const ExploreScreen = () => {
-  const placesList = useSelector((state) => state.places) || [];
-  const foodList = useSelector((state) => state.food) || [];
-  const navigation = useNavigation();
   const dispatch = useDispatch();
   const [recommendation, setRecommendation] = useState("");
   const [location, setLocation] = useState("");
@@ -31,7 +27,6 @@ const ExploreScreen = () => {
       location,
     };
     dispatch(getPlaces(locationInput));
-    // .then( navigation.navigate("Places"));
     setLocation("");
   };
 

@@ -26,9 +26,7 @@ const SignUpScreen = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [show, setShow] = useState("");
-
   const navigation = useNavigation();
-
   const dispatch = useDispatch();
 
   return (

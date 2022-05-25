@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Modal, Center, Checkbox, Text } from "native-base";
 import { addFromExplore } from "./store/itinerary";
-
 import styles from "../styles/itinerary";
 
 const SelectModal = (props) => {
@@ -13,7 +12,6 @@ const SelectModal = (props) => {
   const dayName = Object.keys(itinerary[props.index]).filter(
     (obj) => obj !== "placesFromExplore"
   )[0];
-
   const [showModal, setShowModal] = useState(false);
   const [groupValues, setGroupValues] = useState([]);
 
