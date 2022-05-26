@@ -8,8 +8,10 @@ A trip coordinator creates a new trip by specifying a trip name, location and tr
 
 Once the trip is in progress, trip members can save **Memories** including journal entries, photos, and voice recordings. No more clumsy group texts or failed messages. Saving items in Trouvaille allows all trip members to easily access trip memories in one central location meaning more fun and less stress! .:people_hugging: :camera_flash: :writing_hand:
 
+## Video Walkthrough ✈️
 Check out our video where we do a walk-through of our application and discuss the technologies we used and challenges we faced!
 
+[📺 Trouvaille Presentation](https://youtu.be/EL65UJ76Ob4)
 
 ## Tech Stack  :computer:
 
