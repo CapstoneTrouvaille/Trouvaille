@@ -20,15 +20,16 @@ const InviteTripMember = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = route.params.tripId;
+  const tripNames = useSelector((state) => state.trip);
+  const tripsInfo = useSelector((state) => state.trips.trips);
+  const tripInfo = tripsInfo.filter(({ id }) => id === tripId)[0];
   const currentTripMembers = tripInfo.users;
   const pendingUsers = tripInfo.pendingUsers;
   const declinedUsers = tripInfo.declinedUsers;
   const currentNames = tripNames.cUsers;
   const pendingNames = tripNames.pUsers;
   const declinedNames = tripNames.dUsers;
-  const tripNames = useSelector((state) => state.trip);
-  const tripsInfo = useSelector((state) => state.trips.trips);
-  const tripInfo = tripsInfo.filter(({ id }) => id === tripId)[0];
+
   const [friendEmail, setFriendEmail] = useState("");
 
   useEffect(() => {
