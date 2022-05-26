@@ -8,6 +8,9 @@ A trip coordinator creates a new trip by specifying a trip name, location and tr
 
 Once the trip is in progress, trip members can save **Memories** including journal entries, photos, and voice recordings. No more clumsy group texts or failed messages. Saving items in Trouvaille allows all trip members to easily access trip memories in one central location meaning more fun and less stress! .:people_hugging: :camera_flash: :writing_hand:
 
+Check out our video where we do a walk-through of our application and discuss the technologies we used and challenges we faced!
+
+
 ## Tech Stack  :computer:
 
 - React Native
@@ -28,7 +31,6 @@ Once the trip is in progress, trip members can save **Memories** including journ
 7. Use the explore feature to find things to do
 8. Save your trip memories
 9. HAVE FUN!!!
-![Insert usage gif here???](https://expo.dev/Trouvaille)
 
 ## Developers :nerd_face:
 
