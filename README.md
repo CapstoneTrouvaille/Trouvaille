@@ -25,7 +25,7 @@ Check out our video where we do a walk-through of our application and discuss th
 ## Application Usage :iphone:
 
 1. [Download the Expo Go client for your mobile device](https://expo.dev/client)
-2. [Scan the barcode below to download Trouvaille](https://expo.dev/Trouvaille)
+2. [Scan the barcode below to download Trouvaille](https://expo.dev/@trouvaille/trouvaille)
 3. Register for an account/Login
 4. Add a trip/ Access an existing trip on the trip dashboard
 5. Invite trip members to collaborate with
