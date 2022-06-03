@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserToInvite } from "../../store/user";
-import { fetchTripMembers } from "../../store/trip";
+import { fetchInvitations } from "../../store/invitations";
 import { useNavigation } from "@react-navigation/core";
 import styles from "../../../styles/inviteScreens";
 import {
@@ -20,10 +20,9 @@ const InviteTripMember = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = route.params.tripId;
-  const tripNames = useSelector((state) => state.trip);
-  const tripsInfo = useSelector((state) => state.trips.trips);
-  const tripInfo = tripsInfo.filter(({ id }) => id === tripId)[0];
-  const currentTripMembers = tripInfo.users;
+  const tripNames = useSelector((state) => state.invitations);
+  const tripInfo = useSelector((state) => state.trip);
+  const currentUsers = tripInfo.users;
   const pendingUsers = tripInfo.pendingUsers;
   const declinedUsers = tripInfo.declinedUsers;
   const currentNames = tripNames.cUsers;
@@ -33,7 +32,7 @@ const InviteTripMember = ({ route }) => {
   const [friendEmail, setFriendEmail] = useState("");
 
   useEffect(() => {
-    dispatch(fetchTripMembers(currentTripMembers, pendingUsers, declinedUsers));
+    dispatch(fetchInvitations(currentUsers, pendingUsers, declinedUsers));
   }, [tripInfo]);
 
   const handleChange = (text) => setFriendEmail(text);

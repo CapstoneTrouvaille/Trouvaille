@@ -1,23 +1,25 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addUserToTrip, declineInviteToTrip } from "../../store/trip";
-import { fetchUserPendingTrips } from "../../store/trips";
+import { addUserToTrip, declineInviteToTrip } from "../../store/invitations";
+import { fetchUserPendingTrips } from "../../store/invitations";
 import { useNavigation } from "@react-navigation/core";
 import styles from "../../../styles/inviteScreens";
 import { ScrollView, Stack, Center, Button, Heading, Box } from "native-base";
 
-const InviteAcceptDecline = ({ route }) => {
+const InviteAcceptDecline = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user);
-  const tripState = useSelector((state) => state.trip);
-  const pendingTripNames = useSelector((state) => state.trips.pendingTrips);
+
+  const pendingTripNames = useSelector(
+    (state) => state.invitations.pendingTrips
+  );
   const userPendingTrips = userInfo.pendingTrips;
 
   useEffect(() => {
     dispatch(fetchUserPendingTrips(userPendingTrips));
-  }, [tripState]);
+  }, [userInfo]);
 
   const handleSubmitAccept = (trip, index) => {
     const tripToDispatch = userPendingTrips[index];

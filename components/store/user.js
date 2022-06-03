@@ -6,13 +6,12 @@ import {
   collection,
 } from "firebase/firestore";
 import { db, auth } from "../../firebase";
-import { fetchUserTrips } from "./trips";
+import { fetchSingleTrip } from "./trip";
 
 //ACTION TYPES
 const GET_USER = "GET_USER";
 const SIGNUP = "SIGNUP";
 const SEARCH_TO_INVITE = "SEARCH_TO_INVITE";
-const SEARCH_TO_INVITE_FAIL = "SEARCH_TO_INVITE_FAIL";
 
 //ACTION CREATOR
 export const getUser = (user) => ({
@@ -28,11 +27,6 @@ export const signup = (user) => ({
 export const searchToInvite = (user) => ({
   type: SEARCH_TO_INVITE,
   user,
-});
-
-export const searchToInviteFail = (error) => ({
-  type: SEARCH_TO_INVITE_FAIL,
-  errorAdd: error,
 });
 
 //THUNK
@@ -69,7 +63,7 @@ export const fetchUserToInvite = (userEmail, tripId) => {
       const userReference = doc(db, "user", userRec.docs[0].id);
 
       if (userRef.empty) {
-        dispatch(searchToInviteFail(error));
+        console.log("Email not found in the system");
       } else {
         await updateDoc(tripReference, {
           pendingUsers: arrayUnion(userRef.UID),
@@ -78,7 +72,7 @@ export const fetchUserToInvite = (userEmail, tripId) => {
           pendingTrips: arrayUnion(tripId),
         });
       }
-      dispatch(fetchUserTrips());
+      dispatch(fetchSingleTrip(tripId));
     } catch (error) {
       console.log(error);
     }
@@ -126,8 +120,6 @@ export default function user(state = {}, action) {
       return action.user;
     case SEARCH_TO_INVITE:
       return action.user;
-    case SEARCH_TO_INVITE_FAIL:
-      return { ...state, errorAdd: action.errorAdd };
     default:
       return state;
   }

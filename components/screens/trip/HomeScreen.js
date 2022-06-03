@@ -29,7 +29,7 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user);
-  const tripsInfo = useSelector((state) => state.trips.trips);
+  const tripsInfo = useSelector((state) => state.trips);
   const userCurrentTrips = userInfo.trip;
   const showPendingTrips = userInfo.pendingTrips
     ? userInfo.pendingTrips.length

@@ -1,9 +1,18 @@
-import { doc, collection } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db, auth } from "../../firebase";
+import {
+  arrayUnion,
+  arrayRemove,
+  doc,
+  query,
+  updateDoc,
+  where,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 
 //ACTION TYPES
 const GET_TRIPS = "GET_TRIPS";
-const GET_PENDING_TRIPS = "GET_PENDING_TRIPS";
+const ADD_TRIP_SUCCESS = "ADD_TRIP_SUCCESS";
 
 //ACTION CREATORS
 export const getTrips = (trips) => ({
@@ -11,9 +20,9 @@ export const getTrips = (trips) => ({
   trips,
 });
 
-export const getPendingTrips = (pendingTrips) => ({
-  type: GET_PENDING_TRIPS,
-  pendingTrips,
+export const _addTripSuccess = (newTripInfo) => ({
+  type: ADD_TRIP_SUCCESS,
+  newTripInfo,
 });
 
 //THUNKS
@@ -22,7 +31,6 @@ export const fetchUserTrips = () => {
     try {
       const state = getState();
       const tripArr = [];
-
       const userTripsArr = state.user.trip;
       for (let i = 0; i < userTripsArr.length; i++) {
         const tripId = userTripsArr[i];
@@ -39,34 +47,36 @@ export const fetchUserTrips = () => {
   };
 };
 
-export const fetchUserPendingTrips = (userPendingTripsArr) => {
+export const addTrip = (newTripInfo) => {
   return async (dispatch) => {
     try {
-      const pendingTripArr = [];
-      for (let i = 0; i < userPendingTripsArr.length; i++) {
-        const pendingTripId = userPendingTripsArr[i];
-        const answer = db.collection("trips").doc(pendingTripId);
-        const doc = await answer.get();
+      const addedTrip = await db.collection("trips").add(newTripInfo);
+      const q = query(
+        collection(db, "user"),
+        where("UID", "==", auth.currentUser.uid)
+      );
+      const userRecord = await getDocs(q);
+      const userReference = doc(db, "user", userRecord.docs[0].id);
 
-        const data = doc.data();
+      await updateDoc(userReference, {
+        trip: arrayUnion(addedTrip.id),
+      });
+      dispatch(_addTripSuccess(newTripInfo));
 
-        pendingTripArr.push(data.tripName);
-      }
-
-      dispatch(getPendingTrips(pendingTripArr));
+      alert("Your trip was successfully created");
     } catch (error) {
-      console.log(error);
+      console.error("Error adding trip: ", error);
     }
   };
 };
 
 //REDUCER
-export default function trips(state = { trips: [], pendingTrips: [] }, action) {
+export default function trips(state = [], action) {
   switch (action.type) {
     case GET_TRIPS:
-      return { ...state, trips: action.trips };
-    case GET_PENDING_TRIPS:
-      return { ...state, pendingTrips: action.pendingTrips };
+      return action.trips;
+    case ADD_TRIP_SUCCESS:
+      return [...state, action.newTripInfo];
     default:
       return state;
   }

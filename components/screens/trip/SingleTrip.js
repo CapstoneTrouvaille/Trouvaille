@@ -16,7 +16,7 @@ import Itinerary from "./Itinerary";
 import Memories from "../memories/Memories";
 import firebase from "firebase/compat";
 import styles from "../../../styles/singleTrip";
-import { fetchTripMember } from "../../store/trip";
+import { fetchTripMembers } from "../../store/trip";
 import { Ionicons } from "@expo/vector-icons";
 import { convertFiretimeToString } from "../../helperFunctions/dates";
 
@@ -24,11 +24,11 @@ const SingleTrip = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const tripId = route.params.tripId;
-  const tripInfo = route.params.trip;
+  const tripInfo = useSelector((state) => state.trip);
   const travelers = tripInfo.users || [];
 
   useEffect(() => {
-    dispatch(fetchTripMember(travelers));
+    dispatch(fetchTripMembers(travelers));
   }, []);
 
   const tripMembers = useSelector((state) => state.trip.tripMembers);
