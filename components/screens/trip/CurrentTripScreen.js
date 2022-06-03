@@ -1,14 +1,24 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Button, Center, Box, ScrollView } from "native-base";
 import { useNavigation } from "@react-navigation/core";
 import styles from "../../../styles/currentAndPastTrip";
+import { fetchSingleTrip } from "../../store/trip";
 
 const CurrentTripScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user);
-  const tripInfo = useSelector((state) => state.trips.trips);
+  const tripInfo = useSelector((state) => state.trips);
   const userCurrentTrips = userInfo.trip;
+
+  const handleSubmit = (tripId, trip) => {
+    dispatch(fetchSingleTrip(tripId));
+    navigation.navigate("Trip", {
+      trip,
+      tripId,
+    });
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -26,12 +36,7 @@ const CurrentTripScreen = () => {
                 colorScheme="indigo"
                 style={styles.tripList}
                 _text={styles.tripButton}
-                onPress={() =>
-                  navigation.navigate("Trip", {
-                    trip,
-                    tripId: userCurrentTrips[index],
-                  })
-                }
+                onPress={() => handleSubmit(userCurrentTrips[index], trip)}
               >
                 {trip && trip.tripName}
               </Button>

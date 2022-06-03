@@ -13,7 +13,7 @@ import {
 } from "native-base";
 import { auth, firebase } from "../../../firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { addTrip } from "../../store/trip";
+import { addTrip } from "../../store/trips";
 import { useNavigation } from "@react-navigation/core";
 import DatePicker from "react-native-datepicker";
 import { getDates } from "../../helperFunctions/getDates";

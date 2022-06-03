@@ -17,6 +17,7 @@ import { useNavigation } from "@react-navigation/core";
 import { addMemories } from "../../store/memories";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "../../../styles/addMemories";
+import DatePicker from "react-native-datepicker";
 //photos
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
